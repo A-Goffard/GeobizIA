@@ -1,31 +1,38 @@
 from abc import ABC, abstractmethod
+from typing import List, Optional, TypeVar, Generic
 
-class BaseGestor(ABC):
+T = TypeVar('T')
+
+class BaseGestor(ABC, Generic[T]):
     def __init__(self):
-        self.lista = []
+        self.lista: List[T] = []
 
-    def agregar(self, item):
-        self.lista.append(item)
-        return f"{item.__class__.__name__} agregado exitosamente."
+    def agregar(self, elemento: T) -> bool:
+        self.lista.append(elemento)
+        return True
 
-    def modificar(self, id_item, **kwargs):
+    def eliminar(self, id_elemento: int) -> bool:
         for item in self.lista:
-            if hasattr(item, 'id') and item.id == id_item:
-                for key, value in kwargs.items():
-                    if hasattr(item, key):
-                        setattr(item, key, value)
-                return f"{item.__class__.__name__} modificado exitosamente."
-        return f"No se encontró el {item.__class__.__name__} con ID '{id_item}'."
+            if hasattr(item, 'id') and item.id == id_elemento:
+                self.lista.remove(item)
+                return True
+        return False
 
-    def buscar(self, id_item):
+    def buscar(self, id_elemento: int) -> Optional[T]:
         for item in self.lista:
-            if hasattr(item, 'id') and item.id == id_item:
+            if hasattr(item, 'id') and item.id == id_elemento:
                 return item
         return None
 
-    def eliminar(self, id_item):
-        for item in self.lista:
-            if hasattr(item, 'id') and item.id == id_item:
-                self.lista.remove(item)
-                return f"{item.__class__.__name__} eliminado."
-        return f"No se encontró el {item.__class__.__name__} con ID '{id_item}'."
+    def mostrar_todos_los_elem(self) -> List[T]:
+        return self.lista.copy()
+
+    def esta_vacia(self) -> bool:
+        return len(self.lista) == 0
+
+    def cantidad_elementos(self) -> int:
+        return len(self.lista)
+
+    @abstractmethod
+    def mostrar_elemento(self, elemento: T) -> str:
+        pass

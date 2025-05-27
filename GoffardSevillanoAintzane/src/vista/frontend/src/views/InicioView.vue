@@ -1,83 +1,28 @@
 <template>
     <div>
-        <!-- <div class="contenedor-cabecero">
+        <div class="contenedor-cabecero">
 
 
             <div class="contenedor-intro">
                 <h1>Geobizi, naturaleza desde el corazón</h1>
-                <h2>Una empresa nacida del amor a la naturaleza y las ganas de compartir</h2>
-                <h3>Diseñamos experiencias medioambientales únicas</h3>
-                <p>Desarrollamos e implementamos actividades a medida para que disfrutes, desconectes, aprendas y sobre
-                    todo, compartamos, siempre con el foco en la naturaleza y el medioambiente.</p>
+                <h3>Gestión de la empresa</h3>
             </div>
 
-        </div> -->
+        </div>
         <div class="contenedor-principal">
             <div>
-                
-            </div>
-
-            <div class="contenedor-historia">
-                <div class="cont-texto">
-                    <h2>Historia y misión</h2>
-                    <h3>Medioambiente y bienestar</h3>
-                    <p>Una asesoría pedagógica medioambiental especializada en la formación, divulgación científica y
-                        medioambiental y el diseño de experiencias centradas en la naturaleza para que conectes con el
-                        mundo desde el respeto y el conocimiento.</p>
-                    <p>Desde nuestros inicios hemos trabajado con mucho cariño para ofrecerte las mejores experiencias
-                        hasta llegar a lo que es hoy en día Geobizi. </p>
-                    <p>Desarrollamos formaciones, rutas, talleres y experiencias personalizadas para niñas y niños,
-                        particulares, perfiles silver, empresas públicas o privadas, colegios u otros centros
-                        formativos, instituciones...</p>
-                    <p>Pensamos que todo tipo de personas, grupos y edades diferentes deben tener acceso a la educación
-                        medioambiental y todos los beneficios sociales, naturales y de salud que lleva unidos. Es por
-                        ello que adaptamos unos objetivos similares a una diversidad de grupos.</p>
-                    <p>Nuestras actividades son sostenibles, inclusivas, coeducativas y no discriminatorias.</p>
-                </div>
-
-                <div>
-                    <img class="imagendiv" src="imagenes/foto.png" alt="">
-                </div>
-            </div>
-
-            <div class="contenedor-historia">
-                <div>
-                    <img class="imagendiv" src="imagenes/foto.png" alt="">
-                </div>
-                <div class="cont-texto">
-                    <h2>Esencia</h2>
-                    <h3>Creemos en el conocimiento compartido</h3>
-                    <p>La ciencia y el conocimiento son el vehículo para acercar a las personas a la naturaleza de una
-                        forma respetuosa y sostenible.</p>
-                    <p>La base para llevar el aprendizaje al hecho es generando una dinámica que permita interiorizar de
-                        forma divertida y práctica los conocimientos y conceptos necesarios para crear hábitos de vida
-                        sostenibles y respetar la curiosidad natural del ser humano.</p>
-                    <p>Hacer las cosas uno mismo e interactuar con la materia facilita la interiorización además de
-                        ayudar a desarrollar otras habilidades y herramientas sociales y mentales.</p>
-                    <p>Las actividades medioambientales no son un mero entretenimiento y con esa premisa muy presente
-                        siempre realizamos nuestras actividades con una calidad y atención especial y siempre teniendo
-                        en cuenta el medioambiente y los ODSs.</p>
-                </div>
-
-            </div>
-
-            <div class="contenedor-historia">
-                <div class="cont-texto">
-                    <h2>Nuestro equipo</h2>
-                    <h3>Multidisciplinar y colaborativo</h3>
-                    <p>Somos un equipo de asesoramiento y de trabajo multidisciplinar de alta cualificación, que
-                        colaboramos y trabajamos conjuntamente para satisfacer tus necesidades y mejorar constantemente
-                        nuestros servicios.</p>
-                    <p>Nuestro equipo no se limita a Geobizi. Además de los compañeros/as que formamos el equipo
-                        principal, tenemos otros muchos colaboradores que nos apoyan, ayudan, asesoran, y comparten con
-                        nosotros su sabiduría y expertise.</p>
-                    <p>Profesionales de la educación, la ciencia, la comunicación y la tecnología forman parte de
-                        Geobizi.</p>
-                </div>
-
-                <div>
-                    <img class="imagendiv" src="imagenes/foto.png" alt="">
-                </div>
+                <h2>Iniciar sesión</h2>
+                <form>
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div>
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit">Acceder</button>
+                </form>
             </div>
         </div>
 
@@ -95,17 +40,6 @@ h1 {
     color: var(--green);
 }
 
-.contenedor-principal {
-    padding-top: 7rem;
-    background-color: rgb(255, 255, 255);
-    padding-bottom: 2rem;
-}
-
-.contenedor-secundario {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 .contenedor-cabecero {
     padding: 5rem;
     background-image: url('/public/imagenes/foto.png');
@@ -115,26 +49,61 @@ h1 {
 }
 
 .contenedor-intro {
-    max-width: 40rem;
+    background-color: var(--white);
     padding: 2rem;
-    background-color: white;
-    border-radius: 0.5rem;
+    border-radius: 0.7rem;
+    width: fit-content;
 }
 
-.contenedor-historia {
+.contenedor-principal {
+    padding: 2rem;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
+}
+
+.contact-container {
+    max-width: 600px;
+    margin: 0 auto;
     padding: 2rem;
+    border: 1px solid var(--shoftgreen);
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(49, 49, 49, 0.7);
+    padding-bottom: 2rem;
 }
 
-.imagendiv {
 
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"] {
     width: 100%;
-    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--shoftgreen);
+    background-color: var(--megashoftgreen);
+    border-radius: 4px;
+    margin: 0.5rem 0;
 }
+
+button {
+    padding: 0.75rem 1rem;
+    background-color: var(--green);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
 
 @media (max-width: 550px) {
-    .contenedor-historia {
+    .contenedor-principal {
         flex-direction: column;
     }
 }

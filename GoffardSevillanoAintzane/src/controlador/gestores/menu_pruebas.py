@@ -16,7 +16,8 @@ class Item:
         return f"ID: {self.id}, Nombre: {self.nombre}, Descripción: {self.descripcion}"
 
 class Gestor(BaseGestor):
-    pass
+    def mostrar_elemento(self, elemento):
+        return str(elemento)
 
 def solicitar_atributos(clase, opcional=False):
     atributos = {}
@@ -24,6 +25,13 @@ def solicitar_atributos(clase, opcional=False):
     for atributo in parametros:
         valor = input(f"Ingrese {atributo}{' (opcional)' if opcional else ''}: ")
         if valor or not opcional:
+            # Convertir a int si el atributo es 'id'
+            if atributo == "id":
+                try:
+                    valor = int(valor)
+                except ValueError:
+                    print("El ID debe ser un número entero.")
+                    return solicitar_atributos(clase, opcional)
             atributos[atributo] = valor
     return atributos
 
@@ -31,43 +39,54 @@ def menu_pruebas(gestor, clase_item):
     while True:
         print(f"\nMenú de Pruebas para {clase_item.__name__}")
         print("1. Agregar")
-        print("2. Modificar")
-        print("3. Buscar")
-        print("4. Eliminar")
-        print("5. Mostrar Todos")
-        print("6. Salir")
+        print("2. Buscar")
+        print("3. Eliminar")
+        print("4. Mostrar Todos")
+        print("5. Salir")
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
             atributos = solicitar_atributos(clase_item)
             item = clase_item(**atributos)
-            print(gestor.agregar(item))
+            if gestor.agregar(item):
+                print(f"{clase_item.__name__} agregado exitosamente.")
+            else:
+                print(f"No se pudo agregar el {clase_item.__name__}.")
 
         elif opcion == "2":
-            id_item = input("Ingrese el ID del elemento a modificar: ")
-            cambios = solicitar_atributos(clase_item, opcional=True)
-            print(gestor.modificar(id_item, **cambios))
-
-        elif opcion == "3":
-            id_item = input("Ingrese el ID del elemento a buscar: ")
+            id_input = input("Ingrese el ID del elemento a buscar: ")
+            try:
+                id_item = int(id_input)
+            except ValueError:
+                print("ID inválido. Debe ser un número entero.")
+                continue
             item = gestor.buscar(id_item)
             if item:
-                print(item)
+                print(gestor.mostrar_elemento(item))
             else:
                 print(f"{clase_item.__name__} no encontrado.")
 
-        elif opcion == "4":
-            id_item = input("Ingrese el ID del elemento a eliminar: ")
-            print(gestor.eliminar(id_item))
+        elif opcion == "3":
+            id_input = input("Ingrese el ID del elemento a eliminar: ")
+            try:
+                id_item = int(id_input)
+            except ValueError:
+                print("ID inválido. Debe ser un número entero.")
+                continue
+            if gestor.eliminar(id_item):
+                print(f"{clase_item.__name__} eliminado exitosamente.")
+            else:
+                print(f"No se encontró el {clase_item.__name__} con ID '{id_item}'.")
 
-        elif opcion == "5":
-            if gestor.lista:
-                for item in gestor.lista:
-                    print(item)
+        elif opcion == "4":
+            elementos = gestor.mostrar_todos_los_elem()
+            if elementos:
+                for item in elementos:
+                    print(gestor.mostrar_elemento(item))
             else:
                 print(f"No hay elementos en {clase_item.__name__}.")
 
-        elif opcion == "6":
+        elif opcion == "5":
             print("Saliendo del programa...")
             break
 

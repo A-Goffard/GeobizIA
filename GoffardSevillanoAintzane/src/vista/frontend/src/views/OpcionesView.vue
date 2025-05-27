@@ -1,11 +1,15 @@
 <template>
     <div class="general-container">
-        <h1>Proyectos</h1>
+        <h1>Opciones</h1>
         <div class="container">
             <div class="card" v-for="option in options" :key="option.title" @click="goToDetail(option.link)">
-                <h2>{{ option.title }}</h2>
-                <img :src="option.image" alt="Imagen del proyecto">
-                <p>{{ option.description }}</p>
+                <div>
+                    <h2>{{ option.title }}</h2>
+                    <p>{{ option.description }}</p>
+                </div>
+                <div>
+                    <img :src="option.image" alt="Imagen del proyecto">
+                </div>
             </div>
         </div>
     </div>
@@ -19,17 +23,59 @@ const router = useRouter()
 
 const options = ref([
     {
-        title: 'Ginkana del Flysch de Bizkaia',
-        description: 'Una experiencia digital para explorar el Flysch de Bizkaia de manera interactiva.',
-        link: '/detalle-flysch',
-        image: '/imagenes/proyectos/flyschdigital.png',
+        title: 'Actividades',
+        description: 'Aquí puedes ver las actividades realizadas, programar nuevas actividades, y gestionar las existentes.',
+        link: '/actividades',
+        image: '/imagenes/foto.png',
     },
     {
-        title: 'Zalla Natura',
-        description: 'Un proyecto de biorregeneración colaborativa para mejorar el medioambiente en Zalla.',
-        link: '/detalle-zalla-natura',
-        image: '/imagenes/proyectos/plantacion4.png',
+        title: 'Facturas',
+        description: 'Aquí puedes ver y gestionar todas las facturas generadas y generar nuevas.',
+        link: '/facturas',
+        image: '/imagenes/foto.png',
     },
+    {
+        title: 'Publicaciones',
+        description: 'Aquí puedes ver las publicaciones realizadas, programar nuevas publicaciones, y gestionar las existentes.',
+        link: '/publicaciones',
+        image: '/imagenes/foto.png',
+    },
+    {
+        title: 'Proyectos',
+        description: 'Aquí puedes ver los proyectos realizados, programar nuevos proyectos, y gestionar los existentes.',
+        link: '/proyectos',
+        image: '/imagenes/foto.png',
+    },
+    {
+        title: 'Eventos',
+        description: 'Aquí puedes ver los eventos que pueden ser interesantes para la empresa para participar, agregar nuevos eventos, y gestionar los existentes.',
+        link: '/eventos',
+        image: '/imagenes/foto.png',
+    },
+    {
+        title: 'Participantes',
+        description: 'Aquí puedes ver los participantes de las actividades, eventos y proyectos, y gestionar sus datos.',
+        link: '/participantes',
+        image: '/imagenes/foto.png',
+    },
+    {
+        title: 'Documentos',
+        description: 'Aquí puedes ver los documentos importantes de la empresa, agregar nuevos documentos, y gestionar los existentes.',
+        link: '/documentos',
+        image: '/imagenes/foto.png',
+    },
+    {
+        title: 'Empresas',
+        description: 'Aquí puedes ver las empresas con las que colaboramos, agregar nuevas empresas, y gestionar las existentes.',
+        link: '/empresas',
+        image: '/imagenes/foto.png',
+    },
+    {
+        title: 'Redes Sociales',
+        description: 'Aquí puedes ver las redes sociales de la empresa, agregar nuevas redes sociales, y gestionar las existentes.',
+        link: '/redes-sociales',
+        image: '/imagenes/foto.png',
+    }
 ])
 
 const goToDetail = (link) => {
