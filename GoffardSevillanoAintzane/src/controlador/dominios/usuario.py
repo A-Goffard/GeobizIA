@@ -1,9 +1,9 @@
-from persona import Persona
+from .persona import Persona
 
 class Usuario(Persona):
 
-    def __init__(self, id, nombre, apellido, correo, telefono, fecha_nacimiento, direccion, dni, cp, poblacion, pais, rol, preferencias, password):
-        super().__init__(id, nombre, apellido, correo, telefono)
+    def __init__(self, id, nombre, apellido, email, telefono, fecha_nacimiento, direccion, dni, cp, poblacion, pais, rol, preferencias, password):
+        super().__init__(id, nombre, apellido, email, telefono)
         self._fecha_nacimiento = fecha_nacimiento
         self._direccion = direccion
         self._dni = dni

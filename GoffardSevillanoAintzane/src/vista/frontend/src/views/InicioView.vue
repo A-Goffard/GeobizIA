@@ -12,16 +12,17 @@
         <div class="contenedor-principal">
             <div>
                 <h2>Iniciar sesión</h2>
-                <form>
+                <form @submit.prevent="login">
                     <div>
                         <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" v-model="email" required>
                     </div>
                     <div>
                         <label for="password">Contraseña:</label>
-                        <input type="password" id="password" name="password" required>
+                        <input type="password" id="password" v-model="password" required>
                     </div>
                     <button type="submit">Acceder</button>
+                    <p v-if="error" style="color: red;">{{ error }}</p>
                 </form>
             </div>
         </div>
@@ -31,7 +32,32 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const error = ref('')
+
+// Usuarios autorizados (puedes cambiar esto por una petición a backend en el futuro)
+const usuarios = [
+    { email: 'admin@geobizi.com', password: 'admin123' },
+    { email: 'usuario@geobizi.com', password: 'usuario123' }
+]
+
+function login() {
+    const autorizado = usuarios.find(
+        u => u.email === email.value && u.password === password.value
+    )
+    if (autorizado) {
+        localStorage.setItem('autenticado', 'true')
+        error.value = ''
+        router.push('/opciones')
+    } else {
+        error.value = 'Usuario o contraseña incorrectos'
+    }
+}
 </script>
 
 

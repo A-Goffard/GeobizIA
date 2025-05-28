@@ -1,7 +1,7 @@
 
-from Proyecto.dominios.persona import Persona
-from Proyecto.dominios.usuario import Usuario
-from Proyecto.gestores.personas import PersonaFactory
+from dominios.persona import Persona
+from dominios.usuario import Usuario
+from gestores.personas import PersonaFactory
 
 
 class UsuarioFactory(PersonaFactory):

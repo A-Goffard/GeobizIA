@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from Proyecto.dominios.log_sistema import LogSistema
+from dominios.log_sistema import LogSistema
 
 class LogSistema(ABC):
     @abstractmethod

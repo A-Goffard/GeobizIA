@@ -1,8 +1,8 @@
-from persona import Persona
+from .persona import Persona
 
 class Participante(Persona):
-    def __init__(self, id, nombre, apellido, correo, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro):
-        super().__init__(id, nombre, apellido, correo, telefono)
+    def __init__(self, id, nombre, apellido, email, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro):
+        super().__init__(id, nombre, apellido, email, telefono)
         self._numero_personas_juntas = numero_personas_juntas
         self._rol = rol
         self._como_conocer = como_conocer
@@ -104,7 +104,7 @@ class Participante(Persona):
     def fecha_registro(self, fecha_registro):
         self._fecha_registro = fecha_registro
 
-    def get_tipo(self) -> str:
+    def get_tipo(self):
         return "Participante"
 
     def __str__(self):
