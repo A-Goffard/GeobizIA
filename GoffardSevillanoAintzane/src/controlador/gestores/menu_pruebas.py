@@ -25,7 +25,6 @@ def solicitar_atributos(clase, opcional=False):
     for atributo in parametros:
         valor = input(f"Ingrese {atributo}{' (opcional)' if opcional else ''}: ")
         if valor or not opcional:
-            # Convertir a int si el atributo es 'id'
             if atributo == "id":
                 try:
                     valor = int(valor)
@@ -42,7 +41,8 @@ def menu_pruebas(gestor, clase_item):
         print("2. Buscar")
         print("3. Eliminar")
         print("4. Mostrar Todos")
-        print("5. Salir")
+        print("5. Existe")
+        print("6. Salir")
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
@@ -54,29 +54,21 @@ def menu_pruebas(gestor, clase_item):
                 print(f"No se pudo agregar el {clase_item.__name__}.")
 
         elif opcion == "2":
-            id_input = input("Ingrese el ID del elemento a buscar: ")
-            try:
-                id_item = int(id_input)
-            except ValueError:
-                print("ID inválido. Debe ser un número entero.")
-                continue
-            item = gestor.buscar(id_item)
-            if item:
-                print(gestor.mostrar_elemento(item))
+            atributos = solicitar_atributos(clase_item)
+            item = clase_item(**atributos)
+            encontrado = gestor.buscar(item)
+            if encontrado:
+                print(gestor.mostrar_elemento(encontrado))
             else:
                 print(f"{clase_item.__name__} no encontrado.")
 
         elif opcion == "3":
-            id_input = input("Ingrese el ID del elemento a eliminar: ")
-            try:
-                id_item = int(id_input)
-            except ValueError:
-                print("ID inválido. Debe ser un número entero.")
-                continue
-            if gestor.eliminar(id_item):
+            atributos = solicitar_atributos(clase_item)
+            item = clase_item(**atributos)
+            if gestor.eliminar(item):
                 print(f"{clase_item.__name__} eliminado exitosamente.")
             else:
-                print(f"No se encontró el {clase_item.__name__} con ID '{id_item}'.")
+                print(f"No se encontró el {clase_item.__name__} para eliminar.")
 
         elif opcion == "4":
             elementos = gestor.mostrar_todos_los_elem()
@@ -87,6 +79,14 @@ def menu_pruebas(gestor, clase_item):
                 print(f"No hay elementos en {clase_item.__name__}.")
 
         elif opcion == "5":
+            atributos = solicitar_atributos(clase_item)
+            item = clase_item(**atributos)
+            if gestor.existe(item):
+                print(f"El elemento existe en {clase_item.__name__}.")
+            else:
+                print(f"El elemento NO existe en {clase_item.__name__}.")
+
+        elif opcion == "6":
             print("Saliendo del programa...")
             break
 

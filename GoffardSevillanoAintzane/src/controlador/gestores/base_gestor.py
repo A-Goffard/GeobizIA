@@ -11,24 +11,23 @@ class BaseGestor(ABC, Generic[T]):
         self.lista.append(elemento)
         return True
 
-    def eliminar(self, id_elemento: int) -> bool:
-        for item in self.lista:
-            if hasattr(item, 'id') and item.id == id_elemento:
-                self.lista.remove(item)
-                return True
+    def eliminar(self, elemento: T) -> bool:
+        if elemento in self.lista:
+            self.lista.remove(elemento)
+            return True
         return False
 
-    def buscar(self, id_elemento: int) -> Optional[T]:
+    def buscar(self, elemento: T) -> Optional[T]:
         for item in self.lista:
-            if hasattr(item, 'id') and item.id == id_elemento:
+            if item == elemento:
                 return item
         return None
 
     def mostrar_todos_los_elem(self) -> List[T]:
         return self.lista.copy()
 
-    def esta_vacia(self) -> bool:
-        return len(self.lista) == 0
+    def existe(self, elemento: T) -> bool:
+        return elemento in self.lista
 
     def cantidad_elementos(self) -> int:
         return len(self.lista)
