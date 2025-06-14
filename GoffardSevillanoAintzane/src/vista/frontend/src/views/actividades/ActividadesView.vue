@@ -2,7 +2,12 @@
     <div class="general-container">
         <h1>Actividades</h1>
         <div class="container">
-            <div class="card" v-for="option in options" :key="option.title">
+            <div
+                class="card"
+                v-for="option in options"
+                :key="option.title"
+                @click="goTo(option.route)"
+            >
                 <h2>{{ option.title }}</h2>
                 <img :src="option.image" alt="Imagen de actividad">
                 <p>{{ option.description }}</p>
@@ -13,24 +18,34 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const options = ref([
     {
         title: 'Crear Actividad',
         description: 'Crea una nueva actividad para la empresa.',
         image: '/imagenes/foto.png',
+        route: '/actividades/crear'
     },
     {
         title: 'Ver Actividades',
         description: 'Consulta y gestiona todas las actividades realizadas.',
         image: '/imagenes/foto.png',
+        route: '/actividades/ver'
     },
     {
         title: 'Estadísticas',
         description: 'Visualiza estadísticas de las actividades.',
         image: '/imagenes/foto.png',
+        route: '/actividades/estadisticas'
     }
 ])
+
+function goTo(route) {
+    router.push(route)
+}
 </script>
 
 <style scoped>

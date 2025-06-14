@@ -3,6 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import InicioView from '../views/InicioView.vue'
 import OpcionesView from '../views/OpcionesView.vue'
 import ActividadesView from '../views/actividades/ActividadesView.vue'
+import CrearActividadView from '../views/actividades/CrearActividadView.vue'
+import VerActividadesView from '../views/actividades/VerActividadesView.vue'
+import EstadisticasActividadesView from '../views/actividades/EstadisticasActividadesView.vue'
 import FacturasView from '../views/facturas/FacturasView.vue'
 import PublicacionesView from '../views/publicaciones/PublicacionesView.vue'
 import ProyectosView from '../views/proyectos/ProyectosView.vue'
@@ -15,7 +18,14 @@ import RedesSocialesView from '../views/RedesSocialesView.vue'
 const routes = [
     { path: '/', name: 'inicio', component: InicioView },
     { path: '/opciones', name: 'opciones', component: OpcionesView },
-    { path: '/actividades', name: 'actividades', component: ActividadesView },
+    { 
+        path: '/actividades', 
+        name: 'actividades', 
+        component: ActividadesView,
+    },
+    { path: '/actividades/crear', name: 'crear-actividad', component: CrearActividadView },
+    { path: '/actividades/ver', name: 'ver-actividades', component: VerActividadesView },
+    { path: '/actividades/estadisticas', name: 'estadisticas-actividades', component: EstadisticasActividadesView },
     { path: '/facturas', name: 'facturas', component: FacturasView },
     { path: '/publicaciones', name: 'publicaciones', component: PublicacionesView },
     { path: '/proyectos', name: 'proyectos', component: ProyectosView },
