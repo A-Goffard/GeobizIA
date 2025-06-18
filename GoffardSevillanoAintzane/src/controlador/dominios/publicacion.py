@@ -1,6 +1,6 @@
 class Publicacion:
-    def __init__(self, id, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave):
-        self._id = id
+    def __init__(self, id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave):
+        self._id_publicacion = id_publicacion
         self._titulo = titulo
         self._contenido = contenido
         self._autor = autor
@@ -10,8 +10,12 @@ class Publicacion:
         self._palabras_clave = palabras_clave
 
     @property
-    def id(self):
-        return self._id
+    def id_publicacion(self):
+        return self._id_publicacion
+
+    @id_publicacion.setter
+    def id_publicacion(self, id_publicacion):
+        self._id_publicacion = id_publicacion
 
     @property
     def titulo(self):
@@ -70,9 +74,9 @@ class Publicacion:
         self._palabras_clave = palabras_clave
 
     @staticmethod
-    def crear_publicacion(id, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave):
+    def crear_publicacion(id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave):
         return Publicacion(
-            id=id,
+            id_publicacion=id_publicacion,
             titulo=titulo,
             contenido=contenido,
             autor=autor,
@@ -84,7 +88,7 @@ class Publicacion:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Título: {self.titulo}, Contenido: {self.contenido}, "
+            f"ID: {self.id_publicacion}, Título: {self.titulo}, Contenido: {self.contenido}, "
             f"Autor: {self.autor}, Fecha creación: {self.fecha_creacion}, Estado: {self.estado}, "
             f"Tags: {self.tags}, Palabras clave: {self.palabras_clave}"
         )

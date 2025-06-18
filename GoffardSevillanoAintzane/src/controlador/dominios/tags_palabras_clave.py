@@ -1,14 +1,18 @@
 class Tag:
-    def __init__(self, id, palabra_clave, categoria, frecuencia_uso, relaciones):
-        self._id = id
+    def __init__(self, id_tag, palabra_clave, categoria, frecuencia_uso, relaciones):
+        self._id_tag = id_tag
         self._palabra_clave = palabra_clave
         self._categoria = categoria
         self._frecuencia_uso = frecuencia_uso
         self._relaciones = relaciones
 
     @property
-    def id(self):
-        return self._id
+    def id_tag(self):
+        return self._id_tag
+
+    @id_tag.setter
+    def id_tag(self, id_tag):
+        self._id_tag = id_tag
 
     @property
     def palabra_clave(self):
@@ -35,9 +39,9 @@ class Tag:
         self._frecuencia_uso = frecuencia_uso
 
     @staticmethod
-    def crear_tag(id, palabra_clave, categoria, frecuencia_uso, relaciones):
+    def crear_tag(id_tag, palabra_clave, categoria, frecuencia_uso, relaciones):
         return Tag(
-            id=id,
+            id_tag=id_tag,
             palabra_clave=palabra_clave,
             categoria=categoria,
             frecuencia_uso=frecuencia_uso,
@@ -46,6 +50,6 @@ class Tag:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Palabra clave: {self.palabra_clave}, Categoría: {self.categoria}, "
+            f"ID: {self.id_tag}, Palabra clave: {self.palabra_clave}, Categoría: {self.categoria}, "
             f"Frecuencia de uso: {self.frecuencia_uso}, Relaciones: {self._relaciones}"
         )

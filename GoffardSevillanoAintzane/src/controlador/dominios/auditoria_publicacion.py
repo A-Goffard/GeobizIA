@@ -1,6 +1,6 @@
 class AuditoriaPublicacion:
-    def __init__(self, id, publicacion_id, generador_ia_id, fecha_generacion, usuario_id, parametros_entrada, resultado, observaciones=None):
-        self._id = id
+    def __init__(self, id_auditoria_publicacion, publicacion_id, generador_ia_id, fecha_generacion, usuario_id, parametros_entrada, resultado, observaciones=None):
+        self._id_auditoria_publicacion = id_auditoria_publicacion
         self._publicacion_id = publicacion_id
         self._generador_ia_id = generador_ia_id
         self._fecha_generacion = fecha_generacion
@@ -10,12 +10,12 @@ class AuditoriaPublicacion:
         self._observaciones = observaciones
 
     @property
-    def id(self):
-        return self._id
+    def id_auditoria_publicacion(self):
+        return self._id_auditoria_publicacion
 
-    @id.setter
-    def id(self, value):
-        self._id = value
+    @id_auditoria_publicacion.setter
+    def id_auditoria_publicacion(self, value):
+        self._id_auditoria_publicacion = value
 
     @property
     def publicacion_id(self):
@@ -75,7 +75,7 @@ class AuditoriaPublicacion:
 
     def __str__(self):
         return (
-            f"Auditoría: {self.id}, Publicación: {self.publicacion_id}, "
+            f"Auditoría: {self.id_auditoria_publicacion}, Publicación: {self.publicacion_id}, "
             f"Generador IA: {self.generador_ia_id}, Fecha: {self.fecha_generacion}, "
             f"Usuario: {self.usuario_id}, Resultado: {self.resultado}, Observaciones: {self.observaciones}"
         )

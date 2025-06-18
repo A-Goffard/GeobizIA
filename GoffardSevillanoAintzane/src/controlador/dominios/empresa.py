@@ -1,6 +1,6 @@
 class Empresa:
-    def __init__(self, id, nombre, sector, valores, objetivos, redes_sociales, logo, ubicacion):
-        self._id = id
+    def __init__(self, id_empresa, nombre, sector, valores, objetivos, redes_sociales, logo, ubicacion):
+        self._id_empresa = id_empresa
         self._nombre = nombre
         self._sector = sector
         self._valores = valores
@@ -10,13 +10,13 @@ class Empresa:
         self._ubicacion = ubicacion
 
     @staticmethod
-    def crear_empresa(id, nombre, sector, valores, objetivos, redes_sociales, logo, ubicacion):
-        return Empresa(id, nombre, sector, valores, objetivos, redes_sociales, logo, ubicacion)
+    def crear_empresa(id_empresa, nombre, sector, valores, objetivos, redes_sociales, logo, ubicacion):
+        return Empresa(id_empresa, nombre, sector, valores, objetivos, redes_sociales, logo, ubicacion)
 
     @property
-    def id(self): return self._id
-    @id.setter
-    def id(self, id): self._id = id
+    def id_empresa(self): return self._id_empresa
+    @id_empresa.setter
+    def id_empresa(self, id_empresa): self._id_empresa = id_empresa
 
     @property
     def nombre(self): return self._nombre
@@ -55,7 +55,7 @@ class Empresa:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Nombre: {self.nombre}, Sector: {self.sector}, "
+            f"ID: {self.id_empresa}, Nombre: {self.nombre}, Sector: {self.sector}, "
             f"Valores: {self.valores}, Objetivos: {self.objetivos}, "
             f"Redes sociales: {self.redes_sociales}, Logo: {self.logo}, Ubicación: {self.ubicacion}"
         )

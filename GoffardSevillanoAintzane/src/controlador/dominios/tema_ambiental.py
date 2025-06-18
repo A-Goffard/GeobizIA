@@ -1,6 +1,6 @@
 class TemaAmbiental:
-    def __init__(self, id, nombre, descripcion, relevancia, relacion_actividades, relacion_publicaciones):
-        self._id = id
+    def __init__(self, id_tema_ambiental, nombre, descripcion, relevancia, relacion_actividades, relacion_publicaciones):
+        self._id_tema_ambiental = id_tema_ambiental
         self._nombre = nombre
         self._descripcion = descripcion
         self._relevancia = relevancia
@@ -8,8 +8,12 @@ class TemaAmbiental:
         self._relacion_publicaciones = relacion_publicaciones
 
     @property
-    def id(self):
-        return self._id
+    def id_tema_ambiental(self):
+        return self._id_tema_ambiental
+
+    @id_tema_ambiental.setter
+    def id_tema_ambiental(self, id_tema_ambiental):
+        self._id_tema_ambiental = id_tema_ambiental
 
     @property
     def nombre(self):
@@ -36,9 +40,9 @@ class TemaAmbiental:
         self._relevancia = relevancia
 
     @staticmethod
-    def crear_tema_ambiental(id, nombre, descripcion, relevancia, relacion_actividades, relacion_publicaciones):
+    def crear_tema_ambiental(id_tema_ambiental, nombre, descripcion, relevancia, relacion_actividades, relacion_publicaciones):
         return TemaAmbiental(
-            id=id,
+            id_tema_ambiental=id_tema_ambiental,
             nombre=nombre,
             descripcion=descripcion,
             relevancia=relevancia,
@@ -48,7 +52,7 @@ class TemaAmbiental:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Nombre: {self.nombre}, Descripción: {self.descripcion}, "
+            f"ID: {self.id_tema_ambiental}, Nombre: {self.nombre}, Descripción: {self.descripcion}, "
             f"Relevancia: {self.relevancia}, Relación actividades: {self._relacion_actividades}, "
             f"Relación publicaciones: {self._relacion_publicaciones}"
         )

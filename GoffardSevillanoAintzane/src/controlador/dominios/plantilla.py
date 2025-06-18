@@ -1,6 +1,6 @@
 class Plantilla:
-    def __init__(self, id, titulo, tipo, contenido_base, fecha_creacion, ultima_modificacion, relaciones):
-        self._id = id
+    def __init__(self, id_plantilla, titulo, tipo, contenido_base, fecha_creacion, ultima_modificacion, relaciones):
+        self._id_plantilla = id_plantilla
         self._titulo = titulo
         self._tipo = tipo
         self._contenido_base = contenido_base
@@ -9,8 +9,12 @@ class Plantilla:
         self._relaciones = relaciones
 
     @property
-    def id(self):
-        return self._id
+    def id_plantilla(self):
+        return self._id_plantilla
+
+    @id_plantilla.setter
+    def id_plantilla(self, id_plantilla):
+        self._id_plantilla = id_plantilla
 
     @property
     def titulo(self):
@@ -29,9 +33,9 @@ class Plantilla:
         self._tipo = tipo
 
     @staticmethod
-    def crear_plantilla(id, titulo, tipo, contenido_base, fecha_creacion, ultima_modificacion, relaciones):
+    def crear_plantilla(id_plantilla, titulo, tipo, contenido_base, fecha_creacion, ultima_modificacion, relaciones):
         return Plantilla(
-            id=id,
+            id_plantilla=id_plantilla,
             titulo=titulo,
             tipo=tipo,
             contenido_base=contenido_base,
@@ -42,7 +46,7 @@ class Plantilla:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Título: {self.titulo}, Tipo: {self.tipo}, "
+            f"ID: {self.id_plantilla}, Título: {self.titulo}, Tipo: {self.tipo}, "
             f"Contenido base: {self._contenido_base}, Fecha creación: {self._fecha_creacion}, "
             f"Última modificación: {self._ultima_modificacion}, Relaciones: {self._relaciones}"
         )

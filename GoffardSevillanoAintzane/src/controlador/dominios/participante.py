@@ -1,8 +1,8 @@
 from .persona import Persona
 
 class Participante(Persona):
-    def __init__(self, id, nombre, apellido, email, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro):
-        super().__init__(id, nombre, apellido, email, telefono)
+    def __init__(self, id_participante, nombre, apellido, email, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro):
+        super().__init__(id_participante, nombre, apellido, email, telefono)
         self._numero_personas_juntas = numero_personas_juntas
         self._rol = rol
         self._como_conocer = como_conocer
@@ -10,9 +10,9 @@ class Participante(Persona):
         self._fecha_registro = fecha_registro
 
     @staticmethod
-    def crear_participante(id, nombre, apellido, correo, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro):
+    def crear_participante(id_participante, nombre, apellido, correo, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro):
         return Participante(
-            id=id,
+            id_participante=id_participante,
             nombre=nombre,
             apellido=apellido,
             correo=correo,
@@ -25,12 +25,12 @@ class Participante(Persona):
         )
 
     @property
-    def id(self):
-        return self._id
+    def id_participante(self):
+        return self._id_participante
 
-    @id.setter
-    def id(self, id):
-        self._id = id
+    @id_participante.setter
+    def id_participante(self, id_participante):
+        self._id_participante = id_participante
 
     @property
     def nombre(self):
@@ -109,7 +109,7 @@ class Participante(Persona):
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Nombre: {self.nombre}, Apellido: {self.apellido}, "
+            f"ID: {self.id_participante}, Nombre: {self.nombre}, Apellido: {self.apellido}, "
             f"Correo: {self.correo}, Teléfono: {self.telefono}, Rol: {self.rol}, "
             f"Nº personas juntas: {self.numero_personas_juntas}, Cómo conocer: {self.como_conocer}, "
             f"Actividad ID: {self.actividad_id}, Fecha de Registro: {self.fecha_registro}"

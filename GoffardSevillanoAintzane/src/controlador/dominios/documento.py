@@ -1,6 +1,6 @@
 class Documento:
-    def __init__(self, id, titulo, descripcion, fecha_subida, tipo, tematica):
-        self._id = id
+    def __init__(self, id_documento, titulo, descripcion, fecha_subida, tipo, tematica):
+        self._id_documento = id_documento
         self._titulo = titulo
         self._descripcion = descripcion
         self._fecha_subida = fecha_subida
@@ -8,8 +8,12 @@ class Documento:
         self._tematica = tematica
 
     @property
-    def id(self):
-        return self._id
+    def id_documento(self):
+        return self._id_documento
+
+    @id_documento.setter
+    def id_documento(self, id_documento):
+        self._id_documento = id_documento
 
     @property
     def titulo(self):
@@ -52,9 +56,9 @@ class Documento:
         self._tematica = tematica
 
     @staticmethod
-    def crear_documento(id, titulo, descripcion, fecha_subida, tipo, tematica):
+    def crear_documento(id_documento, titulo, descripcion, fecha_subida, tipo, tematica):
         return Documento(
-            id=id,
+            id_documento=id_documento,
             titulo=titulo,
             descripcion=descripcion,
             fecha_subida=fecha_subida,
@@ -64,6 +68,6 @@ class Documento:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Título: {self.titulo}, Descripción: {self.descripcion}, "
+            f"ID: {self.id_documento}, Título: {self.titulo}, Descripción: {self.descripcion}, "
             f"Fecha subida: {self.fecha_subida}, Tipo: {self.tipo}, Temática: {self.tematica}"
         )

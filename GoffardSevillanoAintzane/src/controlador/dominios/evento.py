@@ -1,6 +1,6 @@
 class Evento:
-    def __init__(self, id, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica):
-        self._id = id
+    def __init__(self, id_evento, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica):
+        self._id_evento = id_evento
         self._nombre = nombre
         self._tipo = tipo
         self._lugar = lugar
@@ -10,13 +10,13 @@ class Evento:
         self._tematica = tematica
 
     @staticmethod
-    def crear_evento(id, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica):
-        return Evento(id, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica)
+    def crear_evento(id_evento, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica):
+        return Evento(id_evento, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica)
 
     @property
-    def id(self): return self._id
-    @id.setter
-    def id(self, id): self._id = id
+    def id_evento(self): return self._id_evento
+    @id_evento.setter
+    def id_evento(self, id_evento): self._id_evento = id_evento
 
     @property
     def nombre(self): return self._nombre
@@ -55,7 +55,7 @@ class Evento:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Nombre: {self.nombre}, Tipo: {self.tipo}, Lugar: {self.lugar}, "
+            f"ID: {self.id_evento}, Nombre: {self.nombre}, Tipo: {self.tipo}, Lugar: {self.lugar}, "
             f"Fecha comienzo: {self.fecha_comienzo}, Fecha final: {self.fecha_final}, "
             f"Población: {self.poblacion}, Temática: {self.tematica}"
         )

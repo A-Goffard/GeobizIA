@@ -1,6 +1,6 @@
 class GeneradorIA:
-    def __init__(self, id, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion):
-        self._id = id
+    def __init__(self, id_generador_ia, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion):
+        self._id_generador_ia = id_generador_ia
         self._nombre = nombre
         self._tipo_ia = tipo_ia
         self._configuraciones = configuraciones
@@ -11,13 +11,13 @@ class GeneradorIA:
         self._ultima_generacion = ultima_generacion
 
     @staticmethod
-    def crear_generador_ia(id, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion):
-        return GeneradorIA(id, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion)
+    def crear_generador_ia(id_generador_ia, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion):
+        return GeneradorIA(id_generador_ia, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion)
 
     @property
-    def id(self): return self._id
-    @id.setter
-    def id(self, id): self._id = id
+    def id_generador_ia(self): return self._id_generador_ia
+    @id_generador_ia.setter
+    def id_generador_ia(self, id_generador_ia): self._id_generador_ia = id_generador_ia
 
     @property
     def nombre(self): return self._nombre
@@ -61,7 +61,7 @@ class GeneradorIA:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Nombre: {self.nombre}, Tipo IA: {self.tipo_ia}, "
+            f"ID: {self.id_generador_ia}, Nombre: {self.nombre}, Tipo IA: {self.tipo_ia}, "
             f"Configuraciones: {self.configuraciones}, Empresa ID: {self.empresa_id}, "
             f"Plantillas: {self.plantillas}, Tags: {self.tags}, Temas ambientales: {self.temas_ambientales}, "
             f"Última generación: {self.ultima_generacion}"

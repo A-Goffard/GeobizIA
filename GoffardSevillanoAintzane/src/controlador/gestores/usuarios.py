@@ -1,4 +1,3 @@
-
 from dominios.persona import Persona
 from dominios.usuario import Usuario
 from gestores.personas import PersonaFactory
@@ -7,7 +6,7 @@ from gestores.personas import PersonaFactory
 class UsuarioFactory(PersonaFactory):
     def crear_persona(self, datos) -> Persona:
         return Usuario(
-            id=datos["id"],
+            id_usuario=datos["id_usuario"],
             nombre=datos["nombre"],
             apellido=datos["apellido"],
             email=datos["email"],

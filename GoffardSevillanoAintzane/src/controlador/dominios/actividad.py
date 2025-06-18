@@ -1,6 +1,6 @@
 class Actividad:
-    def __init__(self, id, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, modificaciones):
-        self._id = id
+    def __init__(self, id_actividad, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, modificaciones):
+        self._id_actividad = id_actividad
         self._tipo = tipo
         self._nombre = nombre
         self._fecha_ejecucion = fecha_ejecucion
@@ -15,9 +15,9 @@ class Actividad:
         self._modificaciones = modificaciones
 
     @staticmethod
-    def crear_actividad(id, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, modificaciones):
+    def crear_actividad(id_actividad, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, modificaciones):
         return Actividad(
-            id=id,
+            id_actividad=id_actividad,
             tipo=tipo,
             nombre=nombre,
             fecha_ejecucion=fecha_ejecucion,
@@ -33,8 +33,12 @@ class Actividad:
         )
 
     @property
-    def id(self):
-        return self._id
+    def id_actividad(self):
+        return self._id_actividad
+
+    @id_actividad.setter
+    def id_actividad(self, id_actividad):
+        self._id_actividad = id_actividad
 
     @property
     def tipo(self):
@@ -134,7 +138,7 @@ class Actividad:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Tipo: {self.tipo}, Nombre: {self.nombre}, Fecha ejecución: {self.fecha_ejecucion}, "
+            f"ID: {self.id_actividad}, Tipo: {self.tipo}, Nombre: {self.nombre}, Fecha ejecución: {self.fecha_ejecucion}, "
             f"Descripción: {self.descripcion}, Responsable: {self.responsable}, Duración: {self.duracion}, "
             f"Coste económico: {self.coste_economico}, Coste horas: {self.coste_horas}, Facturación: {self.facturacion}, "
             f"Resultados: {self.resultados}, Valoración: {self.valoracion}, Modificaciones: {self.modificaciones}"

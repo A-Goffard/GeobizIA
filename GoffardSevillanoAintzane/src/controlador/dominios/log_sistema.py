@@ -1,6 +1,6 @@
 class LogSistema:
-    def __init__(self, id, fecha, usuario_id, accion, descripcion, nivel="INFO"):
-        self._id = id
+    def __init__(self, id_log_sistema, fecha, usuario_id, accion, descripcion, nivel="INFO"):
+        self._id_log_sistema = id_log_sistema
         self._fecha = fecha
         self._usuario_id = usuario_id
         self._accion = accion
@@ -8,12 +8,12 @@ class LogSistema:
         self._nivel = nivel
 
     @property
-    def id(self):
-        return self._id
+    def id_log_sistema(self):
+        return self._id_log_sistema
 
-    @id.setter
-    def id(self, value):
-        self._id = value
+    @id_log_sistema.setter
+    def id_log_sistema(self, value):
+        self._id_log_sistema = value
 
     @property
     def fecha(self):

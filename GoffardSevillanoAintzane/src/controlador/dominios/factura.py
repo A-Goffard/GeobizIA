@@ -1,6 +1,6 @@
 class Factura:
-    def __init__(self, id, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf):
-        self._id = id
+    def __init__(self, id_factura, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf):
+        self._id_factura = id_factura
         self._tipo = tipo
         self._nombre = nombre
         self._direccion = direccion
@@ -17,9 +17,9 @@ class Factura:
         self._irpf = irpf
 
     @staticmethod
-    def crear_factura(id, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf):
+    def crear_factura(id_factura, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf):
         return Factura(
-            id=id,
+            id_factura=id_factura,
             tipo=tipo,
             nombre=nombre,
             direccion=direccion,
@@ -37,11 +37,11 @@ class Factura:
         )
 
     @property
-    def id(self):
-        return self._id
-    @id.setter
-    def id(self, id):
-        self._id = id
+    def id_factura(self):
+        return self._id_factura
+    @id_factura.setter
+    def id_factura(self, id_factura):
+        self._id_factura = id_factura
 
     @property
     def tipo(self):
@@ -157,7 +157,7 @@ class Factura:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Tipo: {self.tipo}, Nombre: {self.nombre}, Dirección: {self.direccion}, "
+            f"ID: {self.id_factura}, Tipo: {self.tipo}, Nombre: {self.nombre}, Dirección: {self.direccion}, "
             f"NIF: {self.nif}, Fecha facturación: {self.fecha_facturacion}, Fecha vencimiento: {self.fecha_vencimiento}, "
             f"Concepto: {self.concepto}, Responsable: {self.responsable}, IVA: {self.iva}, "
             f"Coste total: {self.coste_total}, Base imponible: {self.base_imponible}, "

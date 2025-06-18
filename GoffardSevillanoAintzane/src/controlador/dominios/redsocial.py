@@ -1,6 +1,6 @@
 class RedSocial:
-    def __init__(self, id, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones):
-        self._id = id
+    def __init__(self, id_red_social, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones):
+        self._id_red_social = id_red_social
         self._plataforma = plataforma
         self._nombre_cuenta = nombre_cuenta
         self._credenciales = credenciales
@@ -11,13 +11,13 @@ class RedSocial:
         self._relaciones = relaciones if relaciones is not None else []
 
     @staticmethod
-    def crear_red_social(id, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones):
-        return RedSocial(id, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones)
+    def crear_red_social(id_red_social, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones):
+        return RedSocial(id_red_social, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones)
 
     @property
-    def id(self): return self._id
-    @id.setter
-    def id(self, id): self._id = id
+    def id_red_social(self): return self._id_red_social
+    @id_red_social.setter
+    def id_red_social(self, id_red_social): self._id_red_social = id_red_social
 
     @property
     def plataforma(self): return self._plataforma
@@ -61,7 +61,7 @@ class RedSocial:
 
     def __str__(self):
         return (
-            f"ID: {self.id}, Plataforma: {self.plataforma}, Cuenta: {self.nombre_cuenta}, "
+            f"ID: {self.id_red_social}, Plataforma: {self.plataforma}, Cuenta: {self.nombre_cuenta}, "
             f"Empresa ID: {self.empresa_id}, Estado: {self.estado_conexion}, Última publicación: {self.ultima_publicacion}, "
             f"Relaciones: {self.relaciones}"
         )
