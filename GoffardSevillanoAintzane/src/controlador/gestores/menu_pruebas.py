@@ -128,10 +128,10 @@ if __name__ == "__main__":
     # --- BLOQUES DE IMPORTS Y VARIABLES PARA PRUEBAS ---
 
     # --- USUARIOS ---
-    # from gestores.usuarios import Usuarios
-    # from dominios.usuario import Usuario
-    # gestor = Usuarios()
-    # clase = Usuario
+    from gestores.usuarios import Usuarios
+    from dominios.usuario import Usuario
+    gestor = Usuarios()
+    clase = Usuario
 
     # --- PARTICIPANTES ---
     # from gestores.participantes import ParticipanteFactory
@@ -145,23 +145,11 @@ if __name__ == "__main__":
     # gestor = Clientes()
     # clase = Cliente
 
-    # --- FISICAS ---
-    # from gestores.fisicas import Fisicas
-    # from dominios.fisica import Fisica
-    # gestor = Fisicas()
-    # clase = Fisica
-
-    # --- JURIDICAS ---
-    # from gestores.juridicas import Juridicas
-    # from dominios.juridica import Juridica
-    # gestor = Juridicas()
-    # clase = Juridica
-
     # --- PUBLICACIONES ---
-    from gestores.publicaciones import Publicaciones
-    from dominios.publicacion import Publicacion
-    gestor = Publicaciones()
-    clase = Publicacion
+    # from gestores.publicaciones import Publicaciones
+    # from dominios.publicacion import Publicacion
+    # gestor = Publicaciones()
+    # clase = Publicacion
 
     # --- PROYECTOS ---
     # from gestores.proyectos import Proyectos
@@ -252,11 +240,5 @@ if __name__ == "__main__":
     # from dominios.auditoria_publicacion import AuditoriaPublicacion
     # gestor = AuditoriaPublicacion()
     # clase = AuditoriaPublicacion
-
-    # --- PERSONAS ---
-    # from gestores.personas import Personas, PersonaFactory
-    # from dominios.persona import Persona
-    # gestor = Personas()
-    # clase = Persona
 
     menu_pruebas(gestor, clase)

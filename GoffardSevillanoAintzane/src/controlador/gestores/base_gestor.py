@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import List, Optional, TypeVar, Generic
 
 T = TypeVar('T')
@@ -32,6 +32,5 @@ class BaseGestor(ABC, Generic[T]):
     def cantidad_elementos(self) -> int:
         return len(self.lista)
 
-    @abstractmethod
     def mostrar_elemento(self, elemento: T) -> str:
-        pass
+        return str(elemento)
