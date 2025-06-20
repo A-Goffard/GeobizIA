@@ -1,5 +1,5 @@
 class Publicacion:
-    def __init__(self, id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave):
+    def __init__(self, id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave, generada_por_ia=False, id_generador_ia=None, feedback_empresa=None):
         self._id_publicacion = id_publicacion
         self._titulo = titulo
         self._contenido = contenido
@@ -8,6 +8,9 @@ class Publicacion:
         self._estado = estado
         self._tags = tags
         self._palabras_clave = palabras_clave
+        self._generada_por_ia = generada_por_ia
+        self._id_generador_ia = id_generador_ia
+        self._feedback_empresa = feedback_empresa
 
     @property
     def id_publicacion(self):
@@ -73,8 +76,32 @@ class Publicacion:
     def palabras_clave(self, palabras_clave):
         self._palabras_clave = palabras_clave
 
+    @property
+    def generada_por_ia(self):
+        return self._generada_por_ia
+
+    @generada_por_ia.setter
+    def generada_por_ia(self, value):
+        self._generada_por_ia = value
+
+    @property
+    def id_generador_ia(self):
+        return self._id_generador_ia
+
+    @id_generador_ia.setter
+    def id_generador_ia(self, value):
+        self._id_generador_ia = value
+
+    @property
+    def feedback_empresa(self):
+        return self._feedback_empresa
+
+    @feedback_empresa.setter
+    def feedback_empresa(self, value):
+        self._feedback_empresa = value
+
     @staticmethod
-    def crear_publicacion(id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave):
+    def crear_publicacion(id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave, generada_por_ia=False, id_generador_ia=None, feedback_empresa=None):
         return Publicacion(
             id_publicacion=id_publicacion,
             titulo=titulo,
@@ -83,12 +110,16 @@ class Publicacion:
             fecha_creacion=fecha_creacion,
             estado=estado,
             tags=tags,
-            palabras_clave=palabras_clave
+            palabras_clave=palabras_clave,
+            generada_por_ia=generada_por_ia,
+            id_generador_ia=id_generador_ia,
+            feedback_empresa=feedback_empresa
         )
 
     def __str__(self):
         return (
             f"ID: {self.id_publicacion}, Título: {self.titulo}, Contenido: {self.contenido}, "
             f"Autor: {self.autor}, Fecha creación: {self.fecha_creacion}, Estado: {self.estado}, "
-            f"Tags: {self.tags}, Palabras clave: {self.palabras_clave}"
+            f"Tags: {self.tags}, Palabras clave: {self.palabras_clave}, Generada por IA: {self.generada_por_ia}, "
+            f"ID Generador IA: {self.id_generador_ia}, Feedback empresa: {self.feedback_empresa}"
         )

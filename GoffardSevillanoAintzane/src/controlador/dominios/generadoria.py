@@ -1,18 +1,16 @@
 class GeneradorIA:
-    def __init__(self, id_generador_ia, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion):
+    def __init__(self, id_generador_ia, nombre, descripcion, empresa_id, configuraciones, ejemplos_estilo, ultima_generacion):
         self._id_generador_ia = id_generador_ia
         self._nombre = nombre
-        self._tipo_ia = tipo_ia
-        self._configuraciones = configuraciones
+        self._descripcion = descripcion
         self._empresa_id = empresa_id
-        self._plantillas = plantillas
-        self._tags = tags
-        self._temas_ambientales = temas_ambientales
+        self._configuraciones = configuraciones
+        self._ejemplos_estilo = ejemplos_estilo
         self._ultima_generacion = ultima_generacion
 
     @staticmethod
-    def crear_generador_ia(id_generador_ia, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion):
-        return GeneradorIA(id_generador_ia, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion)
+    def crear_generador_ia(id_generador_ia, nombre, descripcion, empresa_id, configuraciones, ejemplos_estilo, ultima_generacion):
+        return GeneradorIA(id_generador_ia, nombre, descripcion, empresa_id, configuraciones, ejemplos_estilo, ultima_generacion)
 
     @property
     def id_generador_ia(self): return self._id_generador_ia
@@ -25,14 +23,9 @@ class GeneradorIA:
     def nombre(self, nombre): self._nombre = nombre
 
     @property
-    def tipo_ia(self): return self._tipo_ia
-    @tipo_ia.setter
-    def tipo_ia(self, tipo_ia): self._tipo_ia = tipo_ia
-
-    @property
-    def configuraciones(self): return self._configuraciones
-    @configuraciones.setter
-    def configuraciones(self, configuraciones): self._configuraciones = configuraciones
+    def descripcion(self): return self._descripcion
+    @descripcion.setter
+    def descripcion(self, descripcion): self._descripcion = descripcion
 
     @property
     def empresa_id(self): return self._empresa_id
@@ -40,19 +33,14 @@ class GeneradorIA:
     def empresa_id(self, empresa_id): self._empresa_id = empresa_id
 
     @property
-    def plantillas(self): return self._plantillas
-    @plantillas.setter
-    def plantillas(self, plantillas): self._plantillas = plantillas
+    def configuraciones(self): return self._configuraciones
+    @configuraciones.setter
+    def configuraciones(self, configuraciones): self._configuraciones = configuraciones
 
     @property
-    def tags(self): return self._tags
-    @tags.setter
-    def tags(self, tags): self._tags = tags
-
-    @property
-    def temas_ambientales(self): return self._temas_ambientales
-    @temas_ambientales.setter
-    def temas_ambientales(self, temas_ambientales): self._temas_ambientales = temas_ambientales
+    def ejemplos_estilo(self): return self._ejemplos_estilo
+    @ejemplos_estilo.setter
+    def ejemplos_estilo(self, ejemplos_estilo): self._ejemplos_estilo = ejemplos_estilo
 
     @property
     def ultima_generacion(self): return self._ultima_generacion
@@ -61,8 +49,7 @@ class GeneradorIA:
 
     def __str__(self):
         return (
-            f"ID: {self.id_generador_ia}, Nombre: {self.nombre}, Tipo IA: {self.tipo_ia}, "
-            f"Configuraciones: {self.configuraciones}, Empresa ID: {self.empresa_id}, "
-            f"Plantillas: {self.plantillas}, Tags: {self.tags}, Temas ambientales: {self.temas_ambientales}, "
-            f"Última generación: {self.ultima_generacion}"
+            f"ID: {self.id_generador_ia}, Nombre: {self.nombre}, Descripción: {self.descripcion}, "
+            f"Empresa ID: {self.empresa_id}, Configuraciones: {self.configuraciones}, "
+            f"Ejemplos estilo: {self.ejemplos_estilo}, Última generación: {self.ultima_generacion}"
         )

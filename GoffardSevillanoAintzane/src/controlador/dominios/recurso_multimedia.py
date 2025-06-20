@@ -39,19 +39,35 @@ class RecursoMultimedia:
     def fecha_subida(self, fecha_subida):
         self._fecha_subida = fecha_subida
 
+    @property
+    def autor(self):
+        return self._autor
+
+    @autor.setter
+    def autor(self, autor):
+        self._autor = autor
+
+    @property
+    def relaciones(self):
+        return self._relaciones
+
+    @relaciones.setter
+    def relaciones(self, relaciones):
+        self._relaciones = relaciones
+
     @staticmethod
-    def crear_recurso_multimedia(id_recurso_multimedia, tipo, url, descripcion, fecha_creacion, etiquetas):
+    def crear_recurso_multimedia(id_recurso_multimedia, tipo, titulo, fecha_subida, autor, relaciones):
         return RecursoMultimedia(
             id_recurso_multimedia=id_recurso_multimedia,
             tipo=tipo,
-            url=url,
-            descripcion=descripcion,
-            fecha_creacion=fecha_creacion,
-            etiquetas=etiquetas
+            titulo=titulo,
+            fecha_subida=fecha_subida,
+            autor=autor,
+            relaciones=relaciones
         )
 
     def __str__(self):
         return (
             f"ID: {self.id_recurso_multimedia}, Tipo: {self.tipo}, Título: {self.titulo}, "
-            f"Fecha subida: {self.fecha_subida}, Autor: {self._autor}, Relaciones: {self._relaciones}"
+            f"Fecha subida: {self.fecha_subida}, Autor: {self.autor}, Relaciones: {self.relaciones}"
         )

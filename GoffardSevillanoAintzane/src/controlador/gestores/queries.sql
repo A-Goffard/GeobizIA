@@ -1,221 +1,208 @@
--- Tabla: usuarios
-INSERT INTO usuarios (id_usuario, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais, fecha_nacimiento, preferencias, rol, password)
+-- Tabla: usuario
+INSERT INTO usuario (id_usuario, nombre, apellido, email, telefono, fecha_nacimiento, direccion, dni, cp, poblacion, pais, rol, preferencias, password)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-SELECT * FROM usuarios WHERE id_usuario = ?;
+SELECT * FROM usuario WHERE id_usuario = ?;
 
-UPDATE usuarios SET nombre=?, apellido=?, email=?, telefono=?, dni=?, direccion=?, cp=?, poblacion=?, pais=?, fecha_nacimiento=?, preferencias=?, rol=?, password=?
+UPDATE usuario SET nombre=?, apellido=?, email=?, telefono=?, fecha_nacimiento=?, direccion=?, dni=?, cp=?, poblacion=?, pais=?, rol=?, preferencias=?, password=?
 WHERE id_usuario = ?;
 
-DELETE FROM usuarios WHERE id_usuario = ?;
+DELETE FROM usuario WHERE id_usuario = ?;
 
--- Tabla: participantes
-INSERT INTO participantes (id_participante, nombre, apellido, email, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro)
+-- Tabla: participante
+INSERT INTO participante (id_participante, nombre, apellido, email, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-SELECT * FROM participantes WHERE id_participante = ?;
+SELECT * FROM participante WHERE id_participante = ?;
 
-UPDATE participantes SET nombre=?, apellido=?, email=?, telefono=?, numero_personas_juntas=?, rol=?, como_conocer=?, actividad_id=?, fecha_registro=?
+UPDATE participante SET nombre=?, apellido=?, email=?, telefono=?, numero_personas_juntas=?, rol=?, como_conocer=?, actividad_id=?, fecha_registro=?
 WHERE id_participante = ?;
 
-DELETE FROM participantes WHERE id_participante = ?;
+DELETE FROM participante WHERE id_participante = ?;
 
--- Tabla: publicaciones
-INSERT INTO publicaciones (id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+-- Tabla: publicacion
+INSERT INTO publicacion (id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave, generada_por_ia, id_generador_ia, feedback_empresa)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-SELECT * FROM publicaciones WHERE id_publicacion = ?;
+SELECT * FROM publicacion WHERE id_publicacion = ?;
 
-UPDATE publicaciones SET titulo=?, contenido=?, autor=?, fecha_creacion=?, estado=?, tags=?, palabras_clave=?
+UPDATE publicacion SET titulo=?, contenido=?, autor=?, fecha_creacion=?, estado=?, tags=?, palabras_clave=?, generada_por_ia=?, id_generador_ia=?, feedback_empresa=?
 WHERE id_publicacion = ?;
 
-DELETE FROM publicaciones WHERE id_publicacion = ?;
+DELETE FROM publicacion WHERE id_publicacion = ?;
 
--- Tabla: clientes
-INSERT INTO clientes (id_cliente, nombre, apellido, email, telefono, tipo, direccion, cp, poblacion, pais, fecha_registro)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+-- Tabla: cliente
+INSERT INTO cliente (id_cliente, tipo, nombre, apellido, razon_social, nif, dni, email, telefono, direccion, cp, poblacion, pais, fecha_registro)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-SELECT * FROM clientes WHERE id_cliente = ?;
+SELECT * FROM cliente WHERE id_cliente = ?;
 
-UPDATE clientes SET nombre=?, apellido=?, email=?, telefono=?, tipo=?, direccion=?, cp=?, poblacion=?, pais=?, fecha_registro=?
+UPDATE cliente SET tipo=?, nombre=?, apellido=?, razon_social=?, nif=?, dni=?, email=?, telefono=?, direccion=?, cp=?, poblacion=?, pais=?, fecha_registro=?
 WHERE id_cliente = ?;
 
-DELETE FROM clientes WHERE id_cliente = ?;
+DELETE FROM cliente WHERE id_cliente = ?;
 
--- Tabla: documentos
-INSERT INTO documentos (id_documento, titulo, descripcion, fecha_subida, tipo, tematica)
+-- Tabla: documento
+INSERT INTO documento (id_documento, titulo, descripcion, fecha_subida, tipo, tematica)
 VALUES (?, ?, ?, ?, ?, ?);
 
-SELECT * FROM documentos WHERE id_documento = ?;
+SELECT * FROM documento WHERE id_documento = ?;
 
-UPDATE documentos SET titulo=?, descripcion=?, fecha_subida=?, tipo=?, tematica=?
+UPDATE documento SET titulo=?, descripcion=?, fecha_subida=?, tipo=?, tematica=?
 WHERE id_documento = ?;
 
-DELETE FROM documentos WHERE id_documento = ?;
+DELETE FROM documento WHERE id_documento = ?;
 
--- Tabla: facturas
-INSERT INTO facturas (id_factura, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-
-SELECT * FROM facturas WHERE id_factura = ?;
-
-UPDATE facturas SET tipo=?, nombre=?, direccion=?, nif=?, fecha_facturacion=?, fecha_vencimiento=?, concepto=?, responsable=?, iva=?, coste_total=?, base_imponible=?, numero_factura=?, tipo_pago=?, irpf=?
-WHERE id_factura = ?;
-
-DELETE FROM facturas WHERE id_factura = ?;
-
--- Tabla: actividades
-INSERT INTO actividades (id_actividad, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, modificaciones)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-
-SELECT * FROM actividades WHERE id_actividad = ?;
-
-UPDATE actividades SET tipo=?, nombre=?, fecha_ejecucion=?, descripcion=?, responsable=?, duracion=?, coste_economico=?, coste_horas=?, facturacion=?, resultados=?, valoracion=?, modificaciones=?
-WHERE id_actividad = ?;
-
-DELETE FROM actividades WHERE id_actividad = ?;
-
--- Tabla: proyectos
-INSERT INTO proyectos (id_proyecto, nombre, descripcion, fecha_inicio, fecha_fin, poblacion, responsable, estado, objetivos, actividades, presupuesto)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-
-SELECT * FROM proyectos WHERE id_proyecto = ?;
-
-UPDATE proyectos SET nombre=?, descripcion=?, fecha_inicio=?, fecha_fin=?, poblacion=?, responsable=?, estado=?, objetivos=?, actividades=?, presupuesto=?
-WHERE id_proyecto = ?;
-
-DELETE FROM proyectos WHERE id_proyecto = ?;
-
--- Tabla: roles
-INSERT INTO roles (nombre, tareas_permitidas)
-VALUES (?, ?);
-
-SELECT * FROM roles WHERE nombre = ?;
-
-UPDATE roles SET tareas_permitidas=?
-WHERE nombre = ?;
-
-DELETE FROM roles WHERE nombre = ?;
-
--- Tabla: redes_sociales
-INSERT INTO redes_sociales (id_red_social, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-
-SELECT * FROM redes_sociales WHERE id_red_social = ?;
-
-UPDATE redes_sociales SET plataforma=?, nombre_cuenta=?, credenciales=?, empresa_id=?, preferencias_publicacion=?, estado_conexion=?, ultima_publicacion=?, relaciones=?
-WHERE id_red_social = ?;
-
-DELETE FROM redes_sociales WHERE id_red_social = ?;
-
--- Tabla: temas_ambientales
-INSERT INTO temas_ambientales (id_tema_ambiental, nombre, descripcion, relevancia, relacion_actividades, relacion_publicaciones)
-VALUES (?, ?, ?, ?, ?, ?);
-
-SELECT * FROM temas_ambientales WHERE id_tema_ambiental = ?;
-
-UPDATE temas_ambientales SET nombre=?, descripcion=?, relevancia=?, relacion_actividades=?, relacion_publicaciones=?
-WHERE id_tema_ambiental = ?;
-
-DELETE FROM temas_ambientales WHERE id_tema_ambiental = ?;
-
--- Tabla: tags_palabras_clave
-INSERT INTO tags_palabras_clave (id_tag, palabra_clave, categoria, frecuencia_uso, relaciones)
-VALUES (?, ?, ?, ?, ?);
-
-SELECT * FROM tags_palabras_clave WHERE id_tag = ?;
-
-UPDATE tags_palabras_clave SET palabra_clave=?, categoria=?, frecuencia_uso=?, relaciones=?
-WHERE id_tag = ?;
-
-DELETE FROM tags_palabras_clave WHERE id_tag = ?;
-
--- Tabla: recursos_multimedia
-INSERT INTO recursos_multimedia (id_recurso_multimedia, tipo, titulo, fecha_subida, autor, relaciones)
-VALUES (?, ?, ?, ?, ?, ?);
-
-SELECT * FROM recursos_multimedia WHERE id_recurso_multimedia = ?;
-
-UPDATE recursos_multimedia SET tipo=?, titulo=?, fecha_subida=?, autor=?, relaciones=?
-WHERE id_recurso_multimedia = ?;
-
-DELETE FROM recursos_multimedia WHERE id_recurso_multimedia = ?;
-
--- Tabla: plantillas
-INSERT INTO plantillas (id_plantilla, titulo, tipo, contenido_base, fecha_creacion, ultima_modificacion, relaciones)
-VALUES (?, ?, ?, ?, ?, ?, ?);
-
-SELECT * FROM plantillas WHERE id_plantilla = ?;
-
-UPDATE plantillas SET titulo=?, tipo=?, contenido_base=?, fecha_creacion=?, ultima_modificacion=?, relaciones=?
-WHERE id_plantilla = ?;
-
-DELETE FROM plantillas WHERE id_plantilla = ?;
-
--- Tabla: empresas
-INSERT INTO empresas (id_empresa, nombre, sector, valores, objetivos, redes_sociales, logo, ubicacion)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-
-SELECT * FROM empresas WHERE id_empresa = ?;
-
-UPDATE empresas SET nombre=?, sector=?, valores=?, objetivos=?, redes_sociales=?, logo=?, ubicacion=?
-WHERE id_empresa = ?;
-
-DELETE FROM empresas WHERE id_empresa = ?;
-
--- Tabla: fisicas
-INSERT INTO fisicas (id_cliente, nombre, apellido, email, telefono, tipo, direccion, cp, poblacion, pais, fecha_registro, dni, fecha_nacimiento)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-
-SELECT * FROM fisicas WHERE id_cliente = ?;
-
-UPDATE fisicas SET nombre=?, apellido=?, email=?, telefono=?, tipo=?, direccion=?, cp=?, poblacion=?, pais=?, fecha_registro=?, dni=?, fecha_nacimiento=?
-WHERE id_cliente = ?;
-
-DELETE FROM fisicas WHERE id_cliente = ?;
-
--- Tabla: juridicas
-INSERT INTO juridicas (id_cliente, nombre, apellido, email, telefono, tipo, direccion, cp, poblacion, pais, fecha_registro, nif)
+-- Tabla: factura
+INSERT INTO factura (id_factura, id_cliente, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-SELECT * FROM juridicas WHERE id_cliente = ?;
+SELECT * FROM factura WHERE id_factura = ?;
 
-UPDATE juridicas SET nombre=?, apellido=?, email=?, telefono=?, tipo=?, direccion=?, cp=?, poblacion=?, pais=?, fecha_registro=?, nif=?
-WHERE id_cliente = ?;
+UPDATE factura SET id_cliente=?, fecha_facturacion=?, fecha_vencimiento=?, concepto=?, responsable=?, iva=?, coste_total=?, base_imponible=?, numero_factura=?, tipo_pago=?, irpf=?
+WHERE id_factura = ?;
 
-DELETE FROM juridicas WHERE id_cliente = ?;
+DELETE FROM factura WHERE id_factura = ?;
 
--- Tabla: programaciones
-INSERT INTO programaciones (id_programacion, publicacion_id, red_social_id, fecha_programada, estado, notificaciones, responsable)
+-- Tabla: actividad
+INSERT INTO actividad (id_actividad, tipo, nombre, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, modificaciones)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+SELECT * FROM actividad WHERE id_actividad = ?;
+
+UPDATE actividad SET tipo=?, nombre=?, descripcion=?, responsable=?, duracion=?, coste_economico=?, coste_horas=?, facturacion=?, resultados=?, valoracion=?, modificaciones=?
+WHERE id_actividad = ?;
+
+DELETE FROM actividad WHERE id_actividad = ?;
+
+-- Tabla: proyecto
+INSERT INTO proyecto (id_proyecto, nombre, descripcion, fecha_inicio, fecha_fin, poblacion, responsable, estado, objetivos, presupuesto)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+SELECT * FROM proyecto WHERE id_proyecto = ?;
+
+UPDATE proyecto SET nombre=?, descripcion=?, fecha_inicio=?, fecha_fin=?, poblacion=?, responsable=?, estado=?, objetivos=?, presupuesto=?
+WHERE id_proyecto = ?;
+
+DELETE FROM proyecto WHERE id_proyecto = ?;
+
+-- Tabla: plantilla
+INSERT INTO plantilla (id_plantilla, titulo, tipo, contenido_base, fecha_creacion, ultima_modificacion, relaciones)
 VALUES (?, ?, ?, ?, ?, ?, ?);
 
-SELECT * FROM programaciones WHERE id_programacion = ?;
+SELECT * FROM plantilla WHERE id_plantilla = ?;
 
-UPDATE programaciones SET publicacion_id=?, red_social_id=?, fecha_programada=?, estado=?, notificaciones=?, responsable=?
-WHERE id_programacion = ?;
+UPDATE plantilla SET titulo=?, tipo=?, contenido_base=?, fecha_creacion=?, ultima_modificacion=?, relaciones=?
+WHERE id_plantilla = ?;
 
-DELETE FROM programaciones WHERE id_programacion = ?;
+DELETE FROM plantilla WHERE id_plantilla = ?;
 
--- Tabla: eventos
-INSERT INTO eventos (id_evento, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica)
+-- Tabla: empresa
+INSERT INTO empresa (id_empresa, nombre, sector, logo, ubicacion)
+VALUES (?, ?, ?, ?, ?);
+
+SELECT * FROM empresa WHERE id_empresa = ?;
+
+UPDATE empresa SET nombre=?, sector=?, logo=?, ubicacion=?
+WHERE id_empresa = ?;
+
+DELETE FROM empresa WHERE id_empresa = ?;
+
+-- Tabla: evento
+INSERT INTO evento (id_evento, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
-SELECT * FROM eventos WHERE id_evento = ?;
+SELECT * FROM evento WHERE id_evento = ?;
 
-UPDATE eventos SET nombre=?, tipo=?, lugar=?, fecha_comienzo=?, fecha_final=?, poblacion=?, tematica=?
+UPDATE evento SET nombre=?, tipo=?, lugar=?, fecha_comienzo=?, fecha_final=?, poblacion=?, tematica=?
 WHERE id_evento = ?;
 
-DELETE FROM eventos WHERE id_evento = ?;
+DELETE FROM evento WHERE id_evento = ?;
 
--- Tabla: generadores_ia
-INSERT INTO generadores_ia (id_generador_ia, nombre, tipo_ia, configuraciones, empresa_id, plantillas, tags, temas_ambientales, ultima_generacion)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+-- Tabla: generadoria
+INSERT INTO generadoria (id_generador_ia, nombre, descripcion, empresa_id, configuraciones, ejemplos_estilo, ultima_generacion)
+VALUES (?, ?, ?, ?, ?, ?, ?);
 
-SELECT * FROM generadores_ia WHERE id_generador_ia = ?;
+SELECT * FROM generadoria WHERE id_generador_ia = ?;
 
-UPDATE generadores_ia SET nombre=?, tipo_ia=?, configuraciones=?, empresa_id=?, plantillas=?, tags=?, temas_ambientales=?, ultima_generacion=?
+UPDATE generadoria SET nombre=?, descripcion=?, empresa_id=?, configuraciones=?, ejemplos_estilo=?, ultima_generacion=?
 WHERE id_generador_ia = ?;
 
-DELETE FROM generadores_ia WHERE id_generador_ia = ?;
+DELETE FROM generadoria WHERE id_generador_ia = ?;
 
--- Agrega más tablas y queries según tus entidades y atributos reales.
+-- Tabla: log_sistema
+INSERT INTO log_sistema (id_log_sistema, fecha, usuario_id, accion, descripcion, nivel)
+VALUES (?, ?, ?, ?, ?, ?);
+
+SELECT * FROM log_sistema WHERE id_log_sistema = ?;
+
+UPDATE log_sistema SET fecha=?, usuario_id=?, accion=?, descripcion=?, nivel=?
+WHERE id_log_sistema = ?;
+
+DELETE FROM log_sistema WHERE id_log_sistema = ?;
+
+-- Tabla: auditoria_publicacion
+INSERT INTO auditoria_publicacion (id_auditoria_publicacion, publicacion_id, generador_ia_id, fecha_generacion, usuario_id, parametros_entrada, resultado, observaciones)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+SELECT * FROM auditoria_publicacion WHERE id_auditoria_publicacion = ?;
+
+UPDATE auditoria_publicacion SET publicacion_id=?, generador_ia_id=?, fecha_generacion=?, usuario_id=?, parametros_entrada=?, resultado=?, observaciones=?
+WHERE id_auditoria_publicacion = ?;
+
+DELETE FROM auditoria_publicacion WHERE id_auditoria_publicacion = ?;
+
+-- Tabla: tema_ambiental
+INSERT INTO tema_ambiental (id_tema_ambiental, nombre, descripcion, relevancia, relacion_actividades, relacion_publicaciones)
+VALUES (?, ?, ?, ?, ?, ?);
+
+SELECT * FROM tema_ambiental WHERE id_tema_ambiental = ?;
+
+UPDATE tema_ambiental SET nombre=?, descripcion=?, relevancia=?, relacion_actividades=?, relacion_publicaciones=?
+WHERE id_tema_ambiental = ?;
+
+DELETE FROM tema_ambiental WHERE id_tema_ambiental = ?;
+
+-- Tabla: tag
+INSERT INTO tag (id_tag, palabra_clave, categoria, frecuencia_uso, relaciones)
+VALUES (?, ?, ?, ?, ?);
+
+SELECT * FROM tag WHERE id_tag = ?;
+
+UPDATE tag SET palabra_clave=?, categoria=?, frecuencia_uso=?, relaciones=?
+WHERE id_tag = ?;
+
+DELETE FROM tag WHERE id_tag = ?;
+
+-- Tabla: redsocial
+INSERT INTO redsocial (id_red_social, plataforma, nombre_cuenta, credenciales, preferencias_publicacion, estado_conexion, ultima_publicacion)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+SELECT * FROM redsocial WHERE id_red_social = ?;
+
+UPDATE redsocial SET plataforma=?, nombre_cuenta=?, credenciales=?, preferencias_publicacion=?, estado_conexion=?, ultima_publicacion=?
+WHERE id_red_social = ?;
+
+DELETE FROM redsocial WHERE id_red_social = ?;
+
+-- Tabla: programacion
+INSERT INTO programacion (id_programacion, publicacion_id, red_social_id, fecha_programada, estado, notificaciones, responsable)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+SELECT * FROM programacion WHERE id_programacion = ?;
+
+UPDATE programacion SET publicacion_id=?, red_social_id=?, fecha_programada=?, estado=?, notificaciones=?, responsable=?
+WHERE id_programacion = ?;
+
+DELETE FROM programacion WHERE id_programacion = ?;
+
+-- Tabla: recurso_multimedia
+INSERT INTO recurso_multimedia (id_recurso_multimedia, tipo, titulo, fecha_subida, autor, relaciones)
+VALUES (?, ?, ?, ?, ?, ?);
+
+SELECT * FROM recurso_multimedia WHERE id_recurso_multimedia = ?;
+
+UPDATE recurso_multimedia SET tipo=?, titulo=?, fecha_subida=?, autor=?, relaciones=?
+WHERE id_recurso_multimedia = ?;
+
+DELETE FROM recurso_multimedia WHERE id_recurso_multimedia = ?;

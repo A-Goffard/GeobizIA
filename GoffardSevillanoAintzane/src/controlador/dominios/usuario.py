@@ -5,6 +5,7 @@ class Usuario(Persona):
     def __init__(self, id_usuario, nombre, apellido, email, telefono, fecha_nacimiento, direccion, dni, cp, poblacion, pais, rol, preferencias, password):
         super().__init__(id_usuario, nombre, apellido, email, telefono)
         self._id_usuario = id_usuario
+        self._email = email
         self._fecha_nacimiento = fecha_nacimiento
         self._direccion = direccion
         self._dni = dni
@@ -16,16 +17,16 @@ class Usuario(Persona):
         self._password = password
 
     @staticmethod
-    def crear_usuario(id_usuario, dni, nombre, apellido, direccion, cp, poblacion, pais, fecha_nacimiento, email, telefono, preferencias, rol, password):
+    def crear_usuario(id_usuario, nombre, apellido, email, telefono, fecha_nacimiento, direccion, dni, cp, poblacion, pais, rol, preferencias, password):
         return Usuario(
             id_usuario=id_usuario,
-            dni=dni,
             nombre=nombre,
             apellido=apellido,
-            correo=email,
+            email=email,
             telefono=telefono,
             fecha_nacimiento=fecha_nacimiento,
             direccion=direccion,
+            dni=dni,
             cp=cp,
             poblacion=poblacion,
             pais=pais,
@@ -106,12 +107,12 @@ class Usuario(Persona):
         self._fecha_nacimiento = fecha_nacimiento
 
     @property
-    def correo(self):
-        return self._correo
+    def email(self):
+        return self._email
 
-    @correo.setter
-    def correo(self, correo):
-        self._correo = correo
+    @email.setter
+    def email(self, email):
+        self._email = email
 
     @property
     def telefono(self):
@@ -151,7 +152,7 @@ class Usuario(Persona):
     def __str__(self):
         return (
             f"ID: {self.id_usuario}, Nombre: {self.nombre}, Apellido: {self.apellido}, "
-            f"Correo: {self.correo}, Teléfono: {self.telefono}, Fecha nacimiento: {self.fecha_nacimiento}, "
+            f"Correo: {self.email}, Teléfono: {self.telefono}, Fecha nacimiento: {self.fecha_nacimiento}, "
             f"Dirección: {self.direccion}, DNI: {self.dni}, CP: {self.cp}, Población: {self.poblacion}, "
             f"País: {self.pais}, Rol: {self.rol}, Preferencias: {self.preferencias}, Contraseña: {self.password}"
         )

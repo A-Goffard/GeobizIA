@@ -1,18 +1,16 @@
 class RedSocial:
-    def __init__(self, id_red_social, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones):
+    def __init__(self, id_red_social, plataforma, nombre_cuenta, credenciales, preferencias_publicacion, estado_conexion, ultima_publicacion):
         self._id_red_social = id_red_social
         self._plataforma = plataforma
         self._nombre_cuenta = nombre_cuenta
         self._credenciales = credenciales
-        self._empresa_id = empresa_id
         self._preferencias_publicacion = preferencias_publicacion
         self._estado_conexion = estado_conexion
         self._ultima_publicacion = ultima_publicacion
-        self._relaciones = relaciones if relaciones is not None else []
 
     @staticmethod
-    def crear_red_social(id_red_social, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones):
-        return RedSocial(id_red_social, plataforma, nombre_cuenta, credenciales, empresa_id, preferencias_publicacion, estado_conexion, ultima_publicacion, relaciones)
+    def crear_red_social(id_red_social, plataforma, nombre_cuenta, credenciales, preferencias_publicacion, estado_conexion, ultima_publicacion):
+        return RedSocial(id_red_social, plataforma, nombre_cuenta, credenciales, preferencias_publicacion, estado_conexion, ultima_publicacion)
 
     @property
     def id_red_social(self): return self._id_red_social
@@ -35,11 +33,6 @@ class RedSocial:
     def credenciales(self, credenciales): self._credenciales = credenciales
 
     @property
-    def empresa_id(self): return self._empresa_id
-    @empresa_id.setter
-    def empresa_id(self, empresa_id): self._empresa_id = empresa_id
-
-    @property
     def preferencias_publicacion(self): return self._preferencias_publicacion
     @preferencias_publicacion.setter
     def preferencias_publicacion(self, preferencias_publicacion): self._preferencias_publicacion = preferencias_publicacion
@@ -52,6 +45,13 @@ class RedSocial:
     @property
     def ultima_publicacion(self): return self._ultima_publicacion
     @ultima_publicacion.setter
+    def ultima_publicacion(self, ultima_publicacion): self._ultima_publicacion = ultima_publicacion
+
+    def __str__(self):
+        return (
+            f"ID: {self.id_red_social}, Plataforma: {self.plataforma}, Cuenta: {self.nombre_cuenta}, "
+            f"Estado: {self.estado_conexion}, Última publicación: {self.ultima_publicacion}"
+        )
     def ultima_publicacion(self, ultima_publicacion): self._ultima_publicacion = ultima_publicacion
 
     @property

@@ -10,12 +10,12 @@ class Participante(Persona):
         self._fecha_registro = fecha_registro
 
     @staticmethod
-    def crear_participante(id_participante, nombre, apellido, correo, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro):
+    def crear_participante(id_participante, nombre, apellido, email, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro):
         return Participante(
             id_participante=id_participante,
             nombre=nombre,
             apellido=apellido,
-            correo=correo,
+            email=email,
             telefono=telefono,
             numero_personas_juntas=numero_personas_juntas,
             rol=rol,
@@ -31,38 +31,6 @@ class Participante(Persona):
     @id_participante.setter
     def id_participante(self, id_participante):
         self._id_participante = id_participante
-
-    @property
-    def nombre(self):
-        return self._nombre
-
-    @nombre.setter
-    def nombre(self, nombre):
-        self._nombre = nombre
-
-    @property
-    def apellido(self):
-        return self._apellido
-
-    @apellido.setter
-    def apellido(self, apellido):
-        self._apellido = apellido
-
-    @property
-    def correo(self):
-        return self._correo
-
-    @correo.setter
-    def correo(self, correo):
-        self._correo = correo
-
-    @property
-    def telefono(self):
-        return self._telefono
-
-    @telefono.setter
-    def telefono(self, telefono):
-        self._telefono = telefono
 
     @property
     def numero_personas_juntas(self):
@@ -82,6 +50,38 @@ class Participante(Persona):
 
     @property
     def como_conocer(self):
+        return self._como_conocer
+
+    @como_conocer.setter
+    def como_conocer(self, como_conocer):
+        self._como_conocer = como_conocer
+
+    @property
+    def actividad_id(self):
+        return self._actividad_id
+
+    @actividad_id.setter
+    def actividad_id(self, actividad_id):
+        self._actividad_id = actividad_id
+
+    @property
+    def fecha_registro(self):
+        return self._fecha_registro
+
+    @fecha_registro.setter
+    def fecha_registro(self, fecha_registro):
+        self._fecha_registro = fecha_registro
+
+    def get_tipo(self):
+        return "Participante"
+
+    def __str__(self):
+        return (
+            f"ID: {self.id_participante}, Nombre: {self._nombre}, Apellido: {self._apellido}, "
+            f"Email: {self._email}, Teléfono: {self._telefono}, Rol: {self.rol}, "
+            f"Nº personas juntas: {self.numero_personas_juntas}, Cómo conocer: {self.como_conocer}, "
+            f"Actividad ID: {self.actividad_id}, Fecha de Registro: {self.fecha_registro}"
+        )
         return self._como_conocer
 
     @como_conocer.setter

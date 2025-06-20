@@ -46,7 +46,7 @@ class Actividad:
 
     @tipo.setter
     def tipo(self, tipo):
-        self.tipo = tipo
+        self._tipo = tipo
         
     @property
     def nombre(self):
