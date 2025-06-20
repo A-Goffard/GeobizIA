@@ -75,6 +75,12 @@ const options = ref([
         description: 'Aquí puedes ver las redes sociales de la empresa, agregar nuevas redes sociales, y gestionar las existentes.',
         link: '/redes-sociales',
         image: '/imagenes/foto.png',
+    },
+    {
+        title: 'Clientes',
+        description: 'Aquí puedes ver los clientes de la empresa, agregar nuevos clientes, y gestionar los existentes.',
+        link: '/clientes',
+        image: '/imagenes/foto.png',
     }
 ])
 

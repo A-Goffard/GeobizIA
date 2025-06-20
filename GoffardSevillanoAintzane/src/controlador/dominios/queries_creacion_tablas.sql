@@ -42,7 +42,7 @@ CREATE TABLE actividad (
     facturacion FLOAT,
     resultados NVARCHAR(MAX),
     valoracion NVARCHAR(MAX),
-    modificaciones NVARCHAR(MAX)
+    observaciones NVARCHAR(MAX)
 );
 
 CREATE TABLE fecha_actividad (

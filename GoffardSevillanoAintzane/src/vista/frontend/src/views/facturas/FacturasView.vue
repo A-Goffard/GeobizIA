@@ -2,7 +2,7 @@
     <div class="general-container">
         <h1>Facturas</h1>
         <div class="container">
-            <div class="card" v-for="option in options" :key="option.title">
+            <div class="card" v-for="option in options" :key="option.title" @click="goTo(option.route)">
                 <h2>{{ option.title }}</h2>
                 <img :src="option.image" alt="Imagen de factura">
                 <p>{{ option.description }}</p>
@@ -13,17 +13,26 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goTo(route) {
+    router.push(route)
+}
 
 const options = ref([
     {
         title: 'Ver Facturas',
-        description: 'Consulta y gestiona todas las facturas generadas.',
+        description: 'Consulta y gestiona las facturas de la empresa.',
         image: '/imagenes/foto.png',
+        route: '/facturas/ver'
     },
     {
-        title: 'Crear Factura',
-        description: 'Genera una nueva factura para la empresa.',
+        title: 'Agregar Factura',
+        description: 'Agrega una nueva factura.',
         image: '/imagenes/foto.png',
+        route: '/facturas/crear'
     }
 ])
 </script>

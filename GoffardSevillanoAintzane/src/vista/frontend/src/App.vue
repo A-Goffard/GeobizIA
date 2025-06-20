@@ -19,6 +19,7 @@ import Footer from './components/FooterComponent.vue';
 
 </script>
 
+<style src="./assets/css/formulario.css"></style>
 <style>
 
 * {

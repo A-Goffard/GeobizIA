@@ -2,7 +2,7 @@
     <div class="general-container">
         <h1>Publicaciones</h1>
         <div class="container">
-            <div class="card" v-for="option in options" :key="option.title">
+            <div class="card" v-for="option in options" :key="option.title" @click="goTo(option.route)">
                 <h2>{{ option.title }}</h2>
                 <img :src="option.image" alt="Imagen de publicación">
                 <p>{{ option.description }}</p>
@@ -13,17 +13,26 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goTo(route) {
+    router.push(route)
+}
 
 const options = ref([
     {
-        title: 'Crear Publicación',
-        description: 'Crea una nueva publicación para la empresa.',
+        title: 'Ver Publicaciones',
+        description: 'Consulta y gestiona las publicaciones registradas.',
         image: '/imagenes/foto.png',
+        route: '/publicaciones/ver'
     },
     {
-        title: 'Ver Publicaciones',
-        description: 'Consulta y gestiona todas las publicaciones realizadas.',
+        title: 'Agregar Publicación',
+        description: 'Agrega una nueva publicación.',
         image: '/imagenes/foto.png',
+        route: '/publicaciones/crear'
     }
 ])
 </script>

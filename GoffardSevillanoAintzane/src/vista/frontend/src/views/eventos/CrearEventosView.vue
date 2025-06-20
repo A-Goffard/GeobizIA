@@ -1,13 +1,13 @@
 <template>
   <div class="general-container">
-    <h1>Crear Nueva Actividad</h1>
-    <p>Formulario para crear una nueva actividad.</p>
-    <ActividadForm />
+    <h1>Crear Nuevo Evento</h1>
+    <p>Formulario para crear un nuevo evento.</p>
+    <EventoForm />
   </div>
 </template>
 <script setup>
 
-import ActividadForm from '@/components/formularios/ActividadForm.vue';
+import EventoForm from '@/components/formularios/EventoForm.vue';
 
 // ...aquí irá la lógica para crear la actividad...
 </script>

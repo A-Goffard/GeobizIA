@@ -1,5 +1,5 @@
 class Actividad:
-    def __init__(self, id_actividad, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, modificaciones):
+    def __init__(self, id_actividad, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones):
         self._id_actividad = id_actividad
         self._tipo = tipo
         self._nombre = nombre
@@ -12,10 +12,10 @@ class Actividad:
         self._facturacion = facturacion
         self._resultados = resultados
         self._valoracion = valoracion
-        self._modificaciones = modificaciones
+        self._observaciones = observaciones
 
     @staticmethod
-    def crear_actividad(id_actividad, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, modificaciones):
+    def crear_actividad(id_actividad, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones):
         return Actividad(
             id_actividad=id_actividad,
             tipo=tipo,
@@ -29,7 +29,7 @@ class Actividad:
             facturacion=facturacion,
             resultados=resultados,
             valoracion=valoracion,
-            modificaciones=modificaciones
+            observaciones=observaciones
         )
 
     @property
@@ -129,17 +129,17 @@ class Actividad:
         self._valoracion = valoracion
 
     @property
-    def modificaciones(self):
-        return self._modificaciones
+    def observaciones(self):
+        return self._observaciones
 
-    @modificaciones.setter
-    def modificaciones(self, modificaciones):
-        self._modificaciones = modificaciones
+    @observaciones.setter
+    def observaciones(self, observaciones):
+        self._observaciones = observaciones
 
     def __str__(self):
         return (
             f"ID: {self.id_actividad}, Tipo: {self.tipo}, Nombre: {self.nombre}, Fecha ejecución: {self.fecha_ejecucion}, "
             f"Descripción: {self.descripcion}, Responsable: {self.responsable}, Duración: {self.duracion}, "
             f"Coste económico: {self.coste_economico}, Coste horas: {self.coste_horas}, Facturación: {self.facturacion}, "
-            f"Resultados: {self.resultados}, Valoración: {self.valoracion}, Modificaciones: {self.modificaciones}"
+            f"Resultados: {self.resultados}, Valoración: {self.valoracion}, Observaciones: {self.observaciones}"
         )

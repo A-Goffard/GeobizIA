@@ -2,7 +2,7 @@
     <div class="general-container">
         <h1>Eventos</h1>
         <div class="container">
-            <div class="card" v-for="option in options" :key="option.title">
+            <div class="card" v-for="option in options" :key="option.title" @click="goTo(option.route)">
                 <h2>{{ option.title }}</h2>
                 <img :src="option.image" alt="Imagen de evento">
                 <p>{{ option.description }}</p>
@@ -13,17 +13,26 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goTo(route) {
+    router.push(route)
+}
 
 const options = ref([
     {
         title: 'Ver Eventos',
         description: 'Consulta y gestiona los eventos de interés para la empresa.',
         image: '/imagenes/foto.png',
+        route: '/eventos/ver'
     },
     {
         title: 'Agregar Evento',
         description: 'Agrega un nuevo evento relevante.',
         image: '/imagenes/foto.png',
+        route: '/eventos/crear'
     }
 ])
 </script>

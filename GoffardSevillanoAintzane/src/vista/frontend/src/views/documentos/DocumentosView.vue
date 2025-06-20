@@ -2,7 +2,7 @@
     <div class="general-container">
         <h1>Documentos</h1>
         <div class="container">
-            <div class="card" v-for="option in options" :key="option.title">
+            <div class="card" v-for="option in options" :key="option.title" @click="goTo(option.route)">
                 <h2>{{ option.title }}</h2>
                 <img :src="option.image" alt="Imagen de documento">
                 <p>{{ option.description }}</p>
@@ -13,21 +13,29 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goTo(route) {
+    router.push(route)
+}
 
 const options = ref([
     {
         title: 'Ver Documentos',
-        description: 'Consulta y gestiona los documentos importantes de la empresa.',
+        description: 'Consulta y gestiona los documentos registrados.',
         image: '/imagenes/foto.png',
+        route: '/documentos/ver'
     },
     {
         title: 'Agregar Documento',
-        description: 'Agrega un nuevo documento importante.',
+        description: 'Agrega un nuevo documento.',
         image: '/imagenes/foto.png',
+        route: '/documentos/crear'
     }
 ])
 </script>
-
 <style scoped>
 .container {
     display: flex;

@@ -2,7 +2,7 @@
     <div class="general-container">
         <h1>Participantes</h1>
         <div class="container">
-            <div class="card" v-for="option in options" :key="option.title">
+            <div class="card" v-for="option in options" :key="option.title" @click="goTo(option.route)">
                 <h2>{{ option.title }}</h2>
                 <img :src="option.image" alt="Imagen de participante">
                 <p>{{ option.description }}</p>
@@ -13,17 +13,26 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goTo(route) {
+    router.push(route)
+}
 
 const options = ref([
     {
         title: 'Ver Participantes',
-        description: 'Consulta y gestiona los participantes de actividades, eventos y proyectos.',
+        description: 'Consulta y gestiona los participantes registrados.',
         image: '/imagenes/foto.png',
+        route: '/participantes/ver'
     },
     {
         title: 'Agregar Participante',
         description: 'Agrega un nuevo participante.',
         image: '/imagenes/foto.png',
+        route: '/participantes/crear'
     }
 ])
 </script>

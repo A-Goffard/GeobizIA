@@ -1,10 +1,10 @@
 <template>
     <div class="general-container">
-        <h1>Empresas</h1>
+        <h1>Clientes</h1>
         <div class="container">
-            <div class="card" v-for="option in options" :key="option.title">
+            <div class="card" v-for="option in options" :key="option.title" @click="goTo(option.route)">
                 <h2>{{ option.title }}</h2>
-                <img :src="option.image" alt="Imagen de empresa">
+                <img :src="option.image" alt="Imagen de cliente">
                 <p>{{ option.description }}</p>
             </div>
         </div>
@@ -13,21 +13,29 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goTo(route) {
+    router.push(route)
+}
 
 const options = ref([
     {
-        title: 'Ver Empresas',
-        description: 'Consulta y gestiona las empresas colaboradoras.',
+        title: 'Ver Clientes',
+        description: 'Consulta y gestiona los clientes registrados.',
         image: '/imagenes/foto.png',
+        route: '/clientes/ver'
     },
     {
-        title: 'Agregar Empresa',
-        description: 'Agrega una nueva empresa colaboradora.',
+        title: 'Agregar Cliente',
+        description: 'Agrega un nuevo cliente.',
         image: '/imagenes/foto.png',
+        route: '/clientes/crear'
     }
 ])
 </script>
-
 <style scoped>
 .container {
     display: flex;

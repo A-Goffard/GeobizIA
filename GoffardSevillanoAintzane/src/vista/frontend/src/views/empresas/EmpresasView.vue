@@ -1,10 +1,10 @@
 <template>
     <div class="general-container">
-        <h1>Proyectos</h1>
+        <h1>Empresas</h1>
         <div class="container">
             <div class="card" v-for="option in options" :key="option.title" @click="goTo(option.route)">
                 <h2>{{ option.title }}</h2>
-                <img :src="option.image" alt="Imagen de proyecto">
+                <img :src="option.image" alt="Imagen de empresa">
                 <p>{{ option.description }}</p>
             </div>
         </div>
@@ -23,20 +23,19 @@ function goTo(route) {
 
 const options = ref([
     {
-        title: 'Ver Proyectos',
-        description: 'Consulta y gestiona los proyectos registrados.',
+        title: 'Ver Empresas',
+        description: 'Consulta y gestiona las empresas registradas.',
         image: '/imagenes/foto.png',
-        route: '/proyectos/ver'
+        route: '/empresas/ver'
     },
     {
-        title: 'Agregar Proyecto',
-        description: 'Agrega un nuevo proyecto.',
+        title: 'Agregar Empresa',
+        description: 'Agrega una nueva empresa.',
         image: '/imagenes/foto.png',
-        route: '/proyectos/crear'
+        route: '/empresas/crear'
     }
 ])
 </script>
-
 <style scoped>
 .container {
     display: flex;
