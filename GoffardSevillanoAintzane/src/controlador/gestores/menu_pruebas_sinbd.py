@@ -47,7 +47,7 @@ def menu_pruebas(gestor, clase_item):
     def get_id_value():
         id_field = get_id_field()
         valor = input(f"Ingrese {id_field}: ")
-        return id_field, valor
+        return id_field, valor  # No convertir a int, comparar como string
 
     while True:
         print(f"\nMenú de Pruebas para {clase_item.__name__}")
@@ -56,33 +56,41 @@ def menu_pruebas(gestor, clase_item):
         print("3. Eliminar")
         print("4. Mostrar Todos")
         print("5. Existe")
-        print("6. Cantidad de elementos")
-        print("7. Mostrar elemento por id")
-        print("8. Salir")
+        print("6. Salir")
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
             atributos = solicitar_atributos(clase_item)
-            values = [atributos[field] for field in gestor.fields]
-            if gestor.existe(values[gestor.fields.index(gestor.id_field)]):
-                print(f"Ya existe un elemento con ese id.")
+            item = clase_item(**atributos)
+            if gestor.agregar(item):
+                print(f"{clase_item.__name__} agregado exitosamente.")
             else:
-                if gestor.agregar(values):
-                    print(f"{clase_item.__name__} agregado exitosamente.")
-                else:
-                    print(f"No se pudo agregar el {clase_item.__name__}.")
+                print(f"No se pudo agregar el {clase_item.__name__}.")
 
         elif opcion == "2":
             id_field, valor = get_id_value()
-            resultado = gestor.buscar(valor)
-            if resultado:
-                print(gestor.mostrar_elemento(valor))
+            if id_field is None:
+                continue
+            encontrado = None
+            for elem in gestor.mostrar_todos_los_elem():
+                if hasattr(elem, id_field) and str(getattr(elem, id_field)) == str(valor):
+                    encontrado = elem
+                    break
+            if encontrado:
+                print(gestor.mostrar_elemento(encontrado))
             else:
                 print(f"{clase_item.__name__} no encontrado.")
 
         elif opcion == "3":
             id_field, valor = get_id_value()
-            if gestor.eliminar(valor):
+            if id_field is None:
+                continue
+            eliminado = False
+            for elem in gestor.mostrar_todos_los_elem():
+                if hasattr(elem, id_field) and str(getattr(elem, id_field)) == str(valor):
+                    eliminado = gestor.eliminar(elem)
+                    break
+            if eliminado:
                 print(f"{clase_item.__name__} eliminado exitosamente.")
             else:
                 print(f"No se encontró el {clase_item.__name__} para eliminar.")
@@ -91,26 +99,25 @@ def menu_pruebas(gestor, clase_item):
             elementos = gestor.mostrar_todos_los_elem()
             if elementos:
                 for item in elementos:
-                    print(item)
+                    print(gestor.mostrar_elemento(item))
             else:
                 print(f"No hay elementos en {clase_item.__name__}.")
 
         elif opcion == "5":
             id_field, valor = get_id_value()
-            if gestor.existe(valor):
+            if id_field is None:
+                continue
+            existe = False
+            for elem in gestor.mostrar_todos_los_elem():
+                if hasattr(elem, id_field) and str(getattr(elem, id_field)) == str(valor):
+                    existe = True
+                    break
+            if existe:
                 print(f"El elemento existe en {clase_item.__name__}.")
             else:
                 print(f"El elemento NO existe en {clase_item.__name__}.")
 
         elif opcion == "6":
-            cantidad = gestor.cantidad_elementos()
-            print(f"Cantidad de elementos en {clase_item.__name__}: {cantidad}")
-
-        elif opcion == "7":
-            id_field, valor = get_id_value()
-            print(gestor.mostrar_elemento(valor))
-
-        elif opcion == "8":
             print("Saliendo del programa...")
             break
 

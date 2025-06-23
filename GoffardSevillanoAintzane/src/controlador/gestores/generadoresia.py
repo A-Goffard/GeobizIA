@@ -1,6 +1,11 @@
 from gestores.base_gestor import BaseGestor
 
 class GeneradoresIA(BaseGestor):
-    # No es necesario redefinir los métodos agregar, modificar, buscar o eliminar
-    # porque ya están implementados en BaseGestor.
-    pass
+    def __init__(self):
+        super().__init__(
+            table_name="generadoria",
+            fields=[
+                "id_generador_ia", "nombre", "descripcion", "empresa_id", "configuraciones", "ejemplos_estilo", "ultima_generacion"
+            ],
+            id_field="id_generador_ia"
+        )

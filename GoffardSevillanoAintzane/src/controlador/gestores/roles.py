@@ -2,6 +2,11 @@ from dominios.rol import Rol
 from gestores.base_gestor import BaseGestor
 
 class Roles(BaseGestor):
-    # No es necesario redefinir los métodos agregar, modificar, buscar o eliminar
-    # porque ya están implementados en BaseGestor.
-    pass
+    def __init__(self):
+        super().__init__(
+            table_name="roles",
+            fields=[
+                "nombre", "tareas_permitidas"
+            ],
+            id_field="nombre"
+        )

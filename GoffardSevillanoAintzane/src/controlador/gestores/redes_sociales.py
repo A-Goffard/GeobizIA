@@ -1,6 +1,11 @@
 from gestores.base_gestor import BaseGestor
 
 class RedesSociales(BaseGestor):
-    # No es necesario redefinir los métodos agregar, modificar, buscar o eliminar
-    # porque ya están implementados en BaseGestor.
-    pass
+    def __init__(self):
+        super().__init__(
+            table_name="redsocial",
+            fields=[
+                "id_red_social", "plataforma", "nombre_cuenta", "credenciales", "preferencias_publicacion", "estado_conexion", "ultima_publicacion"
+            ],
+            id_field="id_red_social"
+        )

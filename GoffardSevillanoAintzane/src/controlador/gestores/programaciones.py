@@ -1,7 +1,12 @@
 from gestores.base_gestor import BaseGestor
 
 class Programaciones(BaseGestor):
-    # No es necesario redefinir los métodos agregar, modificar, buscar o eliminar
-    # porque ya están implementados en BaseGestor.
-    pass
+    def __init__(self):
+        super().__init__(
+            table_name="programacion",
+            fields=[
+                "id_programacion", "publicacion_id", "red_social_id", "fecha_programada", "estado", "notificaciones", "responsable"
+            ],
+            id_field="id_programacion"
+        )
 
