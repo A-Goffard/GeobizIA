@@ -83,41 +83,6 @@ CREATE TABLE clientes (
     fecha_registro DATE
 );
 
--- Tabla: juridicas
-CREATE TABLE juridicas (
-    id_cliente INT PRIMARY KEY,
-    nombre NVARCHAR(100),
-    apellido NVARCHAR(100),
-    email NVARCHAR(150),
-    telefono NVARCHAR(50),
-    tipo NVARCHAR(50),
-    direccion NVARCHAR(200),
-    cp NVARCHAR(20),
-    poblacion NVARCHAR(100),
-    pais NVARCHAR(100),
-    fecha_registro DATE,
-    nif NVARCHAR(20),
-    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
-);
-
--- Tabla: fisicas
-CREATE TABLE fisicas (
-    id_cliente INT PRIMARY KEY,
-    nombre NVARCHAR(100),
-    apellido NVARCHAR(100),
-    email NVARCHAR(150),
-    telefono NVARCHAR(50),
-    tipo NVARCHAR(50),
-    direccion NVARCHAR(200),
-    cp NVARCHAR(20),
-    poblacion NVARCHAR(100),
-    pais NVARCHAR(100),
-    fecha_registro DATE,
-    dni NVARCHAR(20),
-    fecha_nacimiento DATE,
-    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
-);
-
 -- Tabla: documentos
 CREATE TABLE documentos (
     id_documento INT PRIMARY KEY,
