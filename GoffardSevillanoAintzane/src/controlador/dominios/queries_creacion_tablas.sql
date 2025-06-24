@@ -5,12 +5,18 @@ CREATE TABLE rol (
     CONSTRAINT FK_usuario_rol FOREIGN KEY (id_rol) REFERENCES rol(id_rol)
 );
 
-CREATE TABLE usuario (
-    id_usuario INT PRIMARY KEY,
+CREATE TABLE persona (
+    id_persona INT PRIMARY KEY,
     nombre NVARCHAR(100),
     apellido NVARCHAR(100),
     email NVARCHAR(100),
-    telefono NVARCHAR(50),
+    telefono NVARCHAR(50)
+    -- otros campos comunes
+);
+
+CREATE TABLE usuario (
+    id_usuario INT PRIMARY KEY,
+    id_persona INT,
     fecha_nacimiento NVARCHAR(50),
     direccion NVARCHAR(200),
     dni NVARCHAR(20),
@@ -19,7 +25,26 @@ CREATE TABLE usuario (
     pais NVARCHAR(100),
     rol NVARCHAR(50),
     preferencias NVARCHAR(MAX),
-    password NVARCHAR(100)
+    password NVARCHAR(100),
+    FOREIGN KEY (id_persona) REFERENCES persona(id_persona)
+);
+
+CREATE TABLE cliente (
+    id_cliente INT PRIMARY KEY,
+    id_persona INT,
+    fecha_registro NVARCHAR(50),
+    FOREIGN KEY (id_persona) REFERENCES persona(id_persona)
+);
+
+CREATE TABLE participante (
+    id_participante INT PRIMARY KEY,
+    id_persona INT,
+    numero_personas_juntas INT,
+    rol NVARCHAR(50),
+    como_conocer NVARCHAR(100),
+    actividad_id INT,
+    fecha_registro NVARCHAR(50),
+    FOREIGN KEY (id_persona) REFERENCES persona(id_persona)
 );
 
 CREATE TABLE empresa (

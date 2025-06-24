@@ -6,8 +6,7 @@ class Usuarios(BaseGestor):
         super().__init__(
             table_name="usuario",
             fields=[
-                "id_usuario", "nombre", "apellido", "email", "telefono", "fecha_nacimiento",
-                "direccion", "dni", "cp", "poblacion", "pais", "rol", "preferencias", "password"
+                "id_usuario", "id_persona", "fecha_nacimiento", "rol", "preferencias", "password"
             ],
             id_field="id_usuario"
         )

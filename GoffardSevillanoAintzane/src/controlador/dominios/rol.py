@@ -1,7 +1,16 @@
 class Rol:
-    def __init__(self, nombre, tareas_permitidas):
+    def __init__(self, id_rol, nombre, descripcion):
+        self._id_rol = id_rol
         self._nombre = nombre
-        self._tareas_permitidas = tareas_permitidas
+        self._descripcion = descripcion
+
+    @property
+    def id_rol(self):
+        return self._id_rol
+
+    @id_rol.setter
+    def id_rol(self, id_rol):
+        self._id_rol = id_rol
 
     @property
     def nombre(self):
@@ -12,21 +21,22 @@ class Rol:
         self._nombre = nombre
 
     @property
-    def tareas_permitidas(self):
-        return self._tareas_permitidas
+    def descripcion(self):
+        return self._descripcion
 
-    @tareas_permitidas.setter
-    def tareas_permitidas(self, tareas_permitidas):
-        self._tareas_permitidas = tareas_permitidas
+    @descripcion.setter
+    def descripcion(self, descripcion):
+        self._descripcion = descripcion
 
     @staticmethod
-    def crear_rol(nombre, tareas_permitidas):
+    def crear_rol(id_rol, nombre, descripcion):
         return Rol(
+            id_rol=id_rol,
             nombre=nombre,
-            tareas_permitidas=tareas_permitidas
+            descripcion=descripcion
         )
 
     def __str__(self):
-        return f"Nombre: {self.nombre}, Tareas permitidas: {self.tareas_permitidas}"
+        return f"ID: {self.id_rol}, Nombre: {self.nombre}, Descripción: {self.descripcion}"
 
 

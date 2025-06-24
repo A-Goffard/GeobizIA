@@ -6,7 +6,7 @@ class Participantes(BaseGestor):
         super().__init__(
             table_name="participante",
             fields=[
-                "id_participante", "nombre", "apellido", "email", "telefono", "numero_personas_juntas", "rol", "como_conocer", "actividad_id", "fecha_registro"
+                "id_participante", "id_persona", "numero_personas_juntas", "rol", "como_conocer", "actividad_id", "fecha_registro"
             ],
             id_field="id_participante"
         )

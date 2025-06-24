@@ -1,13 +1,15 @@
-from abc import ABC, abstractmethod
-
-# Clase base: Persona
-class Persona(ABC):
-    def __init__(self, id_persona, nombre, apellido=None, email=None, telefono=None):
+class Persona:
+    def __init__(self, id_persona, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais):
         self._id_persona = id_persona
         self._nombre = nombre
         self._apellido = apellido
         self._email = email
         self._telefono = telefono
+        self._dni = dni
+        self._direccion = direccion
+        self._cp = cp
+        self._poblacion = poblacion
+        self._pais = pais
 
     @property
     def id_persona(self): return self._id_persona
@@ -34,6 +36,34 @@ class Persona(ABC):
     @telefono.setter
     def telefono(self, telefono): self._telefono = telefono
 
-    @abstractmethod
-    def get_tipo(self) -> str:
-        pass
+    @property
+    def dni(self): return self._dni
+    @dni.setter
+    def dni(self, dni): self._dni = dni
+
+    @property
+    def direccion(self): return self._direccion
+    @direccion.setter
+    def direccion(self, direccion): self._direccion = direccion
+
+    @property
+    def cp(self): return self._cp
+    @cp.setter
+    def cp(self, cp): self._cp = cp
+
+    @property
+    def poblacion(self): return self._poblacion
+    @poblacion.setter
+    def poblacion(self, poblacion): self._poblacion = poblacion
+
+    @property
+    def pais(self): return self._pais
+    @pais.setter
+    def pais(self, pais): self._pais = pais
+
+    def __str__(self):
+        return (
+            f"ID Persona: {self.id_persona}, Nombre: {self.nombre}, Apellido: {self.apellido}, "
+            f"Email: {self.email}, Teléfono: {self.telefono}, DNI: {self.dni}, Dirección: {self.direccion}, "
+            f"CP: {self.cp}, Población: {self.poblacion}, País: {self.pais}"
+        )

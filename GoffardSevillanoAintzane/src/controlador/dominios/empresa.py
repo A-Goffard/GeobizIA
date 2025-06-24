@@ -40,8 +40,6 @@ class Empresa:
             f"ID: {self.id_empresa}, Nombre: {self.nombre}, Sector: {self.sector}, "
             f"Logo: {self.logo}, Ubicación: {self.ubicacion}"
         )
-    @redes_sociales.setter
-    def redes_sociales(self, redes_sociales): self._redes_sociales = redes_sociales
 
     @property
     def logo(self): return self._logo

@@ -1,10 +1,7 @@
 class Factura:
-    def __init__(self, id_factura, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf):
+    def __init__(self, id_factura, id_cliente, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf):
         self._id_factura = id_factura
-        self._tipo = tipo
-        self._nombre = nombre
-        self._direccion = direccion
-        self._nif = nif
+        self._id_cliente = id_cliente
         self._fecha_facturacion = fecha_facturacion
         self._fecha_vencimiento = fecha_vencimiento
         self._concepto = concepto
@@ -17,13 +14,10 @@ class Factura:
         self._irpf = irpf
 
     @staticmethod
-    def crear_factura(id_factura, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf):
+    def crear_factura(id_factura, id_cliente, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf):
         return Factura(
             id_factura=id_factura,
-            tipo=tipo,
-            nombre=nombre,
-            direccion=direccion,
-            nif=nif,
+            id_cliente=id_cliente,
             fecha_facturacion=fecha_facturacion,
             fecha_vencimiento=fecha_vencimiento,
             concepto=concepto,
@@ -44,37 +38,13 @@ class Factura:
         self._id_factura = id_factura
 
     @property
-    def tipo(self):
-        return self._tipo
+    def id_cliente(self):
+        return self._id_cliente
 
-    @tipo.setter
-    def tipo(self, tipo):
-        self._tipo = tipo
+    @id_cliente.setter
+    def id_cliente(self, id_cliente):
+        self._id_cliente = id_cliente
 
-    @property
-    def nombre(self):
-        return self._nombre
-    
-    @nombre.setter
-    def nombre(self, nombre):
-        self._nombre = nombre
-        
-    @property
-    def direccion(self):
-        return self._direccion
-
-    @direccion.setter
-    def direccion(self, direccion):
-        self._direccion = direccion
-    
-    @property
-    def nif(self):
-        return self._nif
-
-    @nif.setter
-    def nif(self, nif):
-        self._nif = nif
-    
     @property
     def fecha_facturacion(self):
         return self._fecha_facturacion
@@ -157,8 +127,7 @@ class Factura:
 
     def __str__(self):
         return (
-            f"ID: {self.id_factura}, Tipo: {self.tipo}, Nombre: {self.nombre}, Dirección: {self.direccion}, "
-            f"NIF: {self.nif}, Fecha facturación: {self.fecha_facturacion}, Fecha vencimiento: {self.fecha_vencimiento}, "
+            f"ID: {self.id_factura}, Cliente ID: {self.id_cliente}, Fecha facturación: {self.fecha_facturacion}, Fecha vencimiento: {self.fecha_vencimiento}, "
             f"Concepto: {self.concepto}, Responsable: {self.responsable}, IVA: {self.iva}, "
             f"Coste total: {self.coste_total}, Base imponible: {self.base_imponible}, "
             f"Número factura: {self.numero_factura}, Tipo pago: {self.tipo_pago}, IRPF: {self.irpf}"

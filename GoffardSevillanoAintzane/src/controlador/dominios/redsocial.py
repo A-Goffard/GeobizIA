@@ -10,7 +10,15 @@ class RedSocial:
 
     @staticmethod
     def crear_red_social(id_red_social, plataforma, nombre_cuenta, credenciales, preferencias_publicacion, estado_conexion, ultima_publicacion):
-        return RedSocial(id_red_social, plataforma, nombre_cuenta, credenciales, preferencias_publicacion, estado_conexion, ultima_publicacion)
+        return RedSocial(
+            id_red_social=id_red_social,
+            plataforma=plataforma,
+            nombre_cuenta=nombre_cuenta,
+            credenciales=credenciales,
+            preferencias_publicacion=preferencias_publicacion,
+            estado_conexion=estado_conexion,
+            ultima_publicacion=ultima_publicacion
+        )
 
     @property
     def id_red_social(self): return self._id_red_social
@@ -52,14 +60,6 @@ class RedSocial:
             f"ID: {self.id_red_social}, Plataforma: {self.plataforma}, Cuenta: {self.nombre_cuenta}, "
             f"Estado: {self.estado_conexion}, Última publicación: {self.ultima_publicacion}"
         )
-    def ultima_publicacion(self, ultima_publicacion): self._ultima_publicacion = ultima_publicacion
-
-    @property
-    def relaciones(self): return self._relaciones
-    @relaciones.setter
-    def relaciones(self, relaciones): self._relaciones = relaciones
-
-    def __str__(self):
         return (
             f"ID: {self.id_red_social}, Plataforma: {self.plataforma}, Cuenta: {self.nombre_cuenta}, "
             f"Empresa ID: {self.empresa_id}, Estado: {self.estado_conexion}, Última publicación: {self.ultima_publicacion}, "

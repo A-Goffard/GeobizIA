@@ -20,11 +20,11 @@
                     <input type="text" id="razon_social" v-model="formData.razon_social">
                 </div>
                 <div class="form-group">
-                    <label for="nif">NIF:</label>
+                    <label for="nif">NIF(empresa/entidad):</label>
                     <input type="text" id="nif" v-model="formData.nif">
                 </div>
                 <div class="form-group">
-                    <label for="dni">DNI:</label>
+                    <label for="dni">DNI(autónomo/particular):</label>
                     <input type="text" id="dni" v-model="formData.dni">
                 </div>
                 <div class="form-group">

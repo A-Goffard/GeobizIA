@@ -15,25 +15,33 @@ set_tareas_permitidas(tareas_permitidas) -> tareas_permitidas
 
 ---
 
-## Usuario
+## Persona
 
-id_usuario  
+id_persona  
 nombre  
 apellido  
 email  
 telefono  
-fecha_nacimiento  
-direccion  
 dni  
+direccion  
 cp  
 poblacion  
-pais  
+pais
+
+---
+
+## Usuario
+
+id_usuario  
+id_persona  
+fecha_nacimiento  
 rol  
 preferencias  
-password
+password  
+(nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais heredados de Persona)
 
 Métodos:
-crear_usuario(self, id_usuario, nombre, apellido, email, telefono, fecha_nacimiento, direccion, dni, cp, poblacion, pais, rol, preferencias, password) -> Usuario  
+crear_usuario(self, id_usuario, id_persona, fecha_nacimiento, rol, preferencias, password, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais) -> Usuario  
 Constructor!!!  
 get_id_usuario() -> id_usuario  
 set_id_usuario(id_usuario) -> id_usuario  
@@ -318,18 +326,16 @@ set_relaciones(relaciones) -> relaciones
 ## Participante
 
 id_participante  
-nombre  
-apellido  
-email  
-telefono  
+id_persona  
 numero_personas_juntas  
 rol  
 como_conocer  
 actividad_id  
-fecha_registro
+fecha_registro  
+(nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais heredados de Persona)
 
 Métodos:
-crear_participante(self, id_participante, nombre, apellido, email, telefono, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro) -> Participante  
+crear_participante(self, id_participante, id_persona, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais) -> Participante  
 Constructor!!!  
 get_id_participante() -> id_participante  
 set_id_participante(id_participante) -> id_participante  
@@ -528,22 +534,15 @@ set_tematica(tematica) -> tematica
 ## Cliente
 
 id_cliente  
+id_persona  
 tipo  
-nombre  
-apellido  
 razon_social  
 nif  
-dni  
-email  
-telefono  
-direccion  
-cp  
-poblacion  
-pais  
-fecha_registro
+fecha_registro  
+(nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais heredados de Persona)
 
 Métodos:
-crear_cliente(self, id_cliente, tipo, nombre, apellido, razon_social, nif, dni, email, telefono, direccion, cp, poblacion, pais, fecha_registro) -> Cliente  
+crear_cliente(self, id_cliente, id_persona, tipo, razon_social, nif, fecha_registro, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais) -> Cliente  
 Constructor!!!  
 get_id_cliente() -> id_cliente  
 set_id_cliente(id_cliente) -> id_cliente  
@@ -655,4 +654,5 @@ set_valoracion(valoracion) -> valoracion
 get_observaciones() -> observaciones  
 set_observaciones(observaciones) -> observaciones  
 
+---
 ---
