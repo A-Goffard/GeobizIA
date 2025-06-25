@@ -116,20 +116,6 @@ CREATE TABLE generadoria (
     CONSTRAINT FK_generadoria_empresa FOREIGN KEY (empresa_id) REFERENCES empresa(id_empresa)
 );
 
-CREATE TABLE participante (
-    id_participante INT PRIMARY KEY,
-    nombre NVARCHAR(100),
-    apellido NVARCHAR(100),
-    email NVARCHAR(100),
-    telefono NVARCHAR(50),
-    numero_personas_juntas INT,
-    rol NVARCHAR(50),
-    como_conocer NVARCHAR(100),
-    actividad_id INT,
-    fecha_registro NVARCHAR(50),
-    CONSTRAINT FK_participante_actividad FOREIGN KEY (actividad_id) REFERENCES actividad(id_actividad)
-);
-
 CREATE TABLE proyecto (
     id_proyecto INT PRIMARY KEY,
     nombre NVARCHAR(200),
@@ -335,8 +321,8 @@ CREATE TABLE documento_tag (
 
 CREATE TABLE plantilla_tipo_publicacion (
     id_plantilla INT,
-    tipo_publicacion NVARCHAR(50),
-    PRIMARY KEY (id_plantilla, tipo_publicacion),
+    id_tipo_publicacion INT,
+    PRIMARY KEY (id_plantilla, id_tipo_publicacion),
     FOREIGN KEY (id_plantilla) REFERENCES plantilla(id_plantilla),
     FOREIGN KEY (id_tipo_publicacion) REFERENCES tipo_publicacion(id_tipo_publicacion)
 );
