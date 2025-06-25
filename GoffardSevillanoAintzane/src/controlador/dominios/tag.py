@@ -34,22 +34,3 @@ class Tag:
             f"ID: {self.id_tag}, Palabra clave: {self.palabra_clave}, "
             f"Categoría: {self.categoria}, Frecuencia de uso: {self.frecuencia_uso}"
         )
-    @frecuencia_uso.setter
-    def frecuencia_uso(self, frecuencia_uso):
-        self._frecuencia_uso = frecuencia_uso
-
-    @staticmethod
-    def crear_tag(id_tag, palabra_clave, categoria, frecuencia_uso, relaciones):
-        return Tag(
-            id_tag=id_tag,
-            palabra_clave=palabra_clave,
-            categoria=categoria,
-            frecuencia_uso=frecuencia_uso,
-            relaciones=relaciones
-        )
-
-    def __str__(self):
-        return (
-            f"ID: {self.id_tag}, Palabra clave: {self.palabra_clave}, Categoría: {self.categoria}, "
-            f"Frecuencia de uso: {self.frecuencia_uso}, Relaciones: {self._relaciones}"
-        )

@@ -6,7 +6,7 @@ class RecursosMultimedia(BaseGestor):
         super().__init__(
             table_name="recurso_multimedia",
             fields=[
-                "id_recurso_multimedia", "tipo", "titulo", "fecha_subida", "autor", "relaciones"
+                "id_recurso_multimedia", "tipo", "titulo", "fecha_subida", "autor"
             ],
             id_field="id_recurso_multimedia"
         )

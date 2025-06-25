@@ -4,9 +4,9 @@ from gestores.base_gestor import BaseGestor
 class Roles(BaseGestor):
     def __init__(self):
         super().__init__(
-            table_name="roles",
+            table_name="rol",
             fields=[
-                "nombre", "tareas_permitidas"
+                "id_rol", "nombre", "descripcion"
             ],
-            id_field="nombre"
+            id_field="id_rol"
         )

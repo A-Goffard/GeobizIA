@@ -1,0 +1,261 @@
+rol
+    id_rol
+    nombre
+    descripcion
+
+persona
+    id_persona
+    nombre
+    apellido
+    email
+    telefono
+    dni
+    direccion
+    cp
+    poblacion
+    pais
+
+cliente
+    id_cliente
+    id_persona
+    tipo
+    razon_social
+    nif
+    fecha_registro
+
+usuario
+    id_usuario
+    id_persona
+    fecha_nacimiento
+    rol
+    preferencias
+    password
+
+participante
+    id_participante
+    id_persona
+    numero_personas_juntas
+    rol
+    como_conocer
+    actividad_id
+    fecha_registro
+
+empresa
+    id_empresa
+    nombre
+    sector
+    logo
+    ubicacion
+
+actividad
+    id_actividad
+    tipo
+    nombre
+    descripcion
+    responsable
+    duracion
+    coste_economico
+    coste_horas
+    facturacion
+    resultados
+    valoracion
+    observaciones
+
+fecha_actividad
+    id_fecha
+    fecha
+
+actividad_fecha
+    id_actividad
+    id_fecha
+
+publicacion
+    id_publicacion
+    titulo
+    contenido
+    autor
+    fecha_creacion
+    estado
+    tags
+    palabras_clave
+    generada_por_ia
+    id_generador_ia
+    feedback_empresa
+    id_tipo_publicacion
+    id_plantilla
+
+generadoria
+    id_generador_ia
+    nombre
+    descripcion
+    empresa_id
+    configuraciones
+    ejemplos_estilo
+    ultima_generacion
+
+proyecto
+    id_proyecto
+    nombre
+    descripcion
+    fecha_inicio
+    fecha_fin
+    poblacion
+    responsable
+    estado
+    objetivos
+    presupuesto
+
+proyecto_actividad
+    id_proyecto
+    id_actividad
+
+plantilla
+    id_plantilla
+    titulo
+    tipo
+    contenido_base
+    fecha_creacion
+    ultima_modificacion
+
+documento
+    id_documento
+    titulo
+    descripcion
+    fecha_subida
+    tipo
+    tematica
+
+evento
+    id_evento
+    nombre
+    tipo
+    lugar
+    fecha_comienzo
+    fecha_final
+    poblacion
+    tematica
+
+actividad_evento
+    id_actividad
+    id_evento
+
+factura
+    id_factura
+    id_cliente
+    tipo
+    nombre
+    direccion
+    nif
+    fecha_facturacion
+    fecha_vencimiento
+    concepto
+    responsable
+    iva
+    coste_total
+    base_imponible
+    numero_factura
+    tipo_pago
+    irpf
+
+factura_actividad
+    id_factura
+    id_actividad
+
+log_sistema
+    id_log_sistema
+    fecha
+    usuario_id
+    accion
+    descripcion
+    nivel
+
+auditoria_publicacion
+    id_auditoria_publicacion
+    publicacion_id
+    generador_ia_id
+    fecha_generacion
+    usuario_id
+    parametros_entrada
+    resultado
+    observaciones
+
+tema_ambiental
+    id_tema_ambiental
+    nombre
+    descripcion
+    relevancia
+
+tag
+    id_tag
+    palabra_clave
+    categoria
+    frecuencia_uso
+
+redsocial
+    id_red_social
+    plataforma
+    nombre_cuenta
+    credenciales
+    preferencias_publicacion
+    estado_conexion
+    ultima_publicacion
+
+programacion
+    id_programacion
+    publicacion_id
+    red_social_id
+    fecha_programada
+    estado
+    notificaciones
+    responsable
+
+recurso_multimedia
+    id_recurso_multimedia
+    tipo
+    titulo
+    fecha_subida
+    autor
+
+tipo_publicacion
+    id_tipo_publicacion
+    nombre
+
+tipo_publicacion_redsocial
+    id_tipo_publicacion
+    id_red_social
+
+# Tablas intermedias
+
+actividad_fecha
+    id_actividad
+    id_fecha
+
+proyecto_actividad
+    id_proyecto
+    id_actividad
+
+actividad_evento
+    id_actividad
+    id_evento
+
+publicacion_tag
+    id_publicacion
+    id_tag
+
+tema_ambiental_tag
+    id_tema_ambiental
+    id_tag
+
+recurso_multimedia_tag
+    id_recurso_multimedia
+    id_tag
+
+documento_tag
+    id_documento
+    id_tag
+
+plantilla_tipo_publicacion
+    id_plantilla
+    id_tipo_publicacion
+
+

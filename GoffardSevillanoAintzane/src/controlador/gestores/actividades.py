@@ -6,7 +6,7 @@ class Actividades(BaseGestor):
         super().__init__(
             table_name="actividad",
             fields=[
-                "id_actividad", "tipo", "nombre", "descripcion", "responsable", "duracion", "coste_economico", "coste_horas", "facturacion", "resultados", "valoracion", "modificaciones"
+                "id_actividad", "tipo", "nombre", "fecha_ejecucion", "descripcion", "responsable", "duracion", "coste_economico", "coste_horas", "facturacion", "resultados", "valoracion", "observaciones"
             ],
             id_field="id_actividad"
         )

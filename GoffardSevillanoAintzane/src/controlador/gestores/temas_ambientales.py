@@ -6,7 +6,7 @@ class TemasAmbientales(BaseGestor):
         super().__init__(
             table_name="tema_ambiental",
             fields=[
-                "id_tema_ambiental", "nombre", "descripcion", "relevancia", "relacion_actividades", "relacion_publicaciones"
+                "id_tema_ambiental", "nombre", "descripcion", "relevancia"
             ],
             id_field="id_tema_ambiental"
         )

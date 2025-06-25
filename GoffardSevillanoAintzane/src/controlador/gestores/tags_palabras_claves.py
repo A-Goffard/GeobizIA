@@ -6,7 +6,7 @@ class Tags(BaseGestor):
         super().__init__(
             table_name="tag",
             fields=[
-                "id_tag", "palabra_clave", "categoria", "frecuencia_uso", "relaciones"
+                "id_tag", "palabra_clave", "categoria", "frecuencia_uso"
             ],
             id_field="id_tag"
         )

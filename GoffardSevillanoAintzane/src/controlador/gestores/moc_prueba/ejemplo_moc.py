@@ -1,13 +1,11 @@
 from ...dominios.usuario import Usuario
 from ...dominios.proyecto import Proyecto
-from ...dominios.tema_ambiental import TemaAmbiental
 from ...dominios.rol import Rol
 from ...dominios.empresa import Empresa
 from ...dominios.actividad import Actividad
 from ...dominios.participante import Participante
 from ...dominios.publicacion import Publicacion
 from ...dominios.generadoria import GeneradorIA
-from ...dominios.plantilla import Plantilla
 from ...dominios.cliente import Cliente
 from ...dominios.documento import Documento
 from ...dominios.evento import Evento
@@ -18,6 +16,8 @@ from ...dominios.tags_palabras_clave import Tag
 from ...dominios.redsocial import RedSocial
 from ...dominios.programacion import Programacion
 from ...dominios.recurso_multimedia import RecursoMultimedia
+from ...dominios.tema_ambiental import TemaAmbiental
+from ...dominios.plantilla import Plantilla
 
 # Ejemplo de datos de persona para los mocks
 personas_cargadas = [
@@ -102,19 +102,19 @@ participantes_cargados = [
     Participante.crear_participante(1, 1, 2, "voluntario", "internet", 1, "2023-06-01", "Ana", "García", "ana@mail.com", "123456789", "12345678A", "Calle Falsa 123", "28080", "Madrid", "España"),
 ]
 participantes_no_cargados = [
-    Participante.crear_participante(2, 2, None, "", "", None, "", "", "", "", "", "", "", "", "", "", ""),  # datos vacíos
+    Participante.crear_participante(2, 2, None, "", "", None, "", "", "", "", "", "", "", "", "", ""),  # datos vacíos (16 args)
     # ...otros ejemplos...
 ]
 participantes_cargados += [
-    Participante.crear_participante(2, "Ana", "Serrano", "ana.s@mail.com", "222111333", 1, "ponente", "web", 2, "2023-07-10"),
-    Participante.crear_participante(3, "Pedro", "Gómez", "pedro@mail.com", "333444555", 3, "asistente", "amigo", 3, "2023-08-15"),
+    Participante.crear_participante(2, "Ana", "Serrano", "ana.s@mail.com", "222111333", 1, "ponente", "web", 2, "2023-07-10", "", "", "", "", "", ""),  # 16 args
+    Participante.crear_participante(3, "Pedro", "Gómez", "pedro@mail.com", "333444555", 3, "asistente", "amigo", 3, "2023-08-15", "", "", "", "", "", ""),  # 16 args
 ]
 participantes_no_cargados += [
-    Participante.crear_participante(4, "", "", "", "", None, "", "", None, ""),  # todos vacíos
+    Participante.crear_participante(4, "", "", "", "", None, "", "", None, "", "", "", "", "", "", ""),  # 16 args
     # Falta argumento (deja fuera fecha_registro)
     # Participante.crear_participante(5, "Lucía", "Vega", "lucia@mail.com", "555444333", 2, "asistente", "redes", 4),
-    Participante.crear_participante(6, "Lucía", "Vega", "lucia@mail.com", "555444333", 2, "asistente", "redes", 4, "2023-09-01"),
-    Participante.crear_participante(7, "Mario", "Díaz", "mario@mail.com", "666555444", 1, "asistente", "web", 5, "2023-10-10"),
+    Participante.crear_participante(6, "Lucía", "Vega", "lucia@mail.com", "555444333", 2, "asistente", "redes", 4, "2023-09-01", "", "", "", "", "", ""),  # 16 args
+    Participante.crear_participante(7, "Mario", "Díaz", "mario@mail.com", "666555444", 1, "asistente", "web", 5, "2023-10-10", "", "", "", "", "", ""),  # 16 args
 ]
 
 # Proyectos
@@ -174,23 +174,50 @@ generadores_ia_no_cargados += [
     GeneradorIA.crear_generador_ia(7, "WindGen", "Generador IA", 5, "{}", "ejemplo5", "2023-05-01"),
 ]
 
-# Plantillas
+# Tag
+tags_cargados = [
+    Tag.crear_tag(1, "palabra", "cat", 5),
+    Tag.crear_tag(2, "reciclaje", "medioambiente", 10),
+    Tag.crear_tag(3, "agua", "recursos", 8),
+]
+tags_no_cargados = [
+    Tag.crear_tag(None, "", "", None),
+    Tag.crear_tag(4, "", "", None),
+    Tag.crear_tag(6, "energía", "recursos", 7),
+    Tag.crear_tag(7, "biodiversidad", "naturaleza", 12),
+]
+
+# TemaAmbiental
+temas_ambientales_cargados = [
+    TemaAmbiental.crear_tema_ambiental(1, "Cambio climático", "Impacto global", 10),
+    TemaAmbiental.crear_tema_ambiental(2, "Residuos", "Gestión de residuos", 8),
+    TemaAmbiental.crear_tema_ambiental(3, "Agua", "Gestión del agua", 9),
+]
+temas_ambientales_no_cargados = [
+    TemaAmbiental.crear_tema_ambiental(None, "", "", None),
+    TemaAmbiental.crear_tema_ambiental(4, "", "", None),
+]
+
+# RecursoMultimedia
+recursos_multimedia_cargados = [
+    RecursoMultimedia.crear_recurso_multimedia(1, "imagen", "titulo", "2023-01-01", "Ana"),
+    RecursoMultimedia.crear_recurso_multimedia(2, "video", "titulo2", "2023-02-01", "Carlos"),
+    RecursoMultimedia.crear_recurso_multimedia(3, "audio", "titulo3", "2023-03-01", "Marta"),
+]
+recursos_multimedia_no_cargados = [
+    RecursoMultimedia.crear_recurso_multimedia(None, "", "", "", ""),
+    RecursoMultimedia.crear_recurso_multimedia(4, "", "", "", ""),
+]
+
+# Plantilla
 plantillas_cargadas = [
-    Plantilla.crear_plantilla(1, "Plantilla1", "tipo1", "contenido", "2023-01-01", "2023-01-02", ""),
+    Plantilla.crear_plantilla(1, "Plantilla1", "tipo1", "contenido", "2023-01-01", "2023-01-02"),
+    Plantilla.crear_plantilla(2, "Plantilla2", "tipo2", "contenido2", "2023-02-01", "2023-02-02"),
+    Plantilla.crear_plantilla(3, "Plantilla3", "tipo3", "contenido3", "2023-03-01", "2023-03-02"),
 ]
 plantillas_no_cargadas = [
-    Plantilla.crear_plantilla(None, "", "", "", "", "", ""),  # id_plantilla vacío
-]
-plantillas_cargadas += [
-    Plantilla.crear_plantilla(2, "Plantilla2", "tipo2", "contenido2", "2023-02-01", "2023-02-02", ""),
-    Plantilla.crear_plantilla(3, "Plantilla3", "tipo3", "contenido3", "2023-03-01", "2023-03-02", ""),
-]
-plantillas_no_cargadas += [
-    Plantilla.crear_plantilla(4, "", "", "", "", "", ""),  # todos vacíos
-    # Falta argumento (deja fuera relaciones)
-    # Plantilla.crear_plantilla(5, "Plantilla4", "tipo4", "contenido4", "2023-04-01", "2023-04-02"),
-    Plantilla.crear_plantilla(6, "Plantilla4", "tipo4", "contenido4", "2023-04-01", "2023-04-02", ""),
-    Plantilla.crear_plantilla(7, "Plantilla5", "tipo5", "contenido5", "2023-05-01", "2023-05-02", ""),
+    Plantilla.crear_plantilla(None, "", "", "", "", ""),
+    Plantilla.crear_plantilla(4, "", "", "", "", ""),
 ]
 
 # Clientes
@@ -306,33 +333,7 @@ auditorias_no_cargadas += [
     AuditoriaPublicacion.crear_auditoria_publicacion(6, 4, 4, "2023-06-01", 4, "{}", "ok", ""),
     AuditoriaPublicacion.crear_auditoria_publicacion(7, 5, 5, "2023-07-01", 5, "{}", "error", "Error de usuario"),
 ]
-
-# TemaAmbiental
-temas_ambientales_cargados = [
-    TemaAmbiental.crear_tema_ambiental(1, "Cambio climático", "Impacto global", 10, ["actividad1"], ["pub1"]),
-]
-temas_ambientales_no_cargados = [
-    TemaAmbiental.crear_tema_ambiental(None, "", "", None, [], []),  # id_tema_ambiental vacío
-]
-temas_ambientales_cargados += [
-    TemaAmbiental.crear_tema_ambiental(2, "Residuos", "Gestión de residuos", 8, ["actividad2"], ["pub2"]),
-    TemaAmbiental.crear_tema_ambiental(3, "Agua", "Gestión del agua", 9, ["actividad3"], ["pub3"]),
-]
-temas_ambientales_no_cargados += [
-    TemaAmbiental.crear_tema_ambiental(4, "", "", None, [], []),  # todos vacíos
-    # Falta argumento (deja fuera relacion_publicaciones)
-    # TemaAmbiental.crear_tema_ambiental(5, "Energía", "Energía renovable", 7, ["actividad4"]),
-    TemaAmbiental.crear_tema_ambiental(6, "Energía", "Energía renovable", 7, ["actividad4"], ["pub4"]),
-    TemaAmbiental.crear_tema_ambiental(7, "Biodiversidad", "Protección de especies", 10, ["actividad5"], ["pub5"]),
-]
-
-# Tag
-tags_cargados = [
-    Tag.crear_tag(1, "palabra", "cat", 5, "relacion1"),
-]
-tags_no_cargados = [
-    Tag.crear_tag(None, "", "", None, ""),  # id_tag vacío
-]
+Tag.crear_tag(None, "", "", None, ""),  # id_tag vacío
 tags_cargados += [
     Tag.crear_tag(2, "reciclaje", "medioambiente", 10, "relacion2"),
     Tag.crear_tag(3, "agua", "recursos", 8, "relacion3"),
