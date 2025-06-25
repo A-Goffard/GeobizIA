@@ -33,10 +33,15 @@ usuarios_cargados = [
     Usuario.crear_usuario(1, 1, "1990-01-01", "admin", "ninguna", "pass123", "Ana", "García", "ana@mail.com", "123456789", "12345678A", "Calle Falsa 123", "28080", "Madrid", "España"),
     Usuario.crear_usuario(2, 2, "1992-03-15", "user", "viajes", "pass321", "Marta", "López", "marta@mail.com", "33445566D", "33445566D", "Calle Sol 5", "29090", "Málaga", "España"),
     Usuario.crear_usuario(3, 3, "1988-07-21", "admin", "lectura", "pass654", "Carlos", "Ruiz", "carlos@mail.com", "44556677E", "44556677E", "Avenida Paz 10", "50001", "Zaragoza", "España"),
+    # Nuevos usuarios para pruebas variadas
 ]
 usuarios_no_cargados = [
     Usuario.crear_usuario(4, 4, "", "", "", "", "", "", "", "", "", "", "", "", ""),  # datos vacíos
-    # ...otros ejemplos...
+    Usuario.crear_usuario(4, 4, "1985-12-30", "editor", "deporte, música", "editorpass", "Lucía", "Vega", "lucia@mail.com", "555444333", "55544433L", "Calle Luna 7", "33001", "Oviedo", "España"),
+    Usuario.crear_usuario(5, 5, "2000-05-20", "lector", "ciencia", "lectorpass", "Mario", "Díaz", "mario@mail.com", "666555444", "66655544M", "Av. Mar 15", "08001", "Barcelona", "España"),
+    Usuario.crear_usuario(6, 6, "1975-11-11", "supervisor", "viajes, tecnología", "superpass", "Elena", "Martínez", "elena@mail.com", "777888999", "77788899E", "Calle Sol 8", "41010", "Sevilla", "España"),
+    Usuario.crear_usuario(7, 7, "1995-04-18", "admin", "lectura, arte", "adminpass2", "Pablo", "Sánchez", "pablo@mail.com", "888999000", "88899900P", "Av. Paz 22", "28001", "Madrid", "España"),
+# ...otros ejemplos...
 ]
 
 # Roles
@@ -225,18 +230,19 @@ clientes_cargados = [
     Cliente.crear_cliente(1, 1, "empresa", "EcoSolutions S.A.", "NIF123", "2023-01-01", "Ana", "García", "ana@mail.com", "123456789", "12345678A", "Calle Falsa 123", "28080", "Madrid", "España"),
 ]
 clientes_no_cargados = [
-    Cliente.crear_cliente(2, 2, "", "", "", "", "", "", "", "", "", "", "", "", "", ""),  # datos vacíos
+    Cliente.crear_cliente(2, 2, "", "", "", "", "", "", "", "", "", "", "", "", ""),  # datos vacíos (15 args)
+    # ...otros ejemplos...
 ]
 clientes_cargados += [
-    Cliente.crear_cliente(2, "empresa", "Empresa2", "Apellido2", "Razon2", "NIF2", "DNI2", "empresa2@mail.com", "222333444", "Calle 2", "29090", "Valencia", "España", "2023-02-01"),
-    Cliente.crear_cliente(3, "asociacion", "Asociacion3", "Apellido3", "Razon3", "NIF3", "DNI3", "asociacion3@mail.com", "333444555", "Calle 3", "50001", "Zaragoza", "España", "2023-03-01"),
+    Cliente.crear_cliente(2, "empresa", "Empresa2", "Apellido2", "Razon2", "NIF2", "DNI2", "empresa2@mail.com", "222333444", "Calle 2", "29090", "Valencia", "España", "2023-02-01", "España"),
+    Cliente.crear_cliente(3, "asociacion", "Asociacion3", "Apellido3", "Razon3", "NIF3", "DNI3", "asociacion3@mail.com", "333444555", "Calle 3", "50001", "Zaragoza", "España", "2023-03-01", "España"),
 ]
 clientes_no_cargados += [
-    Cliente.crear_cliente(4, "", "", "", "", "", "", "", "", "", "", "", "", ""),  # todos vacíos
+    Cliente.crear_cliente(4, "", "", "", "", "", "", "", "", "", "", "", "", "", ""),  # todos vacíos (15 args)
     # Falta argumento (deja fuera fecha_registro)
     # Cliente.crear_cliente(5, "particular", "Nombre5", "Apellido5", "Razon5", "NIF5", "DNI5", "mail5@mail.com", "555666777", "Calle 5", "33001", "Oviedo", "España"),
-    Cliente.crear_cliente(6, "particular", "Nombre6", "Apellido6", "Razon6", "NIF6", "DNI6", "mail6@mail.com", "666777888", "Calle 6", "28001", "Madrid", "España", "2023-06-01"),
-    Cliente.crear_cliente(7, "empresa", "Empresa7", "Apellido7", "Razon7", "NIF7", "DNI7", "empresa7@mail.com", "777888999", "Calle 7", "41010", "Sevilla", "España", "2023-07-01"),
+    Cliente.crear_cliente(6, "particular", "Nombre6", "Apellido6", "Razon6", "NIF6", "DNI6", "mail6@mail.com", "666777888", "Calle 6", "28001", "Madrid", "España", "2023-06-01", "España"),
+    Cliente.crear_cliente(7, "empresa", "Empresa7", "Apellido7", "Razon7", "NIF7", "DNI7", "empresa7@mail.com", "777888999", "Calle 7", "41010", "Sevilla", "España", "2023-07-01", "España"),
 ]
 
 # Documentos
@@ -333,17 +339,14 @@ auditorias_no_cargadas += [
     AuditoriaPublicacion.crear_auditoria_publicacion(6, 4, 4, "2023-06-01", 4, "{}", "ok", ""),
     AuditoriaPublicacion.crear_auditoria_publicacion(7, 5, 5, "2023-07-01", 5, "{}", "error", "Error de usuario"),
 ]
-Tag.crear_tag(None, "", "", None, ""),  # id_tag vacío
 tags_cargados += [
-    Tag.crear_tag(2, "reciclaje", "medioambiente", 10, "relacion2"),
-    Tag.crear_tag(3, "agua", "recursos", 8, "relacion3"),
+    Tag.crear_tag(2, "reciclaje", "medioambiente", 10),
+    Tag.crear_tag(3, "agua", "recursos", 8),
 ]
 tags_no_cargados += [
-    Tag.crear_tag(4, "", "", None, ""),  # todos vacíos
-    # Falta argumento (deja fuera relaciones)
-    # Tag.crear_tag(5, "energía", "recursos", 7),
-    Tag.crear_tag(6, "energía", "recursos", 7, "relacion4"),
-    Tag.crear_tag(7, "biodiversidad", "naturaleza", 12, "relacion5"),
+    Tag.crear_tag(4, "", "", None),
+    Tag.crear_tag(6, "energía", "recursos", 7),
+    Tag.crear_tag(7, "biodiversidad", "naturaleza", 12),
 ]
 
 # RedSocial
@@ -386,20 +389,21 @@ programaciones_no_cargadas += [
 
 # RecursoMultimedia
 recursos_multimedia_cargados = [
-    RecursoMultimedia.crear_recurso_multimedia(1, "imagen", "titulo", "2023-01-01", "Ana", "relacion1"),
+    RecursoMultimedia.crear_recurso_multimedia(1, "imagen", "titulo", "2023-01-01", "Ana"),
 ]
 recursos_multimedia_no_cargados = [
-    RecursoMultimedia.crear_recurso_multimedia(None, "", "", "", "", ""),  # id_recurso_multimedia vacío
+    RecursoMultimedia.crear_recurso_multimedia(None, "", "", "", ""),  # id_recurso_multimedia vacío
 ]
 recursos_multimedia_cargados += [
-    RecursoMultimedia.crear_recurso_multimedia(2, "video", "titulo2", "2023-02-01", "Carlos", "relacion2"),
-    RecursoMultimedia.crear_recurso_multimedia(3, "audio", "titulo3", "2023-03-01", "Marta", "relacion3"),
+    RecursoMultimedia.crear_recurso_multimedia(2, "video", "titulo2", "2023-02-01", "Carlos"),
+    RecursoMultimedia.crear_recurso_multimedia(3, "audio", "titulo3", "2023-03-01", "Marta"),
 ]
 recursos_multimedia_no_cargados += [
-    RecursoMultimedia.crear_recurso_multimedia(4, "", "", "", "", ""),  # todos vacíos
+    RecursoMultimedia.crear_recurso_multimedia(4, "", "", "", ""),  # todos vacíos
     # Falta argumento (deja fuera relaciones)
     # RecursoMultimedia.crear_recurso_multimedia(5, "imagen", "titulo5", "2023-05-01", "Elena"),
-    RecursoMultimedia.crear_recurso_multimedia(6, "imagen", "titulo5", "2023-05-01", "Elena", "relacion5"),
-    RecursoMultimedia.crear_recurso_multimedia(7, "video", "titulo6", "2023-06-01", "Luis", "relacion6"),
+    RecursoMultimedia.crear_recurso_multimedia(6, "imagen", "titulo5", "2023-05-01", "Elena"),
+    RecursoMultimedia.crear_recurso_multimedia(7, "video", "titulo6", "2023-06-01", "Luis"),
 ]
+
 

@@ -60,8 +60,4 @@ class RedSocial:
             f"ID: {self.id_red_social}, Plataforma: {self.plataforma}, Cuenta: {self.nombre_cuenta}, "
             f"Estado: {self.estado_conexion}, Última publicación: {self.ultima_publicacion}"
         )
-        return (
-            f"ID: {self.id_red_social}, Plataforma: {self.plataforma}, Cuenta: {self.nombre_cuenta}, "
-            f"Empresa ID: {self.empresa_id}, Estado: {self.estado_conexion}, Última publicación: {self.ultima_publicacion}, "
-            f"Relaciones: {self.relaciones}"
-        )
+
