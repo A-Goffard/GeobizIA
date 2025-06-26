@@ -1,8 +1,7 @@
 CREATE TABLE rol (
     id_rol INT PRIMARY KEY,
     nombre NVARCHAR(50) UNIQUE,
-    descripcion NVARCHAR(200),
-    CONSTRAINT FK_usuario_rol FOREIGN KEY (id_rol) REFERENCES rol(id_rol)
+    descripcion NVARCHAR(200)
 );
 
 CREATE TABLE persona (
@@ -38,6 +37,21 @@ CREATE TABLE usuario (
     FOREIGN KEY (id_persona) REFERENCES persona(id_persona)
 );
 
+CREATE TABLE actividad (
+    id_actividad INT PRIMARY KEY,
+    tipo NVARCHAR(50),
+    nombre NVARCHAR(100),
+    descripcion NVARCHAR(MAX),
+    responsable NVARCHAR(100),
+    duracion NVARCHAR(50),
+    coste_economico FLOAT,
+    coste_horas FLOAT,
+    facturacion FLOAT,
+    resultados NVARCHAR(MAX),
+    valoracion NVARCHAR(MAX),
+    observaciones NVARCHAR(MAX)
+);
+
 CREATE TABLE participante (
     id_participante INT PRIMARY KEY,
     id_persona INT,
@@ -58,32 +72,29 @@ CREATE TABLE empresa (
     ubicacion NVARCHAR(200)
 );
 
-CREATE TABLE actividad (
-    id_actividad INT PRIMARY KEY,
-    tipo NVARCHAR(50),
+CREATE TABLE generadoria (
+    id_generador_ia INT PRIMARY KEY,
     nombre NVARCHAR(100),
     descripcion NVARCHAR(MAX),
-    responsable NVARCHAR(100),
-    duracion NVARCHAR(50),
-    coste_economico FLOAT,
-    coste_horas FLOAT,
-    facturacion FLOAT,
-    resultados NVARCHAR(MAX),
-    valoracion NVARCHAR(MAX),
-    observaciones NVARCHAR(MAX)
+    empresa_id INT,
+    configuraciones NVARCHAR(MAX),
+    ejemplos_estilo NVARCHAR(MAX),
+    ultima_generacion NVARCHAR(50),
+    FOREIGN KEY (empresa_id) REFERENCES empresa(id_empresa)
 );
 
-CREATE TABLE fecha_actividad (
-    id_fecha INT PRIMARY KEY IDENTITY(1,1),
-    fecha NVARCHAR(50)
+CREATE TABLE tipo_publicacion (
+    id_tipo_publicacion INT PRIMARY KEY,
+    nombre NVARCHAR(100)
 );
 
-CREATE TABLE actividad_fecha (
-    id_actividad INT,
-    id_fecha INT,
-    PRIMARY KEY (id_actividad, id_fecha),
-    CONSTRAINT FK_actividad_fecha_actividad FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad),
-    CONSTRAINT FK_actividad_fecha_fecha FOREIGN KEY (id_fecha) REFERENCES fecha_actividad(id_fecha)
+CREATE TABLE plantilla (
+    id_plantilla INT PRIMARY KEY,
+    titulo NVARCHAR(200),
+    tipo NVARCHAR(50),
+    contenido_base NVARCHAR(MAX),
+    fecha_creacion NVARCHAR(50),
+    ultima_modificacion NVARCHAR(50)
 );
 
 CREATE TABLE publicacion (
@@ -100,20 +111,9 @@ CREATE TABLE publicacion (
     feedback_empresa NVARCHAR(MAX),
     id_tipo_publicacion INT,
     id_plantilla INT NULL,
-    CONSTRAINT FK_publicacion_generador FOREIGN KEY (id_generador_ia) REFERENCES generadoria(id_generador_ia),
-    CONSTRAINT FK_publicacion_tipo_publicacion FOREIGN KEY (id_tipo_publicacion) REFERENCES tipo_publicacion(id_tipo_publicacion),
-    CONSTRAINT FK_publicacion_plantilla FOREIGN KEY (id_plantilla) REFERENCES plantilla(id_plantilla)
-);
-
-CREATE TABLE generadoria (
-    id_generador_ia INT PRIMARY KEY,
-    nombre NVARCHAR(100),
-    descripcion NVARCHAR(MAX),
-    empresa_id INT,
-    configuraciones NVARCHAR(MAX), -- JSON o texto con parámetros de la IA
-    ejemplos_estilo NVARCHAR(MAX), -- Ejemplos de textos de la empresa
-    ultima_generacion NVARCHAR(50),
-    CONSTRAINT FK_generadoria_empresa FOREIGN KEY (empresa_id) REFERENCES empresa(id_empresa)
+    FOREIGN KEY (id_generador_ia) REFERENCES generadoria(id_generador_ia),
+    FOREIGN KEY (id_tipo_publicacion) REFERENCES tipo_publicacion(id_tipo_publicacion),
+    FOREIGN KEY (id_plantilla) REFERENCES plantilla(id_plantilla)
 );
 
 CREATE TABLE proyecto (
@@ -129,38 +129,25 @@ CREATE TABLE proyecto (
     presupuesto FLOAT
 );
 
+CREATE TABLE fecha_actividad (
+    id_fecha INT PRIMARY KEY IDENTITY(1,1),
+    fecha NVARCHAR(50)
+);
+
+CREATE TABLE actividad_fecha (
+    id_actividad INT,
+    id_fecha INT,
+    PRIMARY KEY (id_actividad, id_fecha),
+    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad),
+    FOREIGN KEY (id_fecha) REFERENCES fecha_actividad(id_fecha)
+);
+
 CREATE TABLE proyecto_actividad (
     id_proyecto INT,
     id_actividad INT,
     PRIMARY KEY (id_proyecto, id_actividad),
-    CONSTRAINT FK_proyecto_actividad_proyecto FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto),
-    CONSTRAINT FK_proyecto_actividad_actividad FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad)
-);
-
-CREATE TABLE plantilla (
-    id_plantilla INT PRIMARY KEY,
-    titulo NVARCHAR(200),
-    tipo NVARCHAR(50),
-    contenido_base NVARCHAR(MAX),
-    fecha_creacion NVARCHAR(50),
-    ultima_modificacion NVARCHAR(50)
-);
-
-CREATE TABLE cliente (
-    id_cliente INT PRIMARY KEY,
-    tipo NVARCHAR(20), -- 'particular', 'empresa', 'asociacion', 'ayuntamiento'
-    nombre NVARCHAR(100),
-    apellido NVARCHAR(100),
-    razon_social NVARCHAR(200),
-    nif NVARCHAR(20),
-    dni NVARCHAR(20),
-    email NVARCHAR(100),
-    telefono NVARCHAR(50),
-    direccion NVARCHAR(200),
-    cp NVARCHAR(10),
-    poblacion NVARCHAR(100),
-    pais NVARCHAR(100),
-    fecha_registro NVARCHAR(50)
+    FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto),
+    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad)
 );
 
 CREATE TABLE documento (
@@ -187,8 +174,8 @@ CREATE TABLE actividad_evento (
     id_actividad INT,
     id_evento INT,
     PRIMARY KEY (id_actividad, id_evento),
-    CONSTRAINT FK_actividad_evento_actividad FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad),
-    CONSTRAINT FK_actividad_evento_evento FOREIGN KEY (id_evento) REFERENCES evento(id_evento)
+    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad),
+    FOREIGN KEY (id_evento) REFERENCES evento(id_evento)
 );
 
 CREATE TABLE factura (
@@ -226,7 +213,7 @@ CREATE TABLE log_sistema (
     accion NVARCHAR(100),
     descripcion NVARCHAR(MAX),
     nivel NVARCHAR(50),
-    CONSTRAINT FK_log_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
 );
 
 CREATE TABLE auditoria_publicacion (
@@ -238,9 +225,9 @@ CREATE TABLE auditoria_publicacion (
     parametros_entrada NVARCHAR(MAX),
     resultado NVARCHAR(MAX),
     observaciones NVARCHAR(MAX),
-    CONSTRAINT FK_auditoria_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicacion(id_publicacion),
-    CONSTRAINT FK_auditoria_generador FOREIGN KEY (generador_ia_id) REFERENCES generadoria(id_generador_ia),
-    CONSTRAINT FK_auditoria_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
+    FOREIGN KEY (publicacion_id) REFERENCES publicacion(id_publicacion),
+    FOREIGN KEY (generador_ia_id) REFERENCES generadoria(id_generador_ia),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
 );
 
 CREATE TABLE tema_ambiental (
@@ -275,8 +262,8 @@ CREATE TABLE programacion (
     estado NVARCHAR(50),
     notificaciones NVARCHAR(MAX),
     responsable NVARCHAR(100),
-    CONSTRAINT FK_programacion_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicacion(id_publicacion),
-    CONSTRAINT FK_programacion_redsocial FOREIGN KEY (red_social_id) REFERENCES redsocial(id_red_social)
+    FOREIGN KEY (publicacion_id) REFERENCES publicacion(id_publicacion),
+    FOREIGN KEY (red_social_id) REFERENCES redsocial(id_red_social)
 );
 
 CREATE TABLE recurso_multimedia (

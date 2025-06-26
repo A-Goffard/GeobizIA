@@ -65,10 +65,6 @@ fecha_actividad
     id_fecha
     fecha
 
-actividad_fecha
-    id_actividad
-    id_fecha
-
 publicacion
     id_publicacion
     titulo
@@ -105,10 +101,6 @@ proyecto
     objetivos
     presupuesto
 
-proyecto_actividad
-    id_proyecto
-    id_actividad
-
 plantilla
     id_plantilla
     titulo
@@ -134,10 +126,6 @@ evento
     fecha_final
     poblacion
     tematica
-
-actividad_evento
-    id_actividad
-    id_evento
 
 factura
     id_factura
