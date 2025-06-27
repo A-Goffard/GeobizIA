@@ -62,3 +62,4 @@ def eliminar_plantilla(id_plantilla):
     """
     gestor = Plantillas()
     return gestor.eliminar(id_plantilla)
+
