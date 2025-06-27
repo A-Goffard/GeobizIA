@@ -1,94 +1,77 @@
-class AuditoriaPublicacion:
-    def __init__(self, id_auditoria_publicacion, publicacion_id, generador_ia_id, fecha_generacion, usuario_id, parametros_entrada, resultado, observaciones=None):
-        self._id_auditoria_publicacion = id_auditoria_publicacion
-        self._publicacion_id = publicacion_id
-        self._generador_ia_id = generador_ia_id
-        self._fecha_generacion = fecha_generacion
+class Auditoria_Publicacion:
+    def __init__(self, id_auditoria, id_publicacion, usuario_id, fecha=None, accion=None, descripcion=None, nivel=None):
+        self._id_auditoria = id_auditoria
+        self._id_publicacion = id_publicacion
         self._usuario_id = usuario_id
-        self._parametros_entrada = parametros_entrada
-        self._resultado = resultado
-        self._observaciones = observaciones
+        self._fecha = fecha
+        self._accion = accion
+        self._descripcion = descripcion
+        self._nivel = nivel
 
     @property
-    def id_auditoria_publicacion(self):
-        return self._id_auditoria_publicacion
+    def id_auditoria(self):
+        return self._id_auditoria
 
-    @id_auditoria_publicacion.setter
-    def id_auditoria_publicacion(self, value):
-        self._id_auditoria_publicacion = value
-
-    @property
-    def publicacion_id(self):
-        return self._publicacion_id
-
-    @publicacion_id.setter
-    def publicacion_id(self, value):
-        self._publicacion_id = value
+    @id_auditoria.setter
+    def id_auditoria(self, id_auditoria):
+        self._id_auditoria = id_auditoria
 
     @property
-    def generador_ia_id(self):
-        return self._generador_ia_id
+    def id_publicacion(self):
+        return self._id_publicacion
 
-    @generador_ia_id.setter
-    def generador_ia_id(self, value):
-        self._generador_ia_id = value
-
-    @property
-    def fecha_generacion(self):
-        return self._fecha_generacion
-
-    @fecha_generacion.setter
-    def fecha_generacion(self, value):
-        self._fecha_generacion = value
+    @id_publicacion.setter
+    def id_publicacion(self, id_publicacion):
+        self._id_publicacion = id_publicacion
 
     @property
     def usuario_id(self):
         return self._usuario_id
 
     @usuario_id.setter
-    def usuario_id(self, value):
-        self._usuario_id = value
+    def usuario_id(self, usuario_id):
+        self._usuario_id = usuario_id
 
     @property
-    def parametros_entrada(self):
-        return self._parametros_entrada
+    def fecha(self):
+        return self._fecha
 
-    @parametros_entrada.setter
-    def parametros_entrada(self, value):
-        self._parametros_entrada = value
-
-    @property
-    def resultado(self):
-        return self._resultado
-
-    @resultado.setter
-    def resultado(self, value):
-        self._resultado = value
+    @fecha.setter
+    def fecha(self, fecha):
+        self._fecha = fecha
 
     @property
-    def observaciones(self):
-        return self._observaciones
+    def accion(self):
+        return self._accion
 
-    @observaciones.setter
-    def observaciones(self, value):
-        self._observaciones = value
+    @accion.setter
+    def accion(self, accion):
+        self._accion = accion
+
+    @property
+    def descripcion(self):
+        return self._descripcion
+
+    @descripcion.setter
+    def descripcion(self, descripcion):
+        self._descripcion = descripcion
+
+    @property
+    def nivel(self):
+        return self._nivel
+
+    @nivel.setter
+    def nivel(self, nivel):
+        self._nivel = nivel
 
     @staticmethod
-    def crear_auditoria_publicacion(id_auditoria_publicacion, publicacion_id, generador_ia_id, fecha_generacion, usuario_id, parametros_entrada, resultado, observaciones):
-        return AuditoriaPublicacion(
-            id_auditoria_publicacion=id_auditoria_publicacion,
-            publicacion_id=publicacion_id,
-            generador_ia_id=generador_ia_id,
-            fecha_generacion=fecha_generacion,
-            usuario_id=usuario_id,
-            parametros_entrada=parametros_entrada,
-            resultado=resultado,
-            observaciones=observaciones
-        )
+    def crear(id_auditoria, id_publicacion, usuario_id, fecha=None, accion=None, descripcion=None, nivel=None):
+        return Auditoria_Publicacion(id_auditoria, id_publicacion, usuario_id, fecha, accion, descripcion, nivel)
 
     def __str__(self):
         return (
-            f"Auditoría: {self.id_auditoria_publicacion}, Publicación: {self.publicacion_id}, "
-            f"Generador IA: {self.generador_ia_id}, Fecha: {self.fecha_generacion}, "
-            f"Usuario: {self.usuario_id}, Resultado: {self.resultado}, Observaciones: {self.observaciones}"
+            f"ID: {self.id_auditoria}, ID Publicación: {self.id_publicacion}, "
+            f"Usuario ID: {self.usuario_id}, Fecha: {self.fecha or 'N/A'}, "
+            f"Acción: {self.accion or 'N/A'}, Descripción: {self.descripcion or 'N/A'}, "
+            f"Nivel: {self.nivel or 'N/A'}"
         )

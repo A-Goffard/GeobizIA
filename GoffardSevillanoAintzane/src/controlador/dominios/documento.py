@@ -1,5 +1,5 @@
 class Documento:
-    def __init__(self, id_documento, titulo, descripcion, fecha_subida, tipo, tematica):
+    def __init__(self, id_documento, titulo=None, descripcion=None, fecha_subida=None, tipo=None, tematica=None):
         self._id_documento = id_documento
         self._titulo = titulo
         self._descripcion = descripcion
@@ -56,18 +56,11 @@ class Documento:
         self._tematica = tematica
 
     @staticmethod
-    def crear_documento(id_documento, titulo, descripcion, fecha_subida, tipo, tematica):
-        return Documento(
-            id_documento=id_documento,
-            titulo=titulo,
-            descripcion=descripcion,
-            fecha_subida=fecha_subida,
-            tipo=tipo,
-            tematica=tematica
-        )
+    def crear(id_documento, titulo=None, descripcion=None, fecha_subida=None, tipo=None, tematica=None):
+        return Documento(id_documento, titulo, descripcion, fecha_subida, tipo, tematica)
 
     def __str__(self):
         return (
-            f"ID: {self.id_documento}, Título: {self.titulo}, Descripción: {self.descripcion}, "
-            f"Fecha subida: {self.fecha_subida}, Tipo: {self.tipo}, Temática: {self.tematica}"
+            f"ID: {self.id_documento}, Título: {self.titulo or 'N/A'}, Descripción: {self.descripcion or 'N/A'}, "
+            f"Fecha Subida: {self.fecha_subida or 'N/A'}, Tipo: {self.tipo or 'N/A'}, Temática: {self.tematica or 'N/A'}"
         )

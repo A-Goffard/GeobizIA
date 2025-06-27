@@ -1,5 +1,5 @@
-class FechaActividad:
-    def __init__(self, id_fecha, fecha):
+class Fecha_Actividad:
+    def __init__(self, id_fecha, fecha=None):
         self._id_fecha = id_fecha
         self._fecha = fecha
 
@@ -20,8 +20,8 @@ class FechaActividad:
         self._fecha = fecha
 
     @staticmethod
-    def crear(id_fecha, fecha):
-        return FechaActividad(id_fecha, fecha)
+    def crear(id_fecha, fecha=None):
+        return Fecha_Actividad(id_fecha, fecha)
 
     def __str__(self):
-        return f"ID: {self.id_fecha}, Fecha: {self.fecha}"
+        return f"ID: {self.id_fecha}, Fecha: {self.fecha or 'N/A'}"

@@ -1,27 +1,25 @@
-from dominios.rol import Rol
-from gestores.roles import Roles
+from src.controlador.dominios.rol import Rol
+from src.controlador.gestores.roles import Roles
 
-def crear_rol(id_rol, nombre, descripcion):
+def crear_rol(nombre):
     """
     Crea un nuevo rol en la base de datos.
 
     Args:
-        id_rol (int): ID del rol.
         nombre (str): Nombre del rol.
-        descripcion (str): Descripción del rol.
 
     Returns:
         Rol: Objeto Rol creado, o None si falla.
     """
     gestor = Roles()
-    return gestor.agregar(id_rol=id_rol, nombre=nombre, descripcion=descripcion)
+    return gestor.agregar(nombre=nombre)
 
 def leer_rol(id_rol):
     """
-    Lee un rol de la base de datos por su ID.
+    Lee un rol por su ID.
 
     Args:
-        id_rol (int): ID del rol a buscar.
+        id_rol (int): ID del rol.
 
     Returns:
         Rol: Objeto Rol si se encuentra, o None si no.
@@ -29,27 +27,26 @@ def leer_rol(id_rol):
     gestor = Roles()
     return gestor.buscar(id_rol)
 
-def actualizar_rol(id_rol, nombre=None, descripcion=None):
+def actualizar_rol(id_rol, nombre=None):
     """
-    Actualiza un rol existente en la base de datos.
+    Actualiza un rol existente.
 
     Args:
-        id_rol (int): ID del rol a actualizar.
+        id_rol (int): ID del rol.
         nombre (str, optional): Nuevo nombre del rol.
-        descripcion (str, optional): Nueva descripción del rol.
 
     Returns:
         bool: True si se actualizó, False si no.
     """
     gestor = Roles()
-    return gestor.actualizar(id_rol, nombre=nombre, descripcion=descripcion)
+    return gestor.actualizar(id_rol, nombre=nombre)
 
 def eliminar_rol(id_rol):
     """
-    Elimina un rol de la base de datos por su ID.
+    Elimina un rol por su ID.
 
     Args:
-        id_rol (int): ID del rol a eliminar.
+        id_rol (int): ID del rol.
 
     Returns:
         bool: True si se eliminó, False si no.

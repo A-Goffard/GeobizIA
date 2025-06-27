@@ -1,5 +1,5 @@
 class Rol:
-    def __init__(self, id_rol, nombre, descripcion):
+    def __init__(self, id_rol, nombre, descripcion=None):
         self._id_rol = id_rol
         self._nombre = nombre
         self._descripcion = descripcion
@@ -29,14 +29,8 @@ class Rol:
         self._descripcion = descripcion
 
     @staticmethod
-    def crear_rol(id_rol, nombre, descripcion):
-        return Rol(
-            id_rol=id_rol,
-            nombre=nombre,
-            descripcion=descripcion
-        )
+    def crear(id_rol, nombre, descripcion=None):
+        return Rol(id_rol, nombre, descripcion)
 
     def __str__(self):
-        return f"ID: {self.id_rol}, Nombre: {self.nombre}, Descripción: {self.descripcion}"
-
-
+        return f"ID: {self.id_rol}, Nombre: {self.nombre}, Descripción: {self.descripcion or 'N/A'}"

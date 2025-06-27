@@ -1,11 +1,12 @@
 from src.controlador.gestores.base_gestor import BaseGestor
-from src.controlador.dominios.fecha_actividad import FechaActividad
+from src.controlador.dominios.fecha_actividad import Fecha_Actividad
 
-class FechasActividad(BaseGestor[FechaActividad]):
+class Fechas_Actividad(BaseGestor[Fecha_Actividad]):
     def __init__(self):
         super().__init__(
             table_name="fecha_actividad",
             fields=["id_fecha", "fecha"],
             id_field="id_fecha",
-            domain_class=FechaActividad
+            domain_class=Fecha_Actividad,
+            is_identity=True
         )

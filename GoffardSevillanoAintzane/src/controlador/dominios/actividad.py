@@ -1,9 +1,8 @@
 class Actividad:
-    def __init__(self, id_actividad, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones):
+    def __init__(self, id_actividad, tipo=None, nombre=None, descripcion=None, responsable=None, duracion=None, coste_economico=None, coste_horas=None, facturacion=None, resultados=None, valoracion=None, observaciones=None):
         self._id_actividad = id_actividad
         self._tipo = tipo
         self._nombre = nombre
-        self._fecha_ejecucion = fecha_ejecucion
         self._descripcion = descripcion
         self._responsable = responsable
         self._duracion = duracion
@@ -13,24 +12,6 @@ class Actividad:
         self._resultados = resultados
         self._valoracion = valoracion
         self._observaciones = observaciones
-
-    @staticmethod
-    def crear_actividad(id_actividad, tipo, nombre, fecha_ejecucion, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones):
-        return Actividad(
-            id_actividad=id_actividad,
-            tipo=tipo,
-            nombre=nombre,
-            fecha_ejecucion=fecha_ejecucion,
-            descripcion=descripcion,
-            responsable=responsable,
-            duracion=duracion,
-            coste_economico=coste_economico,
-            coste_horas=coste_horas,
-            facturacion=facturacion,
-            resultados=resultados,
-            valoracion=valoracion,
-            observaciones=observaciones
-        )
 
     @property
     def id_actividad(self):
@@ -47,7 +28,7 @@ class Actividad:
     @tipo.setter
     def tipo(self, tipo):
         self._tipo = tipo
-        
+
     @property
     def nombre(self):
         return self._nombre
@@ -55,14 +36,6 @@ class Actividad:
     @nombre.setter
     def nombre(self, nombre):
         self._nombre = nombre
-
-    @property
-    def fecha_ejecucion(self):
-        return self._fecha_ejecucion
-
-    @fecha_ejecucion.setter
-    def fecha_ejecucion(self, fecha_ejecucion):
-        self._fecha_ejecucion = fecha_ejecucion
 
     @property
     def descripcion(self):
@@ -136,10 +109,14 @@ class Actividad:
     def observaciones(self, observaciones):
         self._observaciones = observaciones
 
+    @staticmethod
+    def crear(id_actividad, tipo=None, nombre=None, descripcion=None, responsable=None, duracion=None, coste_economico=None, coste_horas=None, facturacion=None, resultados=None, valoracion=None, observaciones=None):
+        return Actividad(id_actividad, tipo, nombre, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones)
+
     def __str__(self):
-        return (
-            f"ID: {self.id_actividad}, Tipo: {self.tipo}, Nombre: {self.nombre}, Fecha ejecución: {self.fecha_ejecucion}, "
-            f"Descripción: {self.descripcion}, Responsable: {self.responsable}, Duración: {self.duracion}, "
-            f"Coste económico: {self.coste_economico}, Coste horas: {self.coste_horas}, Facturación: {self.facturacion}, "
-            f"Resultados: {self.resultados}, Valoración: {self.valoracion}, Observaciones: {self.observaciones}"
-        )
+        return (f"ID: {self.id_actividad}, Tipo: {self.tipo or 'N/A'}, Nombre: {self.nombre or 'N/A'}, "
+                f"Descripción: {self.descripcion or 'N/A'}, Responsable: {self.responsable or 'N/A'}, "
+                f"Duración: {self.duracion or 'N/A'}, Coste Económico: {self.coste_economico or 'N/A'}, "
+                f"Coste Horas: {self.coste_horas or 'N/A'}, Facturación: {self.facturacion or 'N/A'}, "
+                f"Resultados: {self.resultados or 'N/A'}, Valoración: {self.valoracion or 'N/A'}, "
+                f"Observaciones: {self.observaciones or 'N/A'}")

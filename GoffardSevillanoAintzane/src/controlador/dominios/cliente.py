@@ -1,70 +1,63 @@
-from abc import ABC, abstractmethod
-from .persona import Persona
-
-class Cliente(Persona):
-    def __init__(self, id_cliente, id_persona, tipo, razon_social, nif, fecha_registro, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais):
-        super().__init__(id_persona, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais)
+class Cliente:
+    def __init__(self, id_cliente, id_persona, tipo=None, razon_social=None, nif=None, fecha_registro=None):
         self._id_cliente = id_cliente
+        self._id_persona = id_persona
         self._tipo = tipo
         self._razon_social = razon_social
         self._nif = nif
         self._fecha_registro = fecha_registro
 
-    @staticmethod
-    def crear_cliente(id_cliente, id_persona, tipo, razon_social, nif, fecha_registro, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais):
-        return Cliente(
-            id_cliente=id_cliente,
-            id_persona=id_persona,
-            tipo=tipo,
-            razon_social=razon_social,
-            nif=nif,
-            fecha_registro=fecha_registro,
-            nombre=nombre,
-            apellido=apellido,
-            email=email,
-            telefono=telefono,
-            dni=dni,
-            direccion=direccion,
-            cp=cp,
-            poblacion=poblacion,
-            pais=pais
-        )
-
     @property
-    def id_cliente(self): return self._id_cliente
+    def id_cliente(self):
+        return self._id_cliente
+
     @id_cliente.setter
-    def id_cliente(self, id_cliente): self._id_cliente = id_cliente
+    def id_cliente(self, id_cliente):
+        self._id_cliente = id_cliente
 
     @property
-    def tipo(self): return self._tipo
+    def id_persona(self):
+        return self._id_persona
+
+    @id_persona.setter
+    def id_persona(self, id_persona):
+        self._id_persona = id_persona
+
+    @property
+    def tipo(self):
+        return self._tipo
+
     @tipo.setter
-    def tipo(self, tipo): self._tipo = tipo
+    def tipo(self, tipo):
+        self._tipo = tipo
 
     @property
-    def razon_social(self): return self._razon_social
+    def razon_social(self):
+        return self._razon_social
+
     @razon_social.setter
-    def razon_social(self, razon_social): self._razon_social = razon_social
+    def razon_social(self, razon_social):
+        self._razon_social = razon_social
 
     @property
-    def nif(self): return self._nif
+    def nif(self):
+        return self._nif
+
     @nif.setter
-    def nif(self, nif): self._nif = nif
+    def nif(self, nif):
+        self._nif = nif
 
     @property
-    def fecha_registro(self): return self._fecha_registro
+    def fecha_registro(self):
+        return self._fecha_registro
+
     @fecha_registro.setter
-    def fecha_registro(self, fecha_registro): self._fecha_registro = fecha_registro
+    def fecha_registro(self, fecha_registro):
+        self._fecha_registro = fecha_registro
 
-    @abstractmethod
-    def get_tipo(self) -> str:
-        pass
-
-    def get_tipo(self) -> str:
-        return "Cliente"
+    @staticmethod
+    def crear(id_cliente, id_persona, tipo=None, razon_social=None, nif=None, fecha_registro=None):
+        return Cliente(id_cliente, id_persona, tipo, razon_social, nif, fecha_registro)
 
     def __str__(self):
-        return (
-            f"ID Cliente: {self.id_cliente}, ID Persona: {self.id_persona}, Tipo: {self.tipo}, "
-            f"Razón social: {self.razon_social}, NIF: {self.nif}, Fecha registro: {self.fecha_registro}, "
-            f"{super().__str__()}"
-        )
+        return f"ID: {self.id_cliente}, ID Persona: {self.id_persona}, Tipo: {self.tipo or 'N/A'}, Razón Social: {self.razon_social or 'N/A'}, NIF: {self.nif or 'N/A'}, Fecha Registro: {self.fecha_registro or 'N/A'}"
