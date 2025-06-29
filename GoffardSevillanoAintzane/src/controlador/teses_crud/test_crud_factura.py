@@ -1,10 +1,22 @@
-from src.controlador.gestores.crud.crud_persona import crear_persona, eliminar_persona
-from src.controlador.gestores.crud.crud_cliente import crear_cliente, eliminar_cliente
-from src.controlador.gestores.crud.crud_factura import crear_factura, leer_factura, actualizar_factura, eliminar_factura
+import pytest
+from src.controlador.gestores.facturas import Facturas
+from src.controlador.gestores.clientes import Clientes
+from src.controlador.gestores.personas import Personas
 
-def test_crud_factura():
-    # Crear una persona para la clave foránea
-    persona = crear_persona(
+@pytest.fixture
+def gestor():
+    return Facturas()
+
+@pytest.fixture
+def gestor_clientes():
+    return Clientes()
+
+@pytest.fixture
+def gestor_personas():
+    return Personas()
+
+def test_crud_factura(gestor, gestor_clientes, gestor_personas):
+    persona = gestor_personas.agregar(
         id_persona=1,
         nombre="Ana",
         apellido="Gómez",
@@ -16,29 +28,21 @@ def test_crud_factura():
         poblacion="Barcelona",
         pais="España"
     )
-    print(f"Persona creada: {persona}")
-    if persona is None:
-        print("Error: No se pudo crear la persona. Finalizando la prueba.")
-        return
+    assert persona is not None
 
-    # Crear un cliente para la clave foránea
-    cliente = crear_cliente(
+    cliente = gestor_clientes.agregar(
         id_cliente=1,
-        id_persona=persona.id_persona,
+        id_persona=1,
         tipo="Premium",
         razon_social="Consultoría Gómez S.L.",
         nif="B12345678",
         fecha_registro="2025-06-27"
     )
-    print(f"Cliente creado: {cliente}")
-    if cliente is None:
-        print("Error: No se pudo crear el cliente. Finalizando la prueba.")
-        return
+    assert cliente is not None
 
-    # Crear una factura
-    factura = crear_factura(
+    factura = gestor.agregar(
         id_factura=1,
-        id_cliente=cliente.id_cliente,
+        id_cliente=1,
         tipo="Factura Ordinaria",
         nombre="Consultoría Gómez S.L.",
         direccion="Calle Luna 789, Barcelona",
@@ -54,48 +58,18 @@ def test_crud_factura():
         tipo_pago="Transferencia",
         irpf=15.0
     )
-    print(f"Factura creada: {factura}")
-    if factura is None:
-        print("Error: No se pudo crear la factura. Finalizando la prueba.")
-        return
+    assert factura is not None
 
-    # Leer la factura
-    factura_leida = leer_factura(factura.id_factura)
-    print(f"Factura leída: {factura_leida}")
+    factura_leida = gestor.buscar(1)
+    assert factura_leida.tipo == "Factura Ordinaria"
 
-    # Actualizar la factura
-    actualizado = actualizar_factura(
-        factura.id_factura,
-        tipo="Factura Rectificativa",
-        nombre="Consultoría Gómez S.L. Actualizada",
-        direccion="Calle Sol 456, Barcelona",
-        nif="B12345678",
-        fecha_facturacion="2025-06-28",
-        fecha_vencimiento="2025-07-28",
-        concepto="Servicios de consultoría actualizados",
-        responsable="María López",
-        iva=21.0,
-        coste_total=1452.0,
-        base_imponible=1200.0,
-        numero_factura="FAC-2025-002",
-        tipo_pago="Domiciliación",
-        irpf=15.0
-    )
-    print(f"Factura actualizada: {actualizado}")
-    factura_leida = leer_factura(factura.id_factura)
-    print(f"Factura después de actualizar: {factura_leida}")
+    actualizado = gestor.actualizar(1, tipo="Factura Rectificativa", nombre="Consultoría Gómez S.L. Actualizada")
+    assert actualizado
+    assert gestor.buscar(1).tipo == "Factura Rectificativa"
 
-    # Eliminar la factura
-    eliminado = eliminar_factura(factura.id_factura)
-    print(f"Factura eliminada: {eliminado}")
-    factura_leida = leer_factura(factura.id_factura)
-    print(f"Factura después de eliminar: {factura_leida}")
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
 
-    # Limpiar el cliente y la persona creados
-    eliminar_cliente(cliente.id_cliente)
-    print(f"Cliente eliminado: {cliente.id_cliente}")
-    eliminar_persona(persona.id_persona)
-    print(f"Persona eliminada: {persona.id_persona}")
-
-if __name__ == "__main__":
-    test_crud_factura()
+    gestor_clientes.eliminar(1)
+    gestor_personas.eliminar(1)

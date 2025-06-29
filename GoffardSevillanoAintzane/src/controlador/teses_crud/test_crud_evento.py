@@ -1,8 +1,13 @@
-from src.controlador.gestores.crud.crud_evento import crear_evento, leer_evento, actualizar_evento, eliminar_evento
+import pytest
+from src.controlador.gestores.eventos import Eventos
 
-def test_crud_evento():
+@pytest.fixture
+def gestor():
+    return Eventos()
+
+def test_crud_evento(gestor):
     # Crear un evento
-    evento = crear_evento(
+    evento = gestor.agregar(
         id_evento=1,
         nombre="Conferencia de Tecnología",
         tipo="Conferencia",
@@ -12,35 +17,22 @@ def test_crud_evento():
         poblacion="Madrid",
         tematica="Innovación Tecnológica"
     )
-    print(f"Evento creado: {evento}")
-    if evento is None:
-        print("Error: No se pudo crear el evento. Finalizando la prueba.")
-        return
+    assert evento is not None
 
     # Leer el evento
-    evento_leido = leer_evento(evento.id_evento)
-    print(f"Evento leído: {evento_leido}")
+    evento_leido = gestor.buscar(1)
+    assert evento_leido.nombre == "Conferencia de Tecnología"
 
     # Actualizar el evento
-    actualizado = actualizar_evento(
-        evento.id_evento,
-        nombre="Conferencia de Tecnología Actualizada",
-        tipo="Conferencia Internacional",
-        lugar="Palacio de Congresos",
-        fecha_comienzo="2025-07-02",
-        fecha_final="2025-07-04",
-        poblacion="Barcelona",
-        tematica="Innovación Tecnológica Avanzada"
-    )
-    print(f"Evento actualizado: {actualizado}")
-    evento_leido = leer_evento(evento.id_evento)
-    print(f"Evento después de actualizar: {evento_leido}")
+    actualizado = gestor.actualizar(1, nombre="Conferencia de Tecnología Actualizada", tipo="Conferencia Internacional")
+    assert actualizado
+    assert gestor.buscar(1).nombre == "Conferencia de Tecnología Actualizada"
+    assert gestor.buscar(1).tipo == "Conferencia Internacional"
 
     # Eliminar el evento
-    eliminado = eliminar_evento(evento.id_evento)
-    print(f"Evento eliminado: {eliminado}")
-    evento_leido = leer_evento(evento.id_evento)
-    print(f"Evento después de eliminar: {evento_leido}")
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
 
 if __name__ == "__main__":
-    test_crud_evento()
+    pytest.main()

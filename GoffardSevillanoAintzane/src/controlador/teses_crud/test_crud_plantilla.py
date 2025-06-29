@@ -1,8 +1,13 @@
-from src.controlador.gestores.crud.crud_plantilla import crear_plantilla, leer_plantilla, actualizar_plantilla, eliminar_plantilla
+import pytest
+from src.controlador.gestores.plantillas import Plantillas
 
-def test_crud_plantilla():
+@pytest.fixture
+def gestor():
+    return Plantillas()
+
+def test_crud_plantilla(gestor):
     # Crear una plantilla
-    plantilla = crear_plantilla(
+    plantilla = gestor.agregar(
         id_plantilla=1,
         titulo="Plantilla Informe",
         tipo="Informe",
@@ -10,33 +15,18 @@ def test_crud_plantilla():
         fecha_creacion="2025-06-27",
         ultima_modificacion="2025-06-27"
     )
-    print(f"Plantilla creada: {plantilla}")
-    if plantilla is None:
-        print("Error: No se pudo crear la plantilla. Finalizando la prueba.")
-        return
+    assert plantilla is not None
 
     # Leer la plantilla
-    plantilla_leida = leer_plantilla(plantilla.id_plantilla)
-    print(f"Plantilla leída: {plantilla_leida}")
+    plantilla_leida = gestor.buscar(1)
+    assert plantilla_leida.titulo == "Plantilla Informe"
 
     # Actualizar la plantilla
-    actualizado = actualizar_plantilla(
-        plantilla.id_plantilla,
-        titulo="Plantilla Informe Actualizado",
-        tipo="Informe Técnico",
-        contenido_base="Contenido base actualizado para informe técnico",
-        fecha_creacion="2025-06-27",
-        ultima_modificacion="2025-06-28"
-    )
-    print(f"Plantilla actualizada: {actualizado}")
-    plantilla_leida = leer_plantilla(plantilla.id_plantilla)
-    print(f"Plantilla después de actualizar: {plantilla_leida}")
+    actualizado = gestor.actualizar(1, titulo="Plantilla Informe Actualizado", tipo="Informe Técnico")
+    assert actualizado
+    assert gestor.buscar(1).titulo == "Plantilla Informe Actualizado"
 
     # Eliminar la plantilla
-    eliminado = eliminar_plantilla(plantilla.id_plantilla)
-    print(f"Plantilla eliminada: {eliminado}")
-    plantilla_leida = leer_plantilla(plantilla.id_plantilla)
-    print(f"Plantilla después de eliminar: {plantilla_leida}")
-
-if __name__ == "__main__":
-    test_crud_plantilla()
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None

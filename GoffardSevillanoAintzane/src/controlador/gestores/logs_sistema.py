@@ -1,26 +1,39 @@
-from src.controlador.gestores.base_gestor import BaseGestor
-from src.controlador.dominios.log_sistema import Log_Sistema
+from src.controlador.crud.crud_log_sistema import CrudLogSistema
+from src.controlador.validaciones.validar_log_sistema import validar_datos_log_sistema
 
-class Logs_Sistema(BaseGestor[Log_Sistema]):
+class LogsSistema:
     def __init__(self):
-        super().__init__(
-            table_name="log_sistema",
-            fields=["id_log_sistema", "fecha", "usuario_id", "accion", "descripcion", "nivel"],
-            id_field="id_log_sistema",
-            domain_class=Log_Sistema
-        )
+        self.crud = CrudLogSistema()
 
     def agregar(self, **kwargs):
-        """
-        Agrega un nuevo log_sistema, validando la clave foránea usuario_id.
-
-        Args:
-            **kwargs: Diccionario con los valores de los campos (id_log_sistema, usuario_id, etc.).
-
-        Returns:
-            Log_Sistema: Objeto Log_Sistema creado, o None si falla.
-        """
-        if "usuario_id" in kwargs and not self.validar_clave_foranea("usuario_id", kwargs["usuario_id"], "usuario", "id_usuario"):
-            print(f"Error: El usuario_id {kwargs['usuario_id']} no existe en la tabla usuario.")
+        id_log_sistema = kwargs.get("id_log_sistema")
+        if id_log_sistema is not None and self.crud.existe(id_log_sistema):
+            print(f"Error: Ya existe un log_sistema con id_log_sistema={id_log_sistema}.")
             return None
-        return super().agregar(**kwargs)
+        valido, msg = validar_datos_log_sistema(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
+            return None
+        return self.crud.crear(**kwargs)
+
+    def eliminar(self, id_log_sistema):
+        if not self.crud.existe(id_log_sistema):
+            print(f"Error: No existe un log_sistema con id_log_sistema={id_log_sistema}.")
+            return False
+        return self.crud.eliminar(id_log_sistema)
+
+    def buscar(self, id_log_sistema):
+        return self.crud.leer(id_log_sistema)
+
+    def actualizar(self, id_log_sistema, **kwargs):
+        valido, msg = validar_datos_log_sistema(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
+            return False
+        return self.crud.actualizar(id_log_sistema, **kwargs)
+
+    def existe(self, id_log_sistema):
+        return self.crud.existe(id_log_sistema)
+
+    def listar(self):
+        return self.crud.listar()

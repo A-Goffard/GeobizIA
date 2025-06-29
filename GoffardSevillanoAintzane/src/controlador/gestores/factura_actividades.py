@@ -1,29 +1,29 @@
-from src.controlador.gestores.base_gestor import BaseGestor
-from src.controlador.dominios.factura_actividad import FacturaActividad
+from src.controlador.crud.crud_factura_actividad import CrudFacturaActividad
+from src.controlador.validaciones.validar_factura_actividad import validar_datos_factura_actividad
 
-class FacturaActividades(BaseGestor[FacturaActividad]):
+class FacturaActividadGestor:
     def __init__(self):
-        super().__init__(
-            table_name="factura_actividad",
-            fields=["id_factura_actividad", "actividad_id", "factura_id", "monto", "fecha"],
-            id_field="id_factura_actividad",
-            domain_class=FacturaActividad
-        )
+        self.crud = CrudFacturaActividad()
 
-    def agregar(self, **kwargs):
-        if "actividad_id" in kwargs and not self.validar_clave_foranea("actividad_id", kwargs["actividad_id"], "actividad", "id_actividad"):
-            print(f"Error: El actividad_id {kwargs['actividad_id']} no existe en la tabla actividad.")
+    def agregar(self, id_factura, id_actividad):
+        if self.crud.buscar(id_factura, id_actividad):
+            print(f"Error: Ya existe la relación factura_actividad ({id_factura}, {id_actividad}).")
             return None
-        if "factura_id" in kwargs and not self.validar_clave_foranea("factura_id", kwargs["factura_id"], "factura", "id_factura"):
-            print(f"Error: El factura_id {kwargs['factura_id']} no existe en la tabla factura.")
+        datos = {"id_factura": id_factura, "id_actividad": id_actividad}
+        valido, msg = validar_datos_factura_actividad(datos)
+        if not valido:
+            print(f"Error: {msg}")
             return None
-        return super().agregar(**kwargs)
+        return self.crud.crear(id_factura, id_actividad)
 
-    def actualizar(self, id_objeto, **kwargs):
-        if "actividad_id" in kwargs and not self.validar_clave_foranea("actividad_id", kwargs["actividad_id"], "actividad", "id_actividad"):
-            print(f"Error: El actividad_id {kwargs['actividad_id']} no existe en la tabla actividad.")
-            return None
-        if "factura_id" in kwargs and not self.validar_clave_foranea("factura_id", kwargs["factura_id"], "factura", "id_factura"):
-            print(f"Error: El factura_id {kwargs['factura_id']} no existe en la tabla factura.")
-            return None
-        return super().actualizar(id_objeto, **kwargs)
+    def eliminar(self, id_factura, id_actividad):
+        if not self.crud.buscar(id_factura, id_actividad):
+            print(f"Error: No existe la relación factura_actividad ({id_factura}, {id_actividad}).")
+            return False
+        return self.crud.eliminar(id_factura, id_actividad)
+
+    def buscar(self, id_factura, id_actividad):
+        return self.crud.buscar(id_factura, id_actividad)
+
+    def listar(self):
+        return self.crud.listar()

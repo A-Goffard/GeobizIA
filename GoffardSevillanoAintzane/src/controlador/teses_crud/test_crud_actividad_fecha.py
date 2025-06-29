@@ -1,32 +1,52 @@
-from src.controlador.gestores.crud.crud_actividad_fecha import (
-    crear_actividad_fecha,
-    leer_actividad_fecha,
-    actualizar_actividad_fecha,
-    eliminar_actividad_fecha
-)
+import pytest
+from src.controlador.gestores.actividades_fecha import ActividadesFechaGestor
+from src.controlador.gestores.actividades import Actividades
+from src.controlador.gestores.fechas_actividad import Fechas_Actividad
 
-def test_crud_actividad_fecha():
-    # Crear
-    actividad_fecha = crear_actividad_fecha(
-        actividad_id=1,  # Asegúrate de que este ID exista en tu DB
-        fecha="2025-07-01"
+@pytest.fixture
+def gestor():
+    return ActividadesFechaGestor()
+
+@pytest.fixture
+def gestor_actividades():
+    return Actividades()
+
+@pytest.fixture
+def gestor_fechas():
+    return Fechas_Actividad()
+
+def test_crud_actividad_fecha(gestor, gestor_actividades, gestor_fechas):
+    actividad = gestor_actividades.agregar(
+        id_actividad=1,
+        tipo="Conferencia",
+        nombre="Evento Anual",
+        descripcion="Evento de tecnología",
+        responsable="Juan Pérez",
+        duracion="2 horas",
+        coste_economico=1000.0,
+        coste_horas=20.0,
+        facturacion=1500.0,
+        resultados="Éxito",
+        valoracion="Positiva",
+        observaciones="Ninguna"
     )
-    print(f"ActividadFecha creada: {actividad_fecha}")
-    if actividad_fecha is None:
-        print("Error: No se pudo crear la actividad_fecha.")
-        return
+    assert actividad is not None
 
-    # Leer
-    leida = leer_actividad_fecha(actividad_fecha.id_actividad_fecha)
-    print(f"Leída: {leida}")
+    fecha = gestor_fechas.agregar(
+        id_fecha=1,
+        fecha="2025-12-31"
+    )
+    assert fecha is not None
 
-    # Actualizar
-    actualizada = actualizar_actividad_fecha(actividad_fecha.id_actividad_fecha, fecha="2025-07-02")
-    print(f"Actualizada: {actualizada}")
+    actividad_fecha = gestor.agregar(1, 1)
+    assert actividad_fecha is not None
 
-    # Eliminar
-    eliminado = eliminar_actividad_fecha(actividad_fecha.id_actividad_fecha)
-    print(f"Eliminada: {eliminado}")
+    actividad_fecha_leida = gestor.buscar(1, 1)
+    assert actividad_fecha_leida is not None
 
-if __name__ == "__main__":
-    test_crud_actividad_fecha()
+    eliminado = gestor.eliminar(1, 1)
+    assert eliminado
+    assert gestor.buscar(1, 1) is None
+
+    gestor_actividades.eliminar(1)
+    gestor_fechas.eliminar(1)

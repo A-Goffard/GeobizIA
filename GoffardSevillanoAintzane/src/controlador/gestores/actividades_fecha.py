@@ -1,23 +1,29 @@
-from src.controlador.gestores.base_gestor import BaseGestor
-from src.controlador.dominios.actividad_fecha import ActividadFecha
+from src.controlador.crud.crud_actividad_fecha import CrudActividadFecha
+from src.controlador.validaciones.validar_actividad_fecha import validar_datos_actividad_fecha
 
-class ActividadesFecha(BaseGestor[ActividadFecha]):
+class ActividadesFechaGestor:
     def __init__(self):
-        super().__init__(
-            table_name="actividad_fecha",
-            fields=["id_actividad_fecha", "actividad_id", "fecha"],
-            id_field="id_actividad_fecha",
-            domain_class=ActividadFecha
-        )
+        self.crud = CrudActividadFecha()
 
-    def agregar(self, **kwargs):
-        if "actividad_id" in kwargs and not self.validar_clave_foranea("actividad_id", kwargs["actividad_id"], "actividad", "id_actividad"):
-            print(f"Error: El actividad_id {kwargs['actividad_id']} no existe en la tabla actividad.")
+    def agregar(self, id_actividad, id_fecha):
+        if self.crud.buscar(id_actividad, id_fecha):
+            print(f"Error: Ya existe la relación actividad_fecha ({id_actividad}, {id_fecha}).")
             return None
-        return super().agregar(**kwargs)
+        datos = {"id_actividad": id_actividad, "id_fecha": id_fecha}
+        valido, msg = validar_datos_actividad_fecha(datos)
+        if not valido:
+            print(f"Error: {msg}")
+            return None
+        return self.crud.crear(id_actividad, id_fecha)
 
-    def actualizar(self, id_objeto, **kwargs):
-        if "actividad_id" in kwargs and not self.validar_clave_foranea("actividad_id", kwargs["actividad_id"], "actividad", "id_actividad"):
-            print(f"Error: El actividad_id {kwargs['actividad_id']} no existe en la tabla actividad.")
-            return None
-        return super().actualizar(id_objeto, **kwargs)
+    def eliminar(self, id_actividad, id_fecha):
+        if not self.crud.buscar(id_actividad, id_fecha):
+            print(f"Error: No existe la relación actividad_fecha ({id_actividad}, {id_fecha}).")
+            return False
+        return self.crud.eliminar(id_actividad, id_fecha)
+
+    def buscar(self, id_actividad, id_fecha):
+        return self.crud.buscar(id_actividad, id_fecha)
+
+    def listar(self):
+        return self.crud.listar()

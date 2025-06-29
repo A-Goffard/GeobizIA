@@ -1,9 +1,21 @@
-from src.controlador.gestores.crud.crud_persona import crear_persona, eliminar_persona
-from src.controlador.gestores.crud.crud_cliente import crear_cliente, leer_cliente, actualizar_cliente, eliminar_cliente
+import sys
+import os
+import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+from src.controlador.gestores.clientes import Clientes
+from src.controlador.gestores.personas import Personas
 
-def test_crud_cliente():
-    # Crear una persona para la clave foránea
-    persona = crear_persona(
+@pytest.fixture
+def gestor():
+    return Clientes()
+
+@pytest.fixture
+def gestor_personas():
+    return Personas()
+
+def test_crud_cliente(gestor, gestor_personas):
+    # Crear persona necesaria para la clave foránea
+    persona = gestor_personas.agregar(
         id_persona=1,
         nombre="Ana",
         apellido="Gómez",
@@ -15,50 +27,28 @@ def test_crud_cliente():
         poblacion="Barcelona",
         pais="España"
     )
-    print(f"Persona creada: {persona}")
-    if persona is None:
-        print("Error: No se pudo crear la persona. Finalizando la prueba.")
-        return
+    assert persona is not None
 
-    # Crear un cliente
-    cliente = crear_cliente(
+    cliente = gestor.agregar(
         id_cliente=1,
-        id_persona=persona.id_persona,
+        id_persona=1,
         tipo="Empresa",
-        razon_social="Tech Solutions S.L.",
+        razon_social="Cliente S.L.",
         nif="B12345678",
-        fecha_registro="2025-06-27"
+        fecha_registro="2025-06-29"
     )
-    print(f"Cliente creado: {cliente}")
-    if cliente is None:
-        print("Error: No se pudo crear el cliente. Finalizando la prueba.")
-        return
+    assert cliente is not None
 
-    # Leer el cliente
-    cliente_leido = leer_cliente(cliente.id_cliente)
-    print(f"Cliente leído: {cliente_leido}")
+    cliente_leido = gestor.buscar(1)
+    assert cliente_leido.tipo == "Empresa"
 
-    # Actualizar el cliente
-    actualizado = actualizar_cliente(
-        cliente.id_cliente,
-        tipo="Individual",
-        razon_social=None,
-        nif="87654321B",
-        fecha_registro="2025-06-28"
-    )
-    print(f"Cliente actualizado: {actualizado}")
-    cliente_leido = leer_cliente(cliente.id_cliente)
-    print(f"Cliente después de actualizar: {cliente_leido}")
+    actualizado = gestor.actualizar(1, tipo="Particular")
+    assert actualizado
+    assert gestor.buscar(1).tipo == "Particular"
 
-    # Eliminar el cliente
-    eliminado = eliminar_cliente(cliente.id_cliente)
-    print(f"Cliente eliminado: {eliminado}")
-    cliente_leido = leer_cliente(cliente.id_cliente)
-    print(f"Cliente después de eliminar: {cliente_leido}")
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
 
-    # Limpiar la persona creada
-    eliminar_persona(persona.id_persona)
-    print(f"Persona eliminada: {persona.id_persona}")
-
-if __name__ == "__main__":
-    test_crud_cliente()
+    # Limpieza: eliminar la persona creada
+    gestor_personas.eliminar(1)

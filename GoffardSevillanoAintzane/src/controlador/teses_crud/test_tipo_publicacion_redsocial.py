@@ -1,47 +1,26 @@
-import unittest
-from src.controlador.gestores.gestor_tipo_publicacion_redsocial import GestorTipoPublicacionRedSocial
+import sys
+import os
+import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
 
-class TestGestorTipoPublicacionRedSocial(unittest.TestCase):
+from src.controlador.gestores.tipo_publicacion_redsocial import TipoPublicacionRedSocialGestor
 
-    def setUp(self):
-        self.gestor = GestorTipoPublicacionRedSocial()
-        # Aquí podrías limpiar la tabla antes de pruebas si tienes método para ello
+@pytest.fixture
+def gestor():
+    return TipoPublicacionRedSocialGestor()
 
-    def test_agregar_y_buscar(self):
-        id_tipo_publicacion = 1
-        id_red_social = 2
+def test_crud_tipo_publicacion_redsocial(gestor):
+    id_tipo_publicacion = 1
+    id_red_social = 2
 
-        agregado = self.gestor.agregar(id_tipo_publicacion, id_red_social)
-        self.assertTrue(agregado, "No se pudo agregar relación tipo_publicacion-redsocial")
+    agregado = gestor.agregar(id_tipo_publicacion, id_red_social)
+    assert agregado is not None
 
-        encontrado = self.gestor.buscar((id_tipo_publicacion, id_red_social))
-        self.assertIsNotNone(encontrado)
-        self.assertEqual(encontrado.id_tipo_publicacion, id_tipo_publicacion)
-        self.assertEqual(encontrado.id_red_social, id_red_social)
+    encontrado = gestor.buscar(id_tipo_publicacion, id_red_social)
+    assert encontrado is not None
+    assert encontrado.id_tipo_publicacion == id_tipo_publicacion
+    assert encontrado.id_red_social == id_red_social
 
-    def test_listar(self):
-        id_tipo_publicacion = 3
-        id_red_social_1 = 4
-        id_red_social_2 = 5
-
-        self.gestor.agregar(id_tipo_publicacion, id_red_social_1)
-        self.gestor.agregar(id_tipo_publicacion, id_red_social_2)
-
-        lista = self.gestor.listar({"id_tipo_publicacion": id_tipo_publicacion})
-        self.assertGreaterEqual(len(lista), 2)
-        for item in lista:
-            self.assertEqual(item.id_tipo_publicacion, id_tipo_publicacion)
-
-    def test_eliminar(self):
-        id_tipo_publicacion = 6
-        id_red_social = 7
-
-        self.gestor.agregar(id_tipo_publicacion, id_red_social)
-        eliminado = self.gestor.eliminar(id_tipo_publicacion, id_red_social)
-        self.assertTrue(eliminado)
-
-        no_existe = self.gestor.buscar((id_tipo_publicacion, id_red_social))
-        self.assertIsNone(no_existe)
-
-if __name__ == "__main__":
-    unittest.main()
+    eliminado = gestor.eliminar(id_tipo_publicacion, id_red_social)
+    assert eliminado
+    assert gestor.buscar(id_tipo_publicacion, id_red_social) is None

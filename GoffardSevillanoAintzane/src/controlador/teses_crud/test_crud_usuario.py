@@ -1,9 +1,17 @@
-from src.controlador.gestores.crud.crud_persona import crear_persona, eliminar_persona
-from src.controlador.gestores.crud.crud_usuario import crear_usuario, leer_usuario, actualizar_usuario, eliminar_usuario
+import pytest
+from src.controlador.gestores.usuarios import Usuarios
+from src.controlador.gestores.personas import Personas
 
-def test_crud_usuario():
-    # Crear una persona para la clave foránea
-    persona = crear_persona(
+@pytest.fixture
+def gestor():
+    return Usuarios()
+
+@pytest.fixture
+def gestor_personas():
+    return Personas()
+
+def test_crud_usuario(gestor, gestor_personas):
+    persona = gestor_personas.agregar(
         id_persona=1,
         nombre="Juan",
         apellido="Pérez",
@@ -15,50 +23,35 @@ def test_crud_usuario():
         poblacion="Madrid",
         pais="España"
     )
-    print(f"Persona creada: {persona}")
-    if persona is None:
-        print("Error: No se pudo crear la persona. Finalizando la prueba.")
-        return
+    assert persona is not None
 
-    # Crear un usuario
-    usuario = crear_usuario(
+    usuario = gestor.agregar(
         id_usuario=1,
-        id_persona=persona.id_persona,
+        id_persona=1,
         fecha_nacimiento="1990-01-01",
         rol="Usuario",
         preferencias="Notificaciones por email",
         password="contraseña123"
     )
-    print(f"Usuario creado: {usuario}")
-    if usuario is None:
-        print("Error: No se pudo crear el usuario. Finalizando la prueba.")
-        return
+    assert usuario is not None
 
-    # Leer el usuario
-    usuario_leido = leer_usuario(usuario.id_usuario)
-    print(f"Usuario leído: {usuario_leido}")
+    usuario_leido = gestor.buscar(1)
+    assert usuario_leido is not None
 
-    # Actualizar el usuario
-    actualizado = actualizar_usuario(
-        usuario.id_usuario,
+    actualizado = gestor.actualizar(
+        1,
         fecha_nacimiento="1990-02-02",
         rol="Administrador",
         preferencias="Notificaciones por SMS",
         password="nueva_contraseña456"
     )
-    print(f"Usuario actualizado: {actualizado}")
-    usuario_leido = leer_usuario(usuario.id_usuario)
-    print(f"Usuario después de actualizar: {usuario_leido}")
+    assert actualizado
+    usuario_leido = gestor.buscar(1)
+    assert usuario_leido.rol == "Administrador"
+    assert usuario_leido.preferencias == "Notificaciones por SMS"
 
-    # Eliminar el usuario
-    eliminado = eliminar_usuario(usuario.id_usuario)
-    print(f"Usuario eliminado: {eliminado}")
-    usuario_leido = leer_usuario(usuario.id_usuario)
-    print(f"Usuario después de eliminar: {usuario_leido}")
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
 
-    # Limpiar la persona creada
-    eliminar_persona(persona.id_persona)
-    print(f"Persona eliminada: {persona.id_persona}")
-
-if __name__ == "__main__":
-    test_crud_usuario()
+    gestor_personas.eliminar(1)

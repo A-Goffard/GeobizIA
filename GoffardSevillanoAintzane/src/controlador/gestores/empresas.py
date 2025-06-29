@@ -1,26 +1,39 @@
-from src.controlador.gestores.base_gestor import BaseGestor
-from src.controlador.dominios.empresa import Empresa
+from src.controlador.crud.crud_empresa import CrudEmpresa
+from src.controlador.validaciones.validar_empresa import validar_datos_empresa
 
-class Empresas(BaseGestor[Empresa]):
+class Empresas:
     def __init__(self):
-        super().__init__(
-            table_name="empresa",
-            fields=["id_empresa", "id_persona", "razon_social", "nif", "sector", "tamano", "fecha_registro"],
-            id_field="id_empresa",
-            domain_class=Empresa
-        )
+        self.crud = CrudEmpresa()
 
     def agregar(self, **kwargs):
-        """
-        Agrega una nueva empresa, validando la clave foránea id_persona.
-
-        Args:
-            **kwargs: Diccionario con los valores de los campos (id_empresa, id_persona, etc.).
-
-        Returns:
-            Empresa: Objeto Empresa creado, o None si falla.
-        """
-        if "id_persona" in kwargs and not self.validar_clave_foranea("id_persona", kwargs["id_persona"], "persona", "id_persona"):
-            print(f"Error: El id_persona {kwargs['id_persona']} no existe en la tabla persona.")
+        id_empresa = kwargs.get("id_empresa")
+        if id_empresa is not None and self.crud.existe(id_empresa):
+            print(f"Error: Ya existe una empresa con id_empresa={id_empresa}.")
             return None
-        return super().agregar(**kwargs)
+        valido, msg = validar_datos_empresa(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
+            return None
+        return self.crud.crear(**kwargs)
+
+    def eliminar(self, id_empresa):
+        if not self.crud.existe(id_empresa):
+            print(f"Error: No existe una empresa con id_empresa={id_empresa}.")
+            return False
+        return self.crud.eliminar(id_empresa)
+
+    def buscar(self, id_empresa):
+        return self.crud.leer(id_empresa)
+
+    def actualizar(self, id_empresa, **kwargs):
+        valido, msg = validar_datos_empresa(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
+            return False
+        return self.crud.actualizar(id_empresa, **kwargs)
+
+    def existe(self, id_empresa):
+        return self.crud.existe(id_empresa)
+
+    def listar(self):
+        return self.crud.listar()

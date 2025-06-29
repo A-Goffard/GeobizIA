@@ -1,8 +1,13 @@
-from src.controlador.gestores.crud.crud_proyecto import crear_proyecto, leer_proyecto, actualizar_proyecto, eliminar_proyecto
+import pytest
+from src.controlador.gestores.proyectos import Proyectos
 
-def test_crud_proyecto():
+@pytest.fixture
+def gestor():
+    return Proyectos()
+
+def test_crud_proyecto(gestor):
     # Crear un proyecto
-    proyecto = crear_proyecto(
+    proyecto = gestor.agregar(
         id_proyecto=1,
         nombre="Proyecto de Consultoría",
         descripcion="Consultoría para optimización de procesos",
@@ -14,37 +19,19 @@ def test_crud_proyecto():
         objetivos="Mejorar eficiencia operativa",
         presupuesto=50000.0
     )
-    print(f"Proyecto creado: {proyecto}")
-    if proyecto is None:
-        print("Error: No se pudo crear el proyecto. Finalizando la prueba.")
-        return
+    assert proyecto is not None
 
     # Leer el proyecto
-    proyecto_leido = leer_proyecto(proyecto.id_proyecto)
-    print(f"Proyecto leído: {proyecto_leido}")
+    proyecto_leido = gestor.buscar(1)
+    assert proyecto_leido.nombre == "Proyecto de Consultoría"
 
     # Actualizar el proyecto
-    actualizado = actualizar_proyecto(
-        proyecto.id_proyecto,
-        nombre="Proyecto de Consultoría Actualizado",
-        descripcion="Consultoría para optimización avanzada",
-        fecha_inicio="2025-07-01",
-        fecha_fin="2026-01-15",
-        poblacion="Barcelona",
-        responsable="María López",
-        estado="En Progreso",
-        objetivos="Mejorar eficiencia operativa y reducir costos",
-        presupuesto=60000.0
-    )
-    print(f"Proyecto actualizado: {actualizado}")
-    proyecto_leido = leer_proyecto(proyecto.id_proyecto)
-    print(f"Proyecto después de actualizar: {proyecto_leido}")
+    actualizado = gestor.actualizar(1, nombre="Proyecto de Consultoría Actualizado", presupuesto=60000.0)
+    assert actualizado
+    assert gestor.buscar(1).nombre == "Proyecto de Consultoría Actualizado"
+    assert gestor.buscar(1).presupuesto == 60000.0
 
     # Eliminar el proyecto
-    eliminado = eliminar_proyecto(proyecto.id_proyecto)
-    print(f"Proyecto eliminado: {eliminado}")
-    proyecto_leido = leer_proyecto(proyecto.id_proyecto)
-    print(f"Proyecto después de eliminar: {proyecto_leido}")
-
-if __name__ == "__main__":
-    test_crud_proyecto()
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None

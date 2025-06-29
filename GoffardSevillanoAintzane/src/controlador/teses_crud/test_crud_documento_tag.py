@@ -1,32 +1,32 @@
-import unittest
-from src.controlador.dominios.documento_tag import DocumentoTag
-from src.controlador.gestores.documentos_tag import DocumentosTag
+import pytest
+from src.controlador.gestores.documentos_tag import DocumentosTagGestor
 
-class TestDocumentosTag(unittest.TestCase):
+@pytest.fixture
+def gestor():
+    return DocumentosTagGestor()
 
-    def setUp(self):
-        self.gestor = DocumentosTag()
-        # Limpiar datos previos (si existe método para ello)
-        # Esto depende de tu implementación de BaseGestor, si no hay, considera hacerlo manualmente
-        # por ejemplo: self.gestor.eliminar_todos()
+def test_agregar_y_buscar(gestor):
+    # Crear relación
+    id_documento = 1
+    id_tag = 10
 
-    def test_agregar_y_buscar(self):
-        # Crear relación
-        id_documento = 1
-        id_tag = 10
+    agregado = gestor.agregar(id_documento, id_tag)
+    assert agregado is not None, "No se pudo agregar relación documento-tag"
 
-        agregado = self.gestor.agregar(id_documento=id_documento, id_tag=id_tag)
-        self.assertTrue(agregado, "No se pudo agregar relación documento-tag")
+    # Buscar relación
+    resultado = gestor.buscar(id_documento, id_tag)
+    assert resultado is not None, "No se encontró relación documento-tag"
+    assert resultado.id_documento == id_documento
+    assert resultado.id_tag == id_tag
 
-        # Buscar relación
-        resultado = self.gestor.buscar((id_documento, id_tag))
-        self.assertIsNotNone(resultado, "No se encontró relación documento-tag")
-        self.assertEqual(resultado.id_documento, id_documento)
-        self.assertEqual(resultado.id_tag, id_tag)
-
-    def test_listar_por_documento(self):
-        id_documento = 2
-        id_tag1 = 20
+def test_eliminar(gestor):
+    id_documento = 2
+    id_tag = 20
+    gestor.agregar(id_documento, id_tag)
+    eliminado = gestor.eliminar(id_documento, id_tag)
+    assert eliminado
+    resultado = gestor.buscar(id_documento, id_tag)
+    assert resultado is None
         id_tag2 = 21
 
         self.gestor.agregar(id_documento=id_documento, id_tag=id_tag1)

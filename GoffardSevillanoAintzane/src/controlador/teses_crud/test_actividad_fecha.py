@@ -1,6 +1,6 @@
 from src.controlador.gestores.actividades_fecha import ActividadesFecha
-from src.controlador.gestores.crud.crud_actividad import crear_actividad
-from src.controlador.gestores.crud.crud_fecha_actividad import crear_fecha_actividad
+from src.controlador.crud.crud_actividad import crear_actividad
+from src.controlador.crud.crud_fecha_actividad import crear_fecha_actividad
 
 def test_actividad_fecha():
     # Crear una actividad
@@ -33,8 +33,8 @@ def test_actividad_fecha():
     print(f"Relación actividad_fecha después de eliminar: {actividad_fecha_leida}")
 
     # Limpiar datos creados
-    from src.controlador.gestores.crud.crud_actividad import eliminar_actividad
-    from src.controlador.gestores.crud.crud_fecha_actividad import eliminar_fecha_actividad
+    from src.controlador.crud.crud_actividad import eliminar_actividad
+    from src.controlador.crud.crud_fecha_actividad import eliminar_fecha_actividad
     eliminar_actividad(actividad.id_actividad)
     eliminar_fecha_actividad(fecha.id_fecha)
 

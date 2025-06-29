@@ -1,32 +1,58 @@
-from src.controlador.gestores.crud.crud_actividad_evento import (
-    crear_actividad_evento,
-    leer_actividad_evento,
-    actualizar_actividad_evento,
-    eliminar_actividad_evento
-)
+import pytest
+from src.controlador.gestores.actividad_eventos import ActividadEventosGestor
+from src.controlador.gestores.actividades import Actividades
+from src.controlador.gestores.eventos import Eventos
 
-def test_crud_actividad_evento():
-    # Crear
-    ae = crear_actividad_evento(
-        actividad_id=1,  # Asegúrate de que exista
-        evento_id=1      # Asegúrate de que exista
+@pytest.fixture
+def gestor():
+    return ActividadEventosGestor()
+
+@pytest.fixture
+def gestor_actividades():
+    return Actividades()
+
+@pytest.fixture
+def gestor_eventos():
+    return Eventos()
+
+def test_crud_actividad_evento(gestor, gestor_actividades, gestor_eventos):
+    actividad = gestor_actividades.agregar(
+        id_actividad=1,
+        tipo="Conferencia",
+        nombre="Evento Anual",
+        descripcion="Evento de tecnología",
+        responsable="Juan Pérez",
+        duracion="2 horas",
+        coste_economico=1000.0,
+        coste_horas=20.0,
+        facturacion=1500.0,
+        resultados="Éxito",
+        valoracion="Positiva",
+        observaciones="Ninguna"
     )
-    print(f"ActividadEvento creada: {ae}")
-    if ae is None:
-        print("Error: No se pudo crear actividad_evento.")
-        return
+    assert actividad is not None
 
-    # Leer
-    leida = leer_actividad_evento(ae.id_actividad_evento)
-    print(f"Leída: {leida}")
+    evento = gestor_eventos.agregar(
+        id_evento=1,
+        nombre="Conferencia de Tecnología",
+        tipo="Conferencia",
+        lugar="Centro de Convenciones",
+        fecha_comienzo="2025-07-01",
+        fecha_final="2025-07-03",
+        poblacion="Madrid",
+        tematica="Innovación Tecnológica"
+    )
+    assert evento is not None
 
-    # Actualizar
-    actualizada = actualizar_actividad_evento(ae.id_actividad_evento, evento_id=2)
-    print(f"Actualizada: {actualizada}")
+    relacion = gestor.agregar(1, 1)
+    assert relacion is not None
 
-    # Eliminar
-    eliminada = eliminar_actividad_evento(ae.id_actividad_evento)
-    print(f"Eliminada: {eliminada}")
+    encontrada = gestor.buscar(1, 1)
+    assert encontrada is not None
 
-if __name__ == "__main__":
-    test_crud_actividad_evento()
+    eliminado = gestor.eliminar(1, 1)
+    assert eliminado
+    assert gestor.buscar(1, 1) is None
+
+    gestor_actividades.eliminar(1)
+    gestor_eventos.eliminar(1)

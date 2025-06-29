@@ -1,36 +1,36 @@
-from src.controlador.gestores.crud.crud_programacion import crear_programacion, leer_programacion, actualizar_programacion, eliminar_programacion
+import pytest
+from src.controlador.gestores.programaciones import Programaciones
 
-def test_crud_programacion():
+@pytest.fixture
+def gestor():
+    return Programaciones()
+
+def test_crud_programacion(gestor):
     # Crear una programación
-    programacion = crear_programacion(
-        fecha="2025-07-10",
-        hora_inicio="09:00",
-        hora_fin="11:00",
-        actividad="Limpieza de playa",
-        responsable="María López",
-        estado="Programado"
+    programacion = gestor.agregar(
+        id_programacion=1,
+        publicacion_id=1,
+        red_social_id=1,
+        fecha_programada="2025-07-10",
+        estado="Programado",
+        notificaciones="",
+        responsable="María López"
     )
-    print(f"Programación creada: {programacion}")
-
-    if programacion is None:
-        print("Error: No se pudo crear la programación. Finalizando la prueba.")
-        return
+    assert programacion is not None
 
     # Leer programación
-    programacion_leida = leer_programacion(programacion.id_programacion)
-    print(f"Programación leída: {programacion_leida}")
+    programacion_leida = gestor.buscar(1)
+    assert programacion_leida is not None
 
     # Actualizar programación
-    actualizar_programacion(
-        programacion.id_programacion,
-        hora_fin="11:30",
-        estado="Reprogramado"
-    )
-    programacion_actualizada = leer_programacion(programacion.id_programacion)
-    print(f"Programación actualizada: {programacion_actualizada}")
+    actualizado = gestor.actualizar(1, estado="Reprogramado")
+    assert actualizado
+    assert gestor.buscar(1).estado == "Reprogramado"
 
     # Eliminar programación
-    eliminar_programacion(programacion.id_programacion)
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
     programacion_eliminada = leer_programacion(programacion.id_programacion)
     print(f"Programación después de eliminar: {programacion_eliminada}")
 

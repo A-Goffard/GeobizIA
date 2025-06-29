@@ -1,10 +1,22 @@
-from src.controlador.gestores.crud.crud_persona import crear_persona, eliminar_persona
-from src.controlador.gestores.crud.crud_usuario import crear_usuario, eliminar_usuario
-from src.controlador.gestores.crud.crud_generadoria import crear_generador_IA, leer_generador_IA, actualizar_generador_IA, eliminar_generador_IA
+import pytest
+from src.controlador.gestores.generadoresia import GeneradoresIA
+from src.controlador.gestores.usuarios import Usuarios
+from src.controlador.gestores.personas import Personas
 
-def test_crud_generador_IA():
-    # Crear una persona para la clave foránea
-    persona = crear_persona(
+@pytest.fixture
+def gestor():
+    return GeneradoresIA()
+
+@pytest.fixture
+def gestor_usuarios():
+    return Usuarios()
+
+@pytest.fixture
+def gestor_personas():
+    return Personas()
+
+def test_crud_generador_ia(gestor, gestor_usuarios, gestor_personas):
+    persona = gestor_personas.agregar(
         id_persona=1,
         nombre="Laura",
         apellido="Sánchez",
@@ -16,64 +28,39 @@ def test_crud_generador_IA():
         poblacion="Sevilla",
         pais="España"
     )
-    print(f"Persona creada: {persona}")
-    if persona is None:
-        print("Error: No se pudo crear la persona. Finalizando la prueba.")
-        return
+    assert persona is not None
 
-    # Crear un usuario para la clave foránea
-    usuario = crear_usuario(
+    usuario = gestor_usuarios.agregar(
         id_usuario=1,
-        id_persona=persona.id_persona,
+        id_persona=1,
         fecha_nacimiento="1995-03-15",
         rol="Analista",
         preferencias="Notificaciones por email",
         password="password123"
     )
-    print(f"Usuario creado: {usuario}")
-    if usuario is None:
-        print("Error: No se pudo crear el usuario. Finalizando la prueba.")
-        return
+    assert usuario is not None
 
-    # Crear un generador_IA
-    generador = crear_generador_IA(
-        id_generador_IA=1,
-        id_usuario=usuario.id_usuario,
+    generador = gestor.agregar(
+        id_generador_ia=1,
         nombre="Generador de Texto",
         descripcion="Generador de texto basado en IA",
-        tipo="Texto"
+        empresa_id=None,
+        configuraciones=None,
+        ejemplos_estilo=None,
+        ultima_generacion=None
     )
-    print(f"GeneradorIA creado: {generador}")
-    if generador is None:
-        print("Error: No se pudo crear el generador_IA. Finalizando la prueba.")
-        return
+    assert generador is not None
 
-    # Leer el generador_IA
-    generador_leido = leer_generador_IA(generador.id_generador_IA)
-    print(f"GeneradorIA leído: {generador_leido}")
+    generador_leido = gestor.buscar(1)
+    assert generador_leido.nombre == "Generador de Texto"
 
-    # Actualizar el generador_IA
-    actualizado = actualizar_generador_IA(
-        generador.id_generador_IA,
-        nombre="Generador de Imágenes",
-        descripcion="Generador de imágenes basado en IA",
-        tipo="Imágenes"
-    )
-    print(f"GeneradorIA actualizado: {actualizado}")
-    generador_leido = leer_generador_IA(generador.id_generador_IA)
-    print(f"GeneradorIA después de actualizar: {generador_leido}")
+    actualizado = gestor.actualizar(1, nombre="Generador de Imágenes", descripcion="Generador de imágenes basado en IA")
+    assert actualizado
+    assert gestor.buscar(1).nombre == "Generador de Imágenes"
 
-    # Eliminar el generador_IA
-    eliminado = eliminar_generador_IA(generador.id_generador_IA)
-    print(f"GeneradorIA eliminado: {eliminado}")
-    generador_leido = leer_generador_IA(generador.id_generador_IA)
-    print(f"GeneradorIA después de eliminar: {generador_leido}")
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
 
-    # Limpiar el usuario y la persona creados
-    eliminar_usuario(usuario.id_usuario)
-    print(f"Usuario eliminado: {usuario.id_usuario}")
-    eliminar_persona(persona.id_persona)
-    print(f"Persona eliminada: {persona.id_persona}")
-
-if __name__ == "__main__":
-    test_crud_generador_IA()
+    gestor_usuarios.eliminar(1)
+    gestor_personas.eliminar(1)

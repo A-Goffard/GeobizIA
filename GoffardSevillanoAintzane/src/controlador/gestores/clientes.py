@@ -1,17 +1,39 @@
-from src.controlador.gestores.base_gestor import BaseGestor
-from src.controlador.dominios.cliente import Cliente
+from src.controlador.crud.crud_cliente import CrudCliente
+from src.controlador.validaciones.validar_cliente import validar_datos_cliente
 
-class Clientes(BaseGestor[Cliente]):
+class Clientes:
     def __init__(self):
-        super().__init__(
-            table_name="cliente",
-            fields=["id_cliente", "id_persona", "tipo", "razon_social", "nif", "fecha_registro"],
-            id_field="id_cliente",
-            domain_class=Cliente
-        )
+        self.crud = CrudCliente()
 
     def agregar(self, **kwargs):
-        if "id_persona" in kwargs and not self.validar_clave_foranea("id_persona", kwargs["id_persona"], "persona", "id_persona"):
-            print(f"Error: El id_persona {kwargs['id_persona']} no existe en la tabla persona.")
+        id_cliente = kwargs.get("id_cliente")
+        if id_cliente is not None and self.crud.existe(id_cliente):
+            print(f"Error: Ya existe un cliente con id_cliente={id_cliente}.")
             return None
-        return super().agregar(**kwargs)
+        valido, msg = validar_datos_cliente(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
+            return None
+        return self.crud.crear(**kwargs)
+
+    def eliminar(self, id_cliente):
+        if not self.crud.existe(id_cliente):
+            print(f"Error: No existe un cliente con id_cliente={id_cliente}.")
+            return False
+        return self.crud.eliminar(id_cliente)
+
+    def buscar(self, id_cliente):
+        return self.crud.leer(id_cliente)
+
+    def actualizar(self, id_cliente, **kwargs):
+        valido, msg = validar_datos_cliente(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
+            return False
+        return self.crud.actualizar(id_cliente, **kwargs)
+
+    def existe(self, id_cliente):
+        return self.crud.existe(id_cliente)
+
+    def listar(self):
+        return self.crud.listar()

@@ -1,36 +1,34 @@
-from src.controlador.gestores.crud.crud_tema_ambiental import crear_tema_ambiental, leer_tema_ambiental, actualizar_tema_ambiental, eliminar_tema_ambiental
+import sys
+import os
+import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
 
-def test_crud_tema_ambiental():
-    # Crear un tema_ambiental
-    tema_ambiental = crear_tema_ambiental(
+from src.controlador.gestores.temas_ambientales import Temas_Ambientales
+
+@pytest.fixture
+def gestor():
+    return Temas_Ambientales()
+
+def test_crud_tema_ambiental(gestor):
+    tema = gestor.agregar(
         id_tema_ambiental=1,
         nombre="Cambio Climático",
-        descripcion="Tema relacionado con el calentamiento global y sus impactos"
+        descripcion="Tema relacionado con el calentamiento global y sus impactos",
+        relevancia="Alta"
     )
-    print(f"Tema_Ambiental creado: {tema_ambiental}")
-    if tema_ambiental is None:
-        print("Error: No se pudo crear el tema_ambiental. Finalizando la prueba.")
-        return
+    assert tema is not None
 
-    # Leer el tema_ambiental
-    tema_ambiental_leido = leer_tema_ambiental(tema_ambiental.id_tema_ambiental)
-    print(f"Tema_Ambiental leído: {tema_ambiental_leido}")
+    tema_leido = gestor.buscar(1)
+    assert tema_leido.nombre == "Cambio Climático"
 
-    # Actualizar el tema_ambiental
-    actualizado = actualizar_tema_ambiental(
-        tema_ambiental.id_tema_ambiental,
-        nombre="Cambio Climático Actualizado",
-        descripcion="Tema actualizado sobre el calentamiento global y sus impactos"
-    )
-    print(f"Tema_Ambiental actualizado: {actualizado}")
-    tema_ambiental_leido = leer_tema_ambiental(tema_ambiental.id_tema_ambiental)
-    print(f"Tema_Ambiental después de actualizar: {tema_ambiental_leido}")
+    actualizado = gestor.actualizar(1, nombre="Cambio Climático Actualizado", relevancia="Media")
+    assert actualizado
+    assert gestor.buscar(1).nombre == "Cambio Climático Actualizado"
+    assert gestor.buscar(1).relevancia == "Media"
 
-    # Eliminar el tema_ambiental
-    eliminado = eliminar_tema_ambiental(tema_ambiental.id_tema_ambiental)
-    print(f"Tema_Ambiental eliminado: {eliminado}")
-    tema_ambiental_leido = leer_tema_ambiental(tema_ambiental.id_tema_ambiental)
-    print(f"Tema_Ambiental después de eliminar: {tema_ambiental_leido}")
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
 
 if __name__ == "__main__":
     test_crud_tema_ambiental()

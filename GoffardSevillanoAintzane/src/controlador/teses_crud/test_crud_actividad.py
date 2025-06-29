@@ -1,8 +1,13 @@
-from src.controlador.gestores.crud.crud_actividad import crear_actividad, leer_actividad, actualizar_actividad, eliminar_actividad
+import pytest
+from src.controlador.gestores.actividades import Actividades
 
-def test_crud_actividad():
+@pytest.fixture
+def gestor():
+    return Actividades()
+
+def test_crud_actividad(gestor):
     # Crear una actividad
-    actividad = crear_actividad(
+    actividad = gestor.agregar(
         id_actividad=1,
         tipo="Conferencia",
         nombre="Evento Anual",
@@ -16,18 +21,15 @@ def test_crud_actividad():
         valoracion="Positiva",
         observaciones="Ninguna"
     )
-    print(f"Actividad creada: {actividad}")
-    if actividad is None:
-        print("Error: No se pudo crear la actividad. Finalizando la prueba.")
-        return
+    assert actividad is not None
 
     # Leer la actividad
-    actividad_leida = leer_actividad(actividad.id_actividad)
-    print(f"Actividad leída: {actividad_leida}")
+    actividad_leida = gestor.buscar(1)
+    assert actividad_leida.nombre == "Evento Anual"
 
     # Actualizar la actividad
-    actualizado = actualizar_actividad(
-        actividad.id_actividad,
+    actualizado = gestor.actualizar(
+        1,
         tipo="Taller",
         nombre="Taller de Innovación",
         descripcion="Taller práctico",
@@ -40,15 +42,13 @@ def test_crud_actividad():
         valoracion="Excelente",
         observaciones="Buena participación"
     )
-    print(f"Actividad actualizada: {actualizado}")
-    actividad_leida = leer_actividad(actividad.id_actividad)
-    print(f"Actividad después de actualizar: {actividad_leida}")
+    assert actualizado
+    assert gestor.buscar(1).nombre == "Taller de Innovación"
 
     # Eliminar la actividad
-    eliminado = eliminar_actividad(actividad.id_actividad)
-    print(f"Actividad eliminada: {eliminado}")
-    actividad_leida = leer_actividad(actividad.id_actividad)
-    print(f"Actividad después de eliminar: {actividad_leida}")
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
 
 if __name__ == "__main__":
     test_crud_actividad()

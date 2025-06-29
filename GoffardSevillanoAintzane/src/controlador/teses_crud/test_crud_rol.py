@@ -1,29 +1,25 @@
-from src.controlador.gestores.crud.crud_rol import crear_rol, leer_rol, actualizar_rol, eliminar_rol
+import sys
+import os
+import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
 
-def test_crud_rol():
-    # Crear un rol
-    rol = crear_rol(id_rol=1, nombre="Administrador", descripcion="Rol con permisos completos")
-    print(f"Rol creado: {rol}")
-    
-    if rol is None:
-        print("Error: No se pudo crear el rol. Finalizando la prueba.")
-        return
+from src.controlador.gestores.roles import Roles
 
-    # Leer el rol
-    rol_leido = leer_rol(rol.id_rol)
-    print(f"Rol leído: {rol_leido}")
+@pytest.fixture
+def gestor():
+    return Roles()
 
-    # Actualizar el rol
-    actualizado = actualizar_rol(rol.id_rol, nombre="Super Administrador", descripcion="Rol actualizado")
-    print(f"Rol actualizado: {actualizado}")
-    rol_leido = leer_rol(rol.id_rol)
-    print(f"Rol después de actualizar: {rol_leido}")
+def test_crud_rol(gestor):
+    rol = gestor.agregar(id_rol=1, nombre="Admin", descripcion="Rol administrativo")
+    assert rol is not None
 
-    # Eliminar el rol
-    eliminado = eliminar_rol(rol.id_rol)
-    print(f"Rol eliminado: {eliminado}")
-    rol_leido = leer_rol(rol.id_rol)
-    print(f"Rol después de eliminar: {rol_leido}")
+    rol_leido = gestor.buscar(1)
+    assert rol_leido.nombre == "Admin"
 
-if __name__ == "__main__":
-    test_crud_rol()
+    actualizado = gestor.actualizar(1, nombre="SuperAdmin")
+    assert actualizado
+    assert gestor.buscar(1).nombre == "SuperAdmin"
+
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None

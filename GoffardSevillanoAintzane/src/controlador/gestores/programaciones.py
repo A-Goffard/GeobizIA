@@ -1,29 +1,39 @@
-from src.controlador.gestores.base_gestor import BaseGestor
-from src.controlador.dominios.programacion import Programacion
+from src.controlador.crud.crud_programacion import CrudProgramacion
+from src.controlador.validaciones.validar_programacion import validar_datos_programacion
 
-class Programaciones(BaseGestor[Programacion]):
+class Programaciones:
     def __init__(self):
-        super().__init__(
-            table_name="programacion",
-            fields=["id_programacion", "publicacion_id", "red_social_id", "fecha_programada", "estado", "notificaciones", "responsable"],
-            id_field="id_programacion",
-            domain_class=Programacion
-        )
+        self.crud = CrudProgramacion()
 
     def agregar(self, **kwargs):
-            if "publicacion_id" in kwargs and not self.validar_clave_foranea("publicacion_id", kwargs["publicacion_id"], "publicacion", "id_publicacion"):
-                print(f"Error: El publicacion_id {kwargs['publicacion_id']} no existe en la tabla publicacion.")
-                return None
-            if "red_social_id" in kwargs and not self.validar_clave_foranea("red_social_id", kwargs["red_social_id"], "redsocial", "id_red_social"):
-                print(f"Error: El red_social_id {kwargs['red_social_id']} no existe en la tabla redsocial.")
-                return None
-            return super().agregar(**kwargs)
+        id_programacion = kwargs.get("id_programacion")
+        if id_programacion is not None and self.crud.existe(id_programacion):
+            print(f"Error: Ya existe una programación con id_programacion={id_programacion}.")
+            return None
+        valido, msg = validar_datos_programacion(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
+            return None
+        return self.crud.crear(**kwargs)
+
+    def eliminar(self, id_programacion):
+        if not self.crud.existe(id_programacion):
+            print(f"Error: No existe una programación con id_programacion={id_programacion}.")
+            return False
+        return self.crud.eliminar(id_programacion)
+
+    def buscar(self, id_programacion):
+        return self.crud.leer(id_programacion)
 
     def actualizar(self, id_programacion, **kwargs):
-        if "publicacion_id" in kwargs and not self.validar_clave_foranea("publicacion_id", kwargs["publicacion_id"], "publicacion", "id_publicacion"):
-            print(f"Error: El publicacion_id {kwargs['publicacion_id']} no existe en la tabla publicacion.")
+        valido, msg = validar_datos_programacion(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
             return False
-        if "red_social_id" in kwargs and not self.validar_clave_foranea("red_social_id", kwargs["red_social_id"], "redsocial", "id_red_social"):
-            print(f"Error: El red_social_id {kwargs['red_social_id']} no existe en la tabla redsocial.")
-            return False
-        return super().actualizar(id_programacion, **kwargs)
+        return self.crud.actualizar(id_programacion, **kwargs)
+
+    def existe(self, id_programacion):
+        return self.crud.existe(id_programacion)
+
+    def listar(self):
+        return self.crud.listar()

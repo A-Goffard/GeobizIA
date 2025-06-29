@@ -1,12 +1,32 @@
-from src.controlador.gestores.crud.crud_persona import crear_persona, eliminar_persona
-from src.controlador.gestores.crud.crud_usuario import crear_usuario, eliminar_usuario
-from src.controlador.gestores.crud.crud_generadoria import crear_generador_IA, eliminar_generador_IA
-from src.controlador.gestores.crud.crud_tipo_publicacion import crear_tipo_publicacion, eliminar_tipo_publicacion
-from src.controlador.gestores.crud.crud_publicacion import crear_publicacion, leer_publicacion, actualizar_publicacion, eliminar_publicacion
+import pytest
+from src.controlador.gestores.publicaciones import Publicaciones
+from src.controlador.gestores.usuarios import Usuarios
+from src.controlador.gestores.personas import Personas
+from src.controlador.gestores.generadoresia import GeneradoresIA
+from src.controlador.gestores.tipos_publicacion import Tipos_Publicacion
 
-def test_crud_publicacion():
-    # Crear una persona para la clave foránea
-    persona = crear_persona(
+@pytest.fixture
+def gestor():
+    return Publicaciones()
+
+@pytest.fixture
+def gestor_usuarios():
+    return Usuarios()
+
+@pytest.fixture
+def gestor_personas():
+    return Personas()
+
+@pytest.fixture
+def gestor_generadores():
+    return GeneradoresIA()
+
+@pytest.fixture
+def gestor_tipos():
+    return Tipos_Publicacion()
+
+def test_crud_publicacion(gestor, gestor_usuarios, gestor_personas, gestor_generadores, gestor_tipos):
+    persona = gestor_personas.agregar(
         id_persona=1,
         nombre="Marta",
         apellido="Rodríguez",
@@ -18,91 +38,65 @@ def test_crud_publicacion():
         poblacion="Madrid",
         pais="España"
     )
-    print(f"Persona creada: {persona}")
-    if persona is None:
-        print("Error: No se pudo crear la persona. Finalizando la prueba.")
-        return
+    assert persona is not None
 
-    # Crear un usuario para la clave foránea
-    usuario = crear_usuario(
+    usuario = gestor_usuarios.agregar(
         id_usuario=1,
-        id_persona=persona.id_persona,
+        id_persona=1,
         fecha_nacimiento="1990-05-20",
         rol="Editor",
         preferencias="Notificaciones por email",
         password="password456"
     )
-    print(f"Usuario creado: {usuario}")
-    if usuario is None:
-        print("Error: No se pudo crear el usuario. Finalizando la prueba.")
-        return
+    assert usuario is not None
 
-    # Crear un generador_IA para la clave foránea
-    generador = crear_generador_IA(
-        id_generador_IA=1,
-        id_usuario=usuario.id_usuario,
+    generador = gestor_generadores.agregar(
+        id_generador_ia=1,
         nombre="Generador de Texto",
         descripcion="Generador de texto basado en IA",
-        tipo="Texto"
+        empresa_id=None,
+        configuraciones=None,
+        ejemplos_estilo=None,
+        ultima_generacion=None
     )
-    print(f"GeneradorIA creado: {generador}")
-    if generador is None:
-        print("Error: No se pudo crear el generador_IA. Finalizando la prueba.")
-        return
+    assert generador is not None
 
-    # Crear un tipo_publicacion para la clave foránea
-    tipo_publicacion = crear_tipo_publicacion(
+    tipo_publicacion = gestor_tipos.agregar(
         id_tipo_publicacion=1,
         nombre="Artículo",
         descripcion="Publicación de tipo artículo"
     )
-    print(f"Tipo_Publicacion creado: {tipo_publicacion}")
-    if tipo_publicacion is None:
-        print("Error: No se pudo crear el tipo_publicacion. Finalizando la prueba.")
-        return
+    assert tipo_publicacion is not None
 
-    # Crear una publicación
-    publicacion = crear_publicacion(
+    publicacion = gestor.agregar(
         id_publicacion=1,
-        id_generador_IA=generador.id_generador_IA,
-        id_tipo_publicacion=tipo_publicacion.id_tipo_publicacion,
+        titulo="Título de prueba",
         contenido="Este es un artículo generado por IA",
-        fecha_creacion="2025-06-27"
+        autor="Marta",
+        fecha_creacion="2025-06-27",
+        estado="borrador",
+        tags="",
+        palabras_clave="",
+        generada_por_ia=True,
+        id_generador_ia=1,
+        feedback_empresa="",
+        id_tipo_publicacion=1,
+        id_plantilla=None
     )
-    print(f"Publicación creada: {publicacion}")
-    if publicacion is None:
-        print("Error: No se pudo crear la publicación. Finalizando la prueba.")
-        return
+    assert publicacion is not None
 
-    # Leer la publicación
-    publicacion_leida = leer_publicacion(publicacion.id_publicacion)
-    print(f"Publicación leída: {publicacion_leida}")
+    publicacion_leida = gestor.buscar(1)
+    assert publicacion_leida is not None
 
-    # Actualizar la publicación
-    actualizado = actualizar_publicacion(
-        publicacion.id_publicacion,
-        contenido="Este es un artículo actualizado generado por IA",
-        fecha_creacion="2025-06-28"
-    )
-    print(f"Publicación actualizada: {actualizado}")
-    publicacion_leida = leer_publicacion(publicacion.id_publicacion)
-    print(f"Publicación después de actualizar: {publicacion_leida}")
+    actualizado = gestor.actualizar(1, contenido="Este es un artículo actualizado generado por IA")
+    assert actualizado
+    assert gestor.buscar(1).contenido == "Este es un artículo actualizado generado por IA"
 
-    # Eliminar la publicación
-    eliminado = eliminar_publicacion(publicacion.id_publicacion)
-    print(f"Publicación eliminada: {eliminado}")
-    publicacion_leida = leer_publicacion(publicacion.id_publicacion)
-    print(f"Publicación después de eliminar: {publicacion_leida}")
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
 
-    # Limpiar las entidades creadas
-    eliminar_tipo_publicacion(tipo_publicacion.id_tipo_publicacion)
-    print(f"Tipo_Publicacion eliminado: {tipo_publicacion.id_tipo_publicacion}")
-    eliminar_generador_IA(generador.id_generador_IA)
-    print(f"GeneradorIA eliminado: {generador.id_generador_IA}")
-    eliminar_usuario(usuario.id_usuario)
-    print(f"Usuario eliminado: {usuario.id_usuario}")
-    eliminar_persona(persona.id_persona)
-    print(f"Persona eliminada: {persona.id_persona}")
-
-if __name__ == "__main__":
-    test_crud_publicacion()
+    gestor_tipos.eliminar(1)
+    gestor_generadores.eliminar(1)
+    gestor_usuarios.eliminar(1)
+    gestor_personas.eliminar(1)

@@ -1,38 +1,24 @@
-from src.controlador.gestores.crud.crud_fecha_actividad import crear_fecha_actividad, leer_fecha_actividad, actualizar_fecha_actividad, eliminar_fecha_actividad
+import pytest
+from src.controlador.gestores.fechas_actividad import Fechas_Actividad
 
-def test_crud_fecha_actividad():
-    # Crear una fecha_actividad
-    fecha_actividad = crear_fecha_actividad(
+@pytest.fixture
+def gestor():
+    return Fechas_Actividad()
+
+def test_crud_fecha_actividad(gestor):
+    fecha_actividad = gestor.agregar(
+        id_fecha=1,
         fecha="2025-07-01"
     )
-    print(f"Fecha_Actividad creada: {fecha_actividad}")
-    if fecha_actividad is None:
-        print("Error: No se pudo crear la fecha_actividad. Finalizando la prueba.")
-        return
+    assert fecha_actividad is not None
 
-    # Leer la fecha_actividad
-    fecha_actividad_leida = leer_fecha_actividad(fecha_actividad.id_fecha)
-    print(f"Fecha_Actividad leída: {fecha_actividad_leida}")
+    fecha_actividad_leida = gestor.buscar(1)
+    assert fecha_actividad_leida.fecha == "2025-07-01"
 
-    # Actualizar la fecha_actividad
-    actualizado = actualizar_fecha_actividad(
-        fecha_actividad.id_fecha,
-        fecha="2025-07-02"
-    )
-    print(f"Fecha_Actividad actualizada: {actualizado}")
-    fecha_actividad_leida = leer_fecha_actividad(fecha_actividad.id_fecha)
-    print(f"Fecha_Actividad después de actualizar: {fecha_actividad_leida}")
+    actualizado = gestor.actualizar(1, fecha="2025-07-02")
+    assert actualizado
+    assert gestor.buscar(1).fecha == "2025-07-02"
 
-    # Eliminar la fecha_actividad
-    eliminado = eliminar_fecha_actividad(fecha_actividad.id_fecha)
-    print(f"Fecha_Actividad eliminada: {eliminado}")
-    fecha_actividad_leida = leer_fecha_actividad(fecha_actividad.id_fecha)
-    print(f"Fecha_Actividad después de eliminar: {fecha_actividad_leida}")
-
-if __name__ == "__main__":
-    test_crud_fecha_actividad()
-    
-    
-    
-    # cd "C:/Aintzane/Data Analisis/GeobizIA/GoffardSevillanoAintzane"
-    # & C:/Users/Alumno/.virtualenvs/pipenv-0E7nQMdt/Scripts/python.exe -m src.controlador.teses_crud.test_crud_fecha_actividad
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None

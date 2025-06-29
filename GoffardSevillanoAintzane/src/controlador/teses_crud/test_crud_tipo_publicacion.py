@@ -1,36 +1,36 @@
-from src.controlador.gestores.crud.crud_tipo_publicacion import crear_tipo_publicacion, leer_tipo_publicacion, actualizar_tipo_publicacion, eliminar_tipo_publicacion
+import sys
+import os
+import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
 
-def test_crud_tipo_publicacion():
+from src.controlador.gestores.tipos_publicacion import Tipos_Publicacion
+
+@pytest.fixture
+def gestor():
+    return Tipos_Publicacion()
+
+def test_crud_tipo_publicacion(gestor):
     # Crear un tipo_publicacion
-    tipo_publicacion = crear_tipo_publicacion(
+    tipo = gestor.agregar(
         id_tipo_publicacion=1,
         nombre="Artículo",
         descripcion="Publicación de tipo artículo"
     )
-    print(f"Tipo_Publicacion creado: {tipo_publicacion}")
-    if tipo_publicacion is None:
-        print("Error: No se pudo crear el tipo_publicacion. Finalizando la prueba.")
-        return
+    assert tipo is not None
 
     # Leer el tipo_publicacion
-    tipo_publicacion_leido = leer_tipo_publicacion(tipo_publicacion.id_tipo_publicacion)
-    print(f"Tipo_Publicacion leído: {tipo_publicacion_leido}")
+    tipo_leido = gestor.buscar(1)
+    assert tipo_leido.nombre == "Artículo"
 
     # Actualizar el tipo_publicacion
-    actualizado = actualizar_tipo_publicacion(
-        tipo_publicacion.id_tipo_publicacion,
-        nombre="Informe",
-        descripcion="Publicación de tipo informe técnico"
-    )
-    print(f"Tipo_Publicacion actualizado: {actualizado}")
-    tipo_publicacion_leido = leer_tipo_publicacion(tipo_publicacion.id_tipo_publicacion)
-    print(f"Tipo_Publicacion después de actualizar: {tipo_publicacion_leido}")
+    actualizado = gestor.actualizar(1, nombre="Informe", descripcion="Publicación de tipo informe técnico")
+    assert actualizado
+    assert gestor.buscar(1).nombre == "Informe"
 
     # Eliminar el tipo_publicacion
-    eliminado = eliminar_tipo_publicacion(tipo_publicacion.id_tipo_publicacion)
-    print(f"Tipo_Publicacion eliminado: {eliminado}")
-    tipo_publicacion_leido = leer_tipo_publicacion(tipo_publicacion.id_tipo_publicacion)
-    print(f"Tipo_Publicacion después de eliminar: {tipo_publicacion_leido}")
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
 
 if __name__ == "__main__":
     test_crud_tipo_publicacion()

@@ -1,0 +1,5 @@
+Teses que han pasado correctamente
+
+-persona
+-rol
+-cliente

@@ -1,29 +1,39 @@
-from src.controlador.gestores.base_gestor import BaseGestor
-from src.controlador.dominios.auditoria_publicacion import Auditoria_Publicacion
+from src.controlador.crud.crud_auditoria_publicacion import CrudAuditoriaPublicacion
+from src.controlador.validaciones.validar_auditoria_publicacion import validar_datos_auditoria_publicacion
 
-class Auditorias_Publicacion(BaseGestor[Auditoria_Publicacion]):
+class Auditorias_Publicacion:
     def __init__(self):
-        super().__init__(
-            table_name="auditoria_publicacion",
-            fields=["id_auditoria", "id_publicacion", "usuario_id", "fecha", "accion", "descripcion", "nivel"],
-            id_field="id_auditoria",
-            domain_class=Auditoria_Publicacion
-        )
+        self.crud = CrudAuditoriaPublicacion()
 
     def agregar(self, **kwargs):
-        """
-        Agrega un nuevo registro de auditoria_publicacion, validando las claves foráneas id_publicacion y usuario_id.
-
-        Args:
-            **kwargs: Diccionario con los valores de los campos (id_auditoria, id_publicacion, usuario_id, etc.).
-
-        Returns:
-            Auditoria_Publicacion: Objeto Auditoria_Publicacion creado, o None si falla.
-        """
-        if "id_publicacion" in kwargs and not self.validar_clave_foranea("id_publicacion", kwargs["id_publicacion"], "publicacion", "id_publicacion"):
-            print(f"Error: El id_publicacion {kwargs['id_publicacion']} no existe en la tabla publicacion.")
+        id_auditoria_publicacion = kwargs.get("id_auditoria_publicacion")
+        if id_auditoria_publicacion is not None and self.crud.existe(id_auditoria_publicacion):
+            print(f"Error: Ya existe una auditoría con id_auditoria_publicacion={id_auditoria_publicacion}.")
             return None
-        if "usuario_id" in kwargs and not self.validar_clave_foranea("usuario_id", kwargs["usuario_id"], "usuario", "id_usuario"):
-            print(f"Error: El usuario_id {kwargs['usuario_id']} no existe en la tabla usuario.")
+        valido, msg = validar_datos_auditoria_publicacion(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
             return None
-        return super().agregar(**kwargs)
+        return self.crud.crear(**kwargs)
+
+    def eliminar(self, id_auditoria_publicacion):
+        if not self.crud.existe(id_auditoria_publicacion):
+            print(f"Error: No existe una auditoría con id_auditoria_publicacion={id_auditoria_publicacion}.")
+            return False
+        return self.crud.eliminar(id_auditoria_publicacion)
+
+    def buscar(self, id_auditoria_publicacion):
+        return self.crud.leer(id_auditoria_publicacion)
+
+    def actualizar(self, id_auditoria_publicacion, **kwargs):
+        valido, msg = validar_datos_auditoria_publicacion(kwargs)
+        if not valido:
+            print(f"Error: {msg}")
+            return False
+        return self.crud.actualizar(id_auditoria_publicacion, **kwargs)
+
+    def existe(self, id_auditoria_publicacion):
+        return self.crud.existe(id_auditoria_publicacion)
+
+    def listar(self):
+        return self.crud.listar()

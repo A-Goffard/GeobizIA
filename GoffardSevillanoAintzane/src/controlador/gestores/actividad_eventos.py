@@ -1,29 +1,29 @@
-from src.controlador.gestores.base_gestor import BaseGestor
-from src.controlador.dominios.actividad_evento import ActividadEvento
+from src.controlador.crud.crud_actividad_evento import CrudActividadEvento
+from src.controlador.validaciones.validar_actividad_evento import validar_datos_actividad_evento
 
-class ActividadEventos(BaseGestor[ActividadEvento]):
+class ActividadEventosGestor:
     def __init__(self):
-        super().__init__(
-            table_name="actividad_evento",
-            fields=["id_actividad_evento", "actividad_id", "evento_id"],
-            id_field="id_actividad_evento",
-            domain_class=ActividadEvento
-        )
+        self.crud = CrudActividadEvento()
 
-    def agregar(self, **kwargs):
-        if "actividad_id" in kwargs and not self.validar_clave_foranea("actividad_id", kwargs["actividad_id"], "actividad", "id_actividad"):
-            print(f"Error: El actividad_id {kwargs['actividad_id']} no existe en la tabla actividad.")
+    def agregar(self, id_actividad, id_evento):
+        if self.crud.buscar(id_actividad, id_evento):
+            print(f"Error: Ya existe la relación actividad_evento ({id_actividad}, {id_evento}).")
             return None
-        if "evento_id" in kwargs and not self.validar_clave_foranea("evento_id", kwargs["evento_id"], "evento", "id_evento"):
-            print(f"Error: El evento_id {kwargs['evento_id']} no existe en la tabla evento.")
+        datos = {"id_actividad": id_actividad, "id_evento": id_evento}
+        valido, msg = validar_datos_actividad_evento(datos)
+        if not valido:
+            print(f"Error: {msg}")
             return None
-        return super().agregar(**kwargs)
+        return self.crud.crear(id_actividad, id_evento)
 
-    def actualizar(self, id_objeto, **kwargs):
-        if "actividad_id" in kwargs and not self.validar_clave_foranea("actividad_id", kwargs["actividad_id"], "actividad", "id_actividad"):
-            print(f"Error: El actividad_id {kwargs['actividad_id']} no existe en la tabla actividad.")
-            return None
-        if "evento_id" in kwargs and not self.validar_clave_foranea("evento_id", kwargs["evento_id"], "evento", "id_evento"):
-            print(f"Error: El evento_id {kwargs['evento_id']} no existe en la tabla evento.")
-            return None
-        return super().actualizar(id_objeto, **kwargs)
+    def eliminar(self, id_actividad, id_evento):
+        if not self.crud.buscar(id_actividad, id_evento):
+            print(f"Error: No existe la relación actividad_evento ({id_actividad}, {id_evento}).")
+            return False
+        return self.crud.eliminar(id_actividad, id_evento)
+
+    def buscar(self, id_actividad, id_evento):
+        return self.crud.buscar(id_actividad, id_evento)
+
+    def listar(self):
+        return self.crud.listar()

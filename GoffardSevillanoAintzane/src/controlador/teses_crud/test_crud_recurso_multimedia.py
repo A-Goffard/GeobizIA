@@ -1,34 +1,34 @@
-from src.controlador.gestores.crud.crud_recurso_multimedia import (
-    crear_recurso_multimedia,
-    leer_recurso_multimedia,
-    actualizar_recurso_multimedia,
-    eliminar_recurso_multimedia
-)
+import pytest
+from src.controlador.gestores.recursos_multimedia import RecursosMultimedia
 
-def test_crud_recurso_multimedia():
+@pytest.fixture
+def gestor():
+    return RecursosMultimedia()
+
+def test_crud_recurso_multimedia(gestor):
     # Crear
-    recurso = crear_recurso_multimedia(
+    recurso = gestor.agregar(
+        id_recurso_multimedia=1,
         tipo="Imagen",
         titulo="Foto del proyecto",
         fecha_subida="2025-06-27",
         autor="Equipo A"
     )
-    print(f"Recurso creado: {recurso}")
-    if recurso is None:
-        print("Error: No se pudo crear el recurso.")
-        return
+    assert recurso is not None
 
     # Leer
-    recurso_leido = leer_recurso_multimedia(recurso.id_recurso_multimedia)
-    print(f"Recurso leído: {recurso_leido}")
+    recurso_leido = gestor.buscar(1)
+    assert recurso_leido.titulo == "Foto del proyecto"
 
     # Actualizar
-    actualizado = actualizar_recurso_multimedia(recurso.id_recurso_multimedia, titulo="Foto oficial del proyecto")
-    print(f"Recurso actualizado: {actualizado}")
-    recurso_leido = leer_recurso_multimedia(recurso.id_recurso_multimedia)
-    print(f"Recurso después de actualizar: {recurso_leido}")
+    actualizado = gestor.actualizar(1, titulo="Foto oficial del proyecto")
+    assert actualizado
+    assert gestor.buscar(1).titulo == "Foto oficial del proyecto"
 
     # Eliminar
+    eliminado = gestor.eliminar(1)
+    assert eliminado
+    assert gestor.buscar(1) is None
     eliminado = eliminar_recurso_multimedia(recurso.id_recurso_multimedia)
     print(f"Recurso eliminado: {eliminado}")
     recurso_leido = leer_recurso_multimedia(recurso.id_recurso_multimedia)

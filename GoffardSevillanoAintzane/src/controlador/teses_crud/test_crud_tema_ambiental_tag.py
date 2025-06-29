@@ -1,25 +1,25 @@
-from src.controlador.gestores.crud.crud_tema_ambiental_tag import buscar_relacion_tema_tag, crear_relacion_tema_tag, eliminar_relacion_tema_tag, listar_relaciones_por_tag, listar_relaciones_por_tema
+import pytest
+from src.controlador.gestores.temas_ambientales_tag import TemaAmbientalTagGestor
 
 
-def test_crud_tema_ambiental_tag():
+@pytest.fixture
+def gestor():
+    return TemaAmbientalTagGestor()
+
+
+def test_crud_tema_ambiental_tag(gestor):
     # Crear relación
-    relacion = crear_relacion_tema_tag(1, 10)
-    print(f"Creada relación: {relacion}")
+    relacion = gestor.agregar(1, 10)
+    assert relacion is not None
 
     # Buscar relación
-    encontrada = buscar_relacion_tema_tag(1, 10)
-    print(f"Encontrada relación: {encontrada}")
-
-    # Listar por tema
-    lista_tema = listar_relaciones_por_tema(1)
-    print(f"Relaciones para tema 1: {lista_tema}")
-
-    # Listar por tag
-    lista_tag = listar_relaciones_por_tag(10)
-    print(f"Relaciones para tag 10: {lista_tag}")
+    encontrada = gestor.buscar(1, 10)
+    assert encontrada is not None
 
     # Eliminar relación
-    eliminada = eliminar_relacion_tema_tag(1, 10)
+    eliminado = gestor.eliminar(1, 10)
+    assert eliminado
+    assert gestor.buscar(1, 10) is None
     print(f"Eliminada relación: {eliminada}")
 
 if __name__ == "__main__":
