@@ -30,14 +30,21 @@ def gestor_tipos():
     return Tipos_Publicacion()
 
 def test_crud_publicacion(gestor, gestor_usuarios, gestor_personas, gestor_generadores, gestor_tipos):
+    # Limpieza previa en orden correcto
+    gestor.eliminar(18)
+    gestor_generadores.eliminar(18)
+    gestor_tipos.eliminar(18)
+    gestor_usuarios.eliminar(18)
+    gestor_personas.eliminar(18)
+
     persona = gestor_personas.agregar(
-        id_persona=9,
+        id_persona=18,
         nombre="Marta",
         apellido="Rodríguez",
         email="marta.rodriguez@example.com",
-        telefono="992395678",
-        dni="92395678E",
-        direccion="Calle Sol 956",
+        telefono="181823185678",
+        dni="1823185678E",
+        direccion="Calle Sol 1856",
         cp="28005",
         poblacion="Madrid",
         pais="España"
@@ -45,60 +52,53 @@ def test_crud_publicacion(gestor, gestor_usuarios, gestor_personas, gestor_gener
     assert persona is not None
 
     usuario = gestor_usuarios.agregar(
-        id_usuario=9,
-        id_persona=9,
-        fecha_nacimiento="9990-05-20",
+        id_usuario=18,
+        id_persona=18,
+        fecha_nacimiento="1818180-05-20",
         rol="Editor",
         preferencias="Notificaciones por email",
-        password="password956"
+        password="password1856"
     )
     assert usuario is not None
 
     generador = gestor_generadores.agregar(
-        id_generador_IA=9,
-        id_usuario=None,
-        nombre="Generador de Texto",
-        descripcion="Generador de texto basado en IA",
-        tipo=None
+        id_generador_ia=18,
+        nombre="Generador de texto para pruebas",
+        descripcion="xxxxx",
+        empresa_id=None,
+        configuraciones=None,
+        ejemplos_estilo=None,
+        ultima_generacion=None
     )
     assert generador is not None
 
     tipo_publicacion = gestor_tipos.agregar(
-        id_tipo_publicacion=9,
-        nombre="Artículo",
-        descripcion="Publicación de tipo artículo"
+        id_tipo_publicacion=18,
+        nombre="Artículo"
     )
     assert tipo_publicacion is not None
 
     publicacion = gestor.agregar(
-        id_publicacion=9,
-        titulo="Título de prueba",
-        contenido="Este es un artículo generado por IA",
-        autor="Marta",
+        id_publicacion=18,
+        id_generador_ia=18,
+        id_tipo_publicacion=18,  # <-- Corrige aquí
+        contenido="xxxxxxxxxxx",
         fecha_creacion="2025-06-27",
-        estado="borrador",
-        tags="",
-        palabras_clave="",
-        generada_por_ia=True,
-        id_generador_ia=9,
-        feedback_empresa="",
-        id_tipo_publicacion=9,
-        id_plantilla=None
     )
     assert publicacion is not None
 
-    publicacion_leida = gestor.buscar(9)
+    publicacion_leida = gestor.buscar(18)
     assert publicacion_leida is not None
 
-    actualizado = gestor.actualizar(9, contenido="Este es un artículo actualizado generado por IA")
+    actualizado = gestor.actualizar(18, contenido="Este es un artículo actualizado generado por IA")
     assert actualizado
-    assert gestor.buscar(9).contenido == "Este es un artículo actualizado generado por IA"
+    assert gestor.buscar(18).contenido == "Este es un artículo actualizado generado por IA"
 
-    eliminado = gestor.eliminar(9)
+    eliminado = gestor.eliminar(18)
     assert eliminado
-    assert gestor.buscar(9) is None
+    assert gestor.buscar(18) is None
 
-    gestor_tipos.eliminar(9)
-    gestor_generadores.eliminar(9)
-    gestor_usuarios.eliminar(9)
-    gestor_personas.eliminar(9)
+    gestor_tipos.eliminar(18)
+    gestor_generadores.eliminar(18)
+    gestor_usuarios.eliminar(18)
+    gestor_personas.eliminar(18)

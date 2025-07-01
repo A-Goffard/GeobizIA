@@ -1,4 +1,8 @@
+import sys
+import os
 import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
 from src.controlador.gestores.proyectos_actividad import ProyectoActividadGestor
 from src.controlador.gestores.proyectos import Proyectos
 from src.controlador.gestores.actividades import Actividades
@@ -16,12 +20,17 @@ def gestor_actividades():
     return Actividades()
 
 def test_crud_proyecto_actividad(gestor, gestor_proyectos, gestor_actividades):
+    # Limpieza previa en orden correcto
+    gestor.eliminar(13, 111)  # Elimina la relación primero
+    gestor_actividades.eliminar(111)  # Luego la actividad
+    gestor_proyectos.eliminar(13)     # Luego el proyecto
+
     proyecto = gestor_proyectos.agregar(
-        id_proyecto=1,
+        id_proyecto=13,
         nombre="Proyecto Test",
         descripcion="Test",
-        fecha_inicio="2025-01-01",
-        fecha_fin="2025-12-31",
+        fecha_inicio="2021-01-01",
+        fecha_fin="2021-12-31",
         poblacion="Madrid",
         responsable="Juan",
         estado="Activo",
@@ -31,7 +40,7 @@ def test_crud_proyecto_actividad(gestor, gestor_proyectos, gestor_actividades):
     assert proyecto is not None
 
     actividad = gestor_actividades.agregar(
-        id_actividad=101,
+        id_actividad=111,
         tipo="Taller",
         nombre="Taller Test",
         descripcion="Test",
@@ -46,15 +55,15 @@ def test_crud_proyecto_actividad(gestor, gestor_proyectos, gestor_actividades):
     )
     assert actividad is not None
 
-    relacion = gestor.agregar(1, 101)
+    relacion = gestor.agregar(13, 111)
     assert relacion is not None
 
-    encontrada = gestor.buscar(1, 101)
+    encontrada = gestor.buscar(13, 111)
     assert encontrada is not None
 
-    eliminado = gestor.eliminar(1, 101)
+    eliminado = gestor.eliminar(13, 111)
     assert eliminado
-    assert gestor.buscar(1, 101) is None
+    assert gestor.buscar(13, 111) is None
 
-    gestor_proyectos.eliminar(1)
-    gestor_actividades.eliminar(101)
+    gestor_actividades.eliminar(111)
+    gestor_proyectos.eliminar(13)

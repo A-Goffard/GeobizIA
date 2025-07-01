@@ -11,3 +11,7 @@ Teses que han pasado correctamente
 -rol
 -redsocial
 -recurso_multimedia
+-publicacion
+-publicacion_tags
+-proyecto
+-proyecto_actividad

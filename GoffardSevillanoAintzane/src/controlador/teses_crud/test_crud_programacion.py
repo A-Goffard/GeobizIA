@@ -31,7 +31,7 @@ def test_crud_programacion(gestor):
     eliminado = gestor.eliminar(1)
     assert eliminado
     assert gestor.buscar(1) is None
-    programacion_eliminada = leer_programacion(programacion.id_programacion)
+    programacion_eliminada = gestor.buscar(programacion.id_programacion)
     print(f"Programación después de eliminar: {programacion_eliminada}")
 
 if __name__ == "__main__":

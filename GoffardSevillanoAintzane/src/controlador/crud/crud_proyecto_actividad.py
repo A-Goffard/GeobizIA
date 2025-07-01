@@ -1,5 +1,6 @@
 from .base_crud import BaseCRUD
 from src.controlador.dominios.proyecto_actividad import ProyectoActividad
+from src.modelo.database.db_conexion import get_connection, close_connection
 
 class CrudProyectoActividad(BaseCRUD):
     def __init__(self):
@@ -18,7 +19,7 @@ class CrudProyectoActividad(BaseCRUD):
 
     def eliminar(self, id_proyecto, id_actividad):
         query = f"DELETE FROM {self.table_name} WHERE id_proyecto = ? AND id_actividad = ?"
-        conn = self.get_connection()
+        conn = get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute(query, (id_proyecto, id_actividad))
@@ -28,11 +29,11 @@ class CrudProyectoActividad(BaseCRUD):
             print(f"Error al eliminar ProyectoActividad: {e}")
             return False
         finally:
-            self.close_connection(conn, cursor)
+            close_connection(conn, cursor)
 
     def buscar(self, id_proyecto, id_actividad):
         query = f"SELECT id_proyecto, id_actividad FROM {self.table_name} WHERE id_proyecto = ? AND id_actividad = ?"
-        conn = self.get_connection()
+        conn = get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute(query, (id_proyecto, id_actividad))
@@ -44,7 +45,7 @@ class CrudProyectoActividad(BaseCRUD):
             print(f"Error al buscar ProyectoActividad: {e}")
             return None
         finally:
-            self.close_connection(conn, cursor)
+            close_connection(conn, cursor)
 
     def listar(self):
         return self.select_all(ProyectoActividad)

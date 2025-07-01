@@ -1,14 +1,14 @@
 class ProyectoActividad:
-    def __init__(self, proyecto_id, actividad_id):
-        self._proyecto_id = proyecto_id
-        self._actividad_id = actividad_id
+    def __init__(self, id_proyecto, id_actividad):
+        self.id_proyecto = id_proyecto
+        self.id_actividad = id_actividad
 
-    @property
-    def proyecto_id(self):
-        return self._proyecto_id
+    @staticmethod
+    def crear(id_proyecto, id_actividad):
+        return ProyectoActividad(id_proyecto, id_actividad)
 
-    @proyecto_id.setter
-    def proyecto_id(self, proyecto_id):
+    def __str__(self):
+        return f"Proyecto ID: {self.id_proyecto}, Actividad ID: {self.id_actividad}"
         self._proyecto_id = proyecto_id
 
     @property
@@ -19,9 +19,3 @@ class ProyectoActividad:
     def actividad_id(self, actividad_id):
         self._actividad_id = actividad_id
 
-    @staticmethod
-    def crear(proyecto_id, actividad_id):
-        return ProyectoActividad(proyecto_id, actividad_id)
-
-    def __str__(self):
-        return f"Proyecto ID: {self.proyecto_id}, Actividad ID: {self.actividad_id}"

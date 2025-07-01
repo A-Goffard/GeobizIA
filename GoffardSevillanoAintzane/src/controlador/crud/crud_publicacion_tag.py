@@ -1,5 +1,6 @@
 from .base_crud import BaseCRUD
 from src.controlador.dominios.publicacion_tag import PublicacionTag
+from src.modelo.database.db_conexion import get_connection, close_connection
 
 class CrudPublicacionTag(BaseCRUD):
     def __init__(self):
@@ -18,7 +19,7 @@ class CrudPublicacionTag(BaseCRUD):
 
     def eliminar(self, id_publicacion, id_tag):
         query = f"DELETE FROM {self.table_name} WHERE id_publicacion = ? AND id_tag = ?"
-        conn = self.get_connection()
+        conn = get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute(query, (id_publicacion, id_tag))
@@ -28,11 +29,11 @@ class CrudPublicacionTag(BaseCRUD):
             print(f"Error al eliminar PublicacionTag: {e}")
             return False
         finally:
-            self.close_connection(conn, cursor)
+            close_connection(conn, cursor)
 
     def buscar(self, id_publicacion, id_tag):
         query = f"SELECT id_publicacion, id_tag FROM {self.table_name} WHERE id_publicacion = ? AND id_tag = ?"
-        conn = self.get_connection()
+        conn = get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute(query, (id_publicacion, id_tag))
@@ -44,7 +45,7 @@ class CrudPublicacionTag(BaseCRUD):
             print(f"Error al buscar PublicacionTag: {e}")
             return None
         finally:
-            self.close_connection(conn, cursor)
+            close_connection(conn, cursor)
 
     def listar(self):
         return self.select_all(PublicacionTag)
