@@ -3,3 +3,11 @@ Teses que han pasado correctamente
 -persona
 -rol
 -cliente
+-tema_ambiental
+-tema_ambiental_tag
+-tipo_publicacion
+-usuario
+-tag
+-rol
+-redsocial
+-recurso_multimedia

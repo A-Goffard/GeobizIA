@@ -1,14 +1,14 @@
 class TemaAmbientalTag:
-    def __init__(self, id_tema_ambiental: int, id_tag: int):
-        self._id_tema_ambiental = id_tema_ambiental
-        self._id_tag = id_tag
+    def __init__(self, id_tema_ambiental, id_tag):
+        self.id_tema_ambiental = id_tema_ambiental
+        self.id_tag = id_tag
 
-    @property
-    def id_tema_ambiental(self):
-        return self._id_tema_ambiental
+    @staticmethod
+    def crear(id_tema_ambiental, id_tag):
+        return TemaAmbientalTag(id_tema_ambiental, id_tag)
 
-    @property
-    def id_tag(self):
+    def __repr__(self):
+        return f"TemaAmbientalTag(id_tema_ambiental={self.id_tema_ambiental}, id_tag={self.id_tag})"
         return self._id_tag
 
     def __eq__(self, other):

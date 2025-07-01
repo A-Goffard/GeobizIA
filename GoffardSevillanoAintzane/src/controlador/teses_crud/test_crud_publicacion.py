@@ -1,4 +1,8 @@
+import sys
+import os
 import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
 from src.controlador.gestores.publicaciones import Publicaciones
 from src.controlador.gestores.usuarios import Usuarios
 from src.controlador.gestores.personas import Personas
@@ -27,13 +31,13 @@ def gestor_tipos():
 
 def test_crud_publicacion(gestor, gestor_usuarios, gestor_personas, gestor_generadores, gestor_tipos):
     persona = gestor_personas.agregar(
-        id_persona=1,
+        id_persona=9,
         nombre="Marta",
         apellido="Rodríguez",
         email="marta.rodriguez@example.com",
-        telefono="912345678",
-        dni="12345678E",
-        direccion="Calle Sol 456",
+        telefono="992395678",
+        dni="92395678E",
+        direccion="Calle Sol 956",
         cp="28005",
         poblacion="Madrid",
         pais="España"
@@ -41,35 +45,33 @@ def test_crud_publicacion(gestor, gestor_usuarios, gestor_personas, gestor_gener
     assert persona is not None
 
     usuario = gestor_usuarios.agregar(
-        id_usuario=1,
-        id_persona=1,
-        fecha_nacimiento="1990-05-20",
+        id_usuario=9,
+        id_persona=9,
+        fecha_nacimiento="9990-05-20",
         rol="Editor",
         preferencias="Notificaciones por email",
-        password="password456"
+        password="password956"
     )
     assert usuario is not None
 
     generador = gestor_generadores.agregar(
-        id_generador_ia=1,
+        id_generador_IA=9,
+        id_usuario=None,
         nombre="Generador de Texto",
         descripcion="Generador de texto basado en IA",
-        empresa_id=None,
-        configuraciones=None,
-        ejemplos_estilo=None,
-        ultima_generacion=None
+        tipo=None
     )
     assert generador is not None
 
     tipo_publicacion = gestor_tipos.agregar(
-        id_tipo_publicacion=1,
+        id_tipo_publicacion=9,
         nombre="Artículo",
         descripcion="Publicación de tipo artículo"
     )
     assert tipo_publicacion is not None
 
     publicacion = gestor.agregar(
-        id_publicacion=1,
+        id_publicacion=9,
         titulo="Título de prueba",
         contenido="Este es un artículo generado por IA",
         autor="Marta",
@@ -78,25 +80,25 @@ def test_crud_publicacion(gestor, gestor_usuarios, gestor_personas, gestor_gener
         tags="",
         palabras_clave="",
         generada_por_ia=True,
-        id_generador_ia=1,
+        id_generador_ia=9,
         feedback_empresa="",
-        id_tipo_publicacion=1,
+        id_tipo_publicacion=9,
         id_plantilla=None
     )
     assert publicacion is not None
 
-    publicacion_leida = gestor.buscar(1)
+    publicacion_leida = gestor.buscar(9)
     assert publicacion_leida is not None
 
-    actualizado = gestor.actualizar(1, contenido="Este es un artículo actualizado generado por IA")
+    actualizado = gestor.actualizar(9, contenido="Este es un artículo actualizado generado por IA")
     assert actualizado
-    assert gestor.buscar(1).contenido == "Este es un artículo actualizado generado por IA"
+    assert gestor.buscar(9).contenido == "Este es un artículo actualizado generado por IA"
 
-    eliminado = gestor.eliminar(1)
+    eliminado = gestor.eliminar(9)
     assert eliminado
-    assert gestor.buscar(1) is None
+    assert gestor.buscar(9) is None
 
-    gestor_tipos.eliminar(1)
-    gestor_generadores.eliminar(1)
-    gestor_usuarios.eliminar(1)
-    gestor_personas.eliminar(1)
+    gestor_tipos.eliminar(9)
+    gestor_generadores.eliminar(9)
+    gestor_usuarios.eliminar(9)
+    gestor_personas.eliminar(9)

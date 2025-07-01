@@ -1,5 +1,6 @@
 from .base_crud import BaseCRUD
 from src.controlador.dominios.tema_ambiental_tag import TemaAmbientalTag
+from src.modelo.database.db_conexion import get_connection, close_connection
 
 class CrudTemaAmbientalTag(BaseCRUD):
     def __init__(self):
@@ -18,7 +19,7 @@ class CrudTemaAmbientalTag(BaseCRUD):
 
     def eliminar(self, id_tema_ambiental, id_tag):
         query = f"DELETE FROM {self.table_name} WHERE id_tema_ambiental = ? AND id_tag = ?"
-        conn = self.get_connection()
+        conn = get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute(query, (id_tema_ambiental, id_tag))
@@ -28,11 +29,11 @@ class CrudTemaAmbientalTag(BaseCRUD):
             print(f"Error al eliminar TemaAmbientalTag: {e}")
             return False
         finally:
-            self.close_connection(conn, cursor)
+            close_connection(conn, cursor)
 
     def buscar(self, id_tema_ambiental, id_tag):
         query = f"SELECT id_tema_ambiental, id_tag FROM {self.table_name} WHERE id_tema_ambiental = ? AND id_tag = ?"
-        conn = self.get_connection()
+        conn = get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute(query, (id_tema_ambiental, id_tag))
@@ -44,7 +45,7 @@ class CrudTemaAmbientalTag(BaseCRUD):
             print(f"Error al buscar TemaAmbientalTag: {e}")
             return None
         finally:
-            self.close_connection(conn, cursor)
+            close_connection(conn, cursor)
 
     def listar(self):
         return self.select_all(TemaAmbientalTag)

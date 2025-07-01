@@ -5,7 +5,7 @@ class CrudTipoPublicacion(BaseCRUD):
     def __init__(self):
         super().__init__(
             table_name="tipo_publicacion",
-            fields=["id_tipo_publicacion", "nombre", "descripcion"],
+            fields=["id_tipo_publicacion", "nombre"],
             id_field="id_tipo_publicacion"
         )
 

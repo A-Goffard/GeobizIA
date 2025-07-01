@@ -10,16 +10,16 @@ def gestor():
     return Roles()
 
 def test_crud_rol(gestor):
-    rol = gestor.agregar(id_rol=1, nombre="Admin", descripcion="Rol administrativo")
+    rol = gestor.agregar(id_rol=4, nombre="Admin", descripcion="Rol administrativo")
     assert rol is not None
 
-    rol_leido = gestor.buscar(1)
+    rol_leido = gestor.buscar(4)
     assert rol_leido.nombre == "Admin"
 
-    actualizado = gestor.actualizar(1, nombre="SuperAdmin")
+    actualizado = gestor.actualizar(4, nombre="SuperAdmin")
     assert actualizado
-    assert gestor.buscar(1).nombre == "SuperAdmin"
+    assert gestor.buscar(4).nombre == "SuperAdmin"
 
-    eliminado = gestor.eliminar(1)
+    eliminado = gestor.eliminar(4)
     assert eliminado
-    assert gestor.buscar(1) is None
+    assert gestor.buscar(4) is None

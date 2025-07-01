@@ -12,25 +12,28 @@ def gestor():
 def test_crud_tipo_publicacion(gestor):
     # Crear un tipo_publicacion
     tipo = gestor.agregar(
-        id_tipo_publicacion=1,
-        nombre="Artículo",
-        descripcion="Publicación de tipo artículo"
+        id_tipo_publicacion=3,
+        nombre="Artículo"
+        # No incluyas 'descripcion' porque la columna no existe en la tabla
     )
     assert tipo is not None
 
     # Leer el tipo_publicacion
-    tipo_leido = gestor.buscar(1)
+    tipo_leido = gestor.buscar(3)
     assert tipo_leido.nombre == "Artículo"
 
     # Actualizar el tipo_publicacion
-    actualizado = gestor.actualizar(1, nombre="Informe", descripcion="Publicación de tipo informe técnico")
+    actualizado = gestor.actualizar(3, nombre="Informe")
     assert actualizado
-    assert gestor.buscar(1).nombre == "Informe"
+    assert gestor.buscar(3).nombre == "Informe"
 
     # Eliminar el tipo_publicacion
-    eliminado = gestor.eliminar(1)
+    eliminado = gestor.eliminar(3)
     assert eliminado
-    assert gestor.buscar(1) is None
+    assert gestor.buscar(3) is None
 
 if __name__ == "__main__":
-    test_crud_tipo_publicacion()
+    # No llames directamente a la función de test con argumentos de pytest.
+    # Usa pytest desde la terminal para ejecutar los tests.
+    # Elimina este bloque para evitar el error.
+    pass

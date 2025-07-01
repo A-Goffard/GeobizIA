@@ -1,5 +1,9 @@
+import sys
+import os
 import pytest
-from src.controlador.gestores.plantilla_tipo_publicacion import PlantillaTipoPublicacionGestor
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
+from src.controlador.gestores.plantilla_tipo_publicaciones import PlantillaTipoPublicacionGestor
 
 @pytest.fixture
 def gestor():

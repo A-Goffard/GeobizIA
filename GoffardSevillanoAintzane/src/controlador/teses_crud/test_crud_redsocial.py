@@ -1,4 +1,8 @@
+import sys
+import os
 import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
 from src.controlador.gestores.redes_sociales import RedesSociales
 
 @pytest.fixture
@@ -8,34 +12,34 @@ def gestor():
 def test_crud_redsocial(gestor):
     # Crear red social
     red = gestor.agregar(
-        id_red_social=1,
+        id_red_social=4,
         plataforma="Instagram",
         nombre_cuenta="@eco_ambiental",
         preferencias_publicacion="",
         estado_conexion="Activa",
-        ultima_publicacion="2025-06-01",
+        ultima_publicacion="2025-06-04",
         credenciales=""
     )
     assert red is not None
     print(f"Red social creada: {red}")
 
-    red_leida = gestor.buscar(1)
+    red_leida = gestor.buscar(4)
     assert red_leida.nombre_cuenta == "@eco_ambiental"
     print(f"Red social leída: {red_leida}")
 
     # Actualizar red social
-    actualizado = gestor.actualizar(1, nombre_cuenta="@eco_actualizada", estado_conexion="En revisión")
+    actualizado = gestor.actualizar(4, nombre_cuenta="@eco_actualizada", estado_conexion="En revisión")
     assert actualizado
-    assert gestor.buscar(1).nombre_cuenta == "@eco_actualizada"
-    assert gestor.buscar(1).estado_conexion == "En revisión"
+    assert gestor.buscar(4).nombre_cuenta == "@eco_actualizada"
+    assert gestor.buscar(4).estado_conexion == "En revisión"
     print(f"Red social actualizada: {actualizado}")
-    red_leida = gestor.buscar(1)
+    red_leida = gestor.buscar(4)
     print(f"Red social después de actualizar: {red_leida}")
 
     # Eliminar red social
-    eliminado = gestor.eliminar(1)
+    eliminado = gestor.eliminar(4)
     assert eliminado
-    assert gestor.buscar(1) is None
+    assert gestor.buscar(4) is None
     print(f"Red social eliminada: {eliminado}")
-    red_leida = gestor.buscar(1)
+    red_leida = gestor.buscar(4)
     print(f"Red social después de eliminar: {red_leida}")
