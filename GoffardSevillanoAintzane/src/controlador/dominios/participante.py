@@ -10,26 +10,26 @@ class Participante(Persona):
         self._actividad_id = actividad_id
         self._fecha_registro = fecha_registro
 
-    @staticmethod
-    def crear_participante(id_participante, id_persona, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais):
-        return Participante(
-            id_participante=id_participante,
-            id_persona=id_persona,
-            numero_personas_juntas=numero_personas_juntas,
-            rol=rol,
-            como_conocer=como_conocer,
-            actividad_id=actividad_id,
-            fecha_registro=fecha_registro,
-            nombre=nombre,
-            apellido=apellido,
-            email=email,
-            telefono=telefono,
-            dni=dni,
-            direccion=direccion,
-            cp=cp,
-            poblacion=poblacion,
-            pais=pais
-        )
+    # @staticmethod
+    # def crear_participante(id_participante, id_persona, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais):
+    #     return Participante(
+    #         id_participante=id_participante,
+    #         id_persona=id_persona,
+    #         numero_personas_juntas=numero_personas_juntas,
+    #         rol=rol,
+    #         como_conocer=como_conocer,
+    #         actividad_id=actividad_id,
+    #         fecha_registro=fecha_registro,
+    #         nombre=nombre,
+    #         apellido=apellido,
+    #         email=email,
+    #         telefono=telefono,
+    #         dni=dni,
+    #         direccion=direccion,
+    #         cp=cp,
+    #         poblacion=poblacion,
+    #         pais=pais
+    #     )
 
     @property
     def id_participante(self): return self._id_participante

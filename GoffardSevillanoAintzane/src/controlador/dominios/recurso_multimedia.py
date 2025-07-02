@@ -46,9 +46,9 @@ class RecursoMultimedia:
     def autor(self, value):
         self._autor = value
 
-    @staticmethod
-    def crear(id_recurso_multimedia, tipo, titulo, fecha_subida, autor):
-        return RecursoMultimedia(id_recurso_multimedia, tipo, titulo, fecha_subida, autor)
+    # @staticmethod
+    # def crear(id_recurso_multimedia, tipo, titulo, fecha_subida, autor):
+    #     return RecursoMultimedia(id_recurso_multimedia, tipo, titulo, fecha_subida, autor)
 
     def __str__(self):
         return f"ID: {self.id_recurso_multimedia}, Título: {self.titulo}, Tipo: {self.tipo}, Fecha: {self.fecha_subida}, Autor: {self.autor}"

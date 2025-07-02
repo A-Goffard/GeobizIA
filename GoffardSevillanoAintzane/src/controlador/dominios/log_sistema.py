@@ -55,9 +55,9 @@ class Log_Sistema:
     def nivel(self, nivel):
         self._nivel = nivel
 
-    @staticmethod
-    def crear(id_log_sistema, usuario_id, fecha=None, accion=None, descripcion=None, nivel=None):
-        return Log_Sistema(id_log_sistema, usuario_id, fecha, accion, descripcion, nivel)
+    # @staticmethod
+    # def crear(id_log_sistema, usuario_id, fecha=None, accion=None, descripcion=None, nivel=None):
+    #     return Log_Sistema(id_log_sistema, usuario_id, fecha, accion, descripcion, nivel)
 
     def __str__(self):
         return (

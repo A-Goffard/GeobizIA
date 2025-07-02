@@ -4,6 +4,7 @@ import pytest
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
 
 from src.controlador.gestores.actividades import Actividades
+from src.controlador.dominios.actividad import Actividad
 
 @pytest.fixture
 def gestor():
@@ -16,7 +17,7 @@ def test_crud_actividad(gestor):
     # Crear una actividad solo si no existe
     actividad = gestor.buscar(1)
     if actividad is None:
-        actividad = gestor.agregar(
+        actividad = Actividad(
             id_actividad=1,
             tipo="Conferencia",
             nombre="Evento Anual",
@@ -30,6 +31,7 @@ def test_crud_actividad(gestor):
             valoracion="Positiva",
             observaciones="Ninguna"
         )
+        actividad = gestor.agregar(actividad)
     assert actividad is not None
 
     # Leer la actividad
@@ -37,20 +39,18 @@ def test_crud_actividad(gestor):
     assert actividad_leida is not None
 
     # Actualizar la actividad
-    actualizado = gestor.actualizar(
-        1,
-        tipo="Taller",
-        nombre="Taller de Innovación",
-        descripcion="Taller práctico",
-        responsable="María López",
-        duracion="3 horas",
-        coste_economico=1200.0,
-        coste_horas=25.0,
-        facturacion=1800.0,
-        resultados="Muy exitoso",
-        valoracion="Excelente",
-        observaciones="Buena participación"
-    )
+    actividad_leida.nombre = "Taller de Innovación"
+    actividad_leida.tipo = "Taller"
+    actividad_leida.descripcion = "Taller práctico"
+    actividad_leida.responsable = "María López"
+    actividad_leida.duracion = "3 horas"
+    actividad_leida.coste_economico = 1200.0
+    actividad_leida.coste_horas = 25.0
+    actividad_leida.facturacion = 1800.0
+    actividad_leida.resultados = "Muy exitoso"
+    actividad_leida.valoracion = "Excelente"
+    actividad_leida.observaciones = "Buena participación"
+    actualizado = gestor.actualizar(actividad_leida)
     assert actualizado
     assert gestor.buscar(1).nombre == "Taller de Innovación"
 
@@ -60,9 +60,11 @@ def test_crud_actividad(gestor):
     conn = get_connection()
     cursor = conn.cursor()
     try:
+        # Elimina primero todas las relaciones hijas
         cursor.execute("DELETE FROM participante WHERE actividad_id = ?", (1,))
         cursor.execute("DELETE FROM actividad_fecha WHERE id_actividad = ?", (1,))
         cursor.execute("DELETE FROM proyecto_actividad WHERE id_actividad = ?", (1,))
+        cursor.execute("DELETE FROM actividad_evento WHERE id_actividad = ?", (1,))
         conn.commit()
     finally:
         close_connection(conn, cursor)
@@ -72,4 +74,6 @@ def test_crud_actividad(gestor):
     assert gestor.buscar(1) is None
 
 if __name__ == "__main__":
-    test_crud_actividad()
+    # Ejecuta el test con pytest, no lo llames directamente
+    import pytest
+    pytest.main([__file__])

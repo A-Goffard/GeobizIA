@@ -3,13 +3,9 @@ class ProyectoActividad:
         self._id_proyecto = id_proyecto
         self._id_actividad = id_actividad
 
-    @staticmethod
-    def crear(id_proyecto, id_actividad):
-        return ProyectoActividad(id_proyecto, id_actividad)
-
-    def __str__(self):
-        return f"Proyecto ID: {self.id_proyecto}, Actividad ID: {self.id_actividad}"
-        self._proyecto_id = proyecto_id
+    # @staticmethod
+    # def crear(id_proyecto, id_actividad):
+    #     return ProyectoActividad(id_proyecto, id_actividad)
 
     @property
     def actividad_id(self):
@@ -19,3 +15,5 @@ class ProyectoActividad:
     def actividad_id(self, actividad_id):
         self._actividad_id = actividad_id
 
+    def __str__(self):
+        return f"Proyecto ID: {self.id_proyecto}, Actividad ID: {self.id_actividad}"

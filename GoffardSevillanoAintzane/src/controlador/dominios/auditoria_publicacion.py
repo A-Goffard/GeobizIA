@@ -83,27 +83,27 @@ class Auditoria_Publicacion:
     def observaciones(self, value):
         self._observaciones = value
 
-    @staticmethod
-    def crear(
-        id_auditoria_publicacion,
-        publicacion_id,
-        generador_ia_id,
-        fecha_generacion,
-        usuario_id,
-        parametros_entrada,
-        resultado,
-        observaciones
-    ):
-        return Auditoria_Publicacion(
-            id_auditoria_publicacion,
-            publicacion_id,
-            generador_ia_id,
-            fecha_generacion,
-            usuario_id,
-            parametros_entrada,
-            resultado,
-            observaciones
-        )
+    # @staticmethod
+    # def crear(
+    #     id_auditoria_publicacion,
+    #     publicacion_id,
+    #     generador_ia_id,
+    #     fecha_generacion,
+    #     usuario_id,
+    #     parametros_entrada,
+    #     resultado,
+    #     observaciones
+    # ):
+    #     return Auditoria_Publicacion(
+    #         id_auditoria_publicacion,
+    #         publicacion_id,
+    #         generador_ia_id,
+    #         fecha_generacion,
+    #         usuario_id,
+    #         parametros_entrada,
+    #         resultado,
+    #         observaciones
+    #     )
 
     def __str__(self):
         return (

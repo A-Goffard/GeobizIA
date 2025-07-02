@@ -91,9 +91,9 @@ class Proyecto:
     def presupuesto(self, presupuesto):
         self._presupuesto = presupuesto
 
-    @staticmethod
-    def crear(id_proyecto, nombre=None, descripcion=None, fecha_inicio=None, fecha_fin=None, poblacion=None, responsable=None, estado=None, objetivos=None, presupuesto=None):
-        return Proyecto(id_proyecto, nombre, descripcion, fecha_inicio, fecha_fin, poblacion, responsable, estado, objetivos, presupuesto)
+    # @staticmethod
+    # def crear(id_proyecto, nombre=None, descripcion=None, fecha_inicio=None, fecha_fin=None, poblacion=None, responsable=None, estado=None, objetivos=None, presupuesto=None):
+    #     return Proyecto(id_proyecto, nombre, descripcion, fecha_inicio, fecha_fin, poblacion, responsable, estado, objetivos, presupuesto)
 
     def __str__(self):
         return (

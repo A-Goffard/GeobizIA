@@ -19,9 +19,9 @@ class ActividadEvento:
     def id_evento(self, value):
         self._id_evento = value
 
-    @staticmethod
-    def crear(id_actividad, id_evento):
-        return ActividadEvento(id_actividad, id_evento)
+    # @staticmethod
+    # def crear(id_actividad, id_evento):
+    #     return ActividadEvento(id_actividad, id_evento)
 
     def __str__(self):
         return f"ID Actividad: {self.id_actividad}, ID Evento: {self.id_evento}"

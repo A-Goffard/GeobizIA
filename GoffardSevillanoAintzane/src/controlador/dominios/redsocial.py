@@ -64,9 +64,9 @@ class RedSocial:
     def ultima_publicacion(self, value):
         self._ultima_publicacion = value
 
-    @staticmethod
-    def crear(id_red_social, plataforma, nombre_cuenta, credenciales=None, preferencias_publicacion=None, estado_conexion=None, ultima_publicacion=None):
-        return RedSocial(id_red_social, plataforma, nombre_cuenta, credenciales, preferencias_publicacion, estado_conexion, ultima_publicacion)
+    # @staticmethod
+    # def crear(id_red_social, plataforma, nombre_cuenta, credenciales=None, preferencias_publicacion=None, estado_conexion=None, ultima_publicacion=None):
+    #     return RedSocial(id_red_social, plataforma, nombre_cuenta, credenciales, preferencias_publicacion, estado_conexion, ultima_publicacion)
 
     def __str__(self):
         return f"ID: {self.id_red_social}, Plataforma: {self.plataforma}, Cuenta: {self.nombre_cuenta}, Estado: {self.estado_conexion}"

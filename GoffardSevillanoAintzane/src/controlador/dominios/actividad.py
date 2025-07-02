@@ -109,9 +109,9 @@ class Actividad:
     def observaciones(self, observaciones):
         self._observaciones = observaciones
 
-    @staticmethod
-    def crear(id_actividad, tipo=None, nombre=None, descripcion=None, responsable=None, duracion=None, coste_economico=None, coste_horas=None, facturacion=None, resultados=None, valoracion=None, observaciones=None):
-        return Actividad(id_actividad, tipo, nombre, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones)
+    # @staticmethod
+    # def crear(id_actividad, tipo=None, nombre=None, descripcion=None, responsable=None, duracion=None, coste_economico=None, coste_horas=None, facturacion=None, resultados=None, valoracion=None, observaciones=None):
+    #     return Actividad(id_actividad, tipo, nombre, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones)
 
     def __str__(self):
         return (f"ID: {self.id_actividad}, Tipo: {self.tipo or 'N/A'}, Nombre: {self.nombre or 'N/A'}, "

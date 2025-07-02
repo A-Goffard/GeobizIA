@@ -3,9 +3,24 @@ class TemaAmbientalTag:
         self.id_tema_ambiental = id_tema_ambiental
         self.id_tag = id_tag
 
-    @staticmethod
-    def crear(id_tema_ambiental, id_tag):
-        return TemaAmbientalTag(id_tema_ambiental, id_tag)
+    @property
+    def id_tema_ambiental(self):
+        return self._id_tema_ambiental
+    @id_tema_ambiental.setter
+    def id_tema_ambiental(self, id_tema_ambiental):
+        self._id_tema_ambiental = id_tema_ambiental
+        
+    @property
+    def id_tag(self):
+        return self._id_tag
+
+    @id_tag.setter
+    def id_tag(self, id_tag):
+        self._id_tag = id_tag
+
+    # @staticmethod
+    # def crear(id_tema_ambiental, id_tag):
+    #     return TemaAmbientalTag(id_tema_ambiental, id_tag)
 
     def __repr__(self):
         return f"TemaAmbientalTag(id_tema_ambiental={self.id_tema_ambiental}, id_tag={self.id_tag})"

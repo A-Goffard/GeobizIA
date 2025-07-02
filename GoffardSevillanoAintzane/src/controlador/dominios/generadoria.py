@@ -64,9 +64,9 @@ class GeneradorIA:
     def ultima_generacion(self, value):
         self._ultima_generacion = value
 
-    @staticmethod
-    def crear(id_generador_ia, nombre, descripcion, empresa_id, configuraciones, ejemplos_estilo, ultima_generacion):
-        return GeneradorIA(id_generador_ia, nombre, descripcion, empresa_id, configuraciones, ejemplos_estilo, ultima_generacion)
+    # @staticmethod
+    # def crear(id_generador_ia, nombre, descripcion, empresa_id, configuraciones, ejemplos_estilo, ultima_generacion):
+    #     return GeneradorIA(id_generador_ia, nombre, descripcion, empresa_id, configuraciones, ejemplos_estilo, ultima_generacion)
 
     def __str__(self):
         return (

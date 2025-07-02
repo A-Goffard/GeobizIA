@@ -46,9 +46,9 @@ class Empresa:
     def ubicacion(self, ubicacion):
         self._ubicacion = ubicacion
 
-    @staticmethod
-    def crear(id_empresa, nombre, sector, logo, ubicacion):
-        return Empresa(id_empresa, nombre, sector, logo, ubicacion)
+    # @staticmethod
+    # def crear(id_empresa, nombre, sector, logo, ubicacion):
+    #     return Empresa(id_empresa, nombre, sector, logo, ubicacion)
 
     def __str__(self):
         return f"ID: {self.id_empresa}, Nombre: {self.nombre}, Sector: {self.sector}, Logo: {self.logo}, Ubicación: {self.ubicacion}"

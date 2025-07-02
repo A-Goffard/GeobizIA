@@ -19,9 +19,9 @@ class PublicacionTag:
     def id_tag(self, value):
         self._id_tag = value
 
-    @staticmethod
-    def crear(id_publicacion, id_tag):
-        return PublicacionTag(id_publicacion, id_tag)
+    # @staticmethod
+    # def crear(id_publicacion, id_tag):
+    #     return PublicacionTag(id_publicacion, id_tag)
 
     def __str__(self):
         return f"Publicacion ID: {self.id_publicacion}, Tag ID: {self.id_tag}"

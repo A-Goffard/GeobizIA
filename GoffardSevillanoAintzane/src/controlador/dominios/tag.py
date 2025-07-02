@@ -37,9 +37,9 @@ class Tag:
     def frecuencia_uso(self, value):
         self._frecuencia_uso = value
 
-    @staticmethod
-    def crear(id_tag, palabra_clave, categoria, frecuencia_uso=0):
-        return Tag(id_tag, palabra_clave, categoria, frecuencia_uso)
+    # @staticmethod
+    # def crear(id_tag, palabra_clave, categoria, frecuencia_uso=0):
+    #     return Tag(id_tag, palabra_clave, categoria, frecuencia_uso)
 
     def __str__(self):
         return f"ID: {self.id_tag}, Palabra Clave: {self.palabra_clave}, Categoría: {self.categoria}, Frecuencia: {self.frecuencia_uso}"

@@ -73,9 +73,9 @@ class Evento:
     def tematica(self, tematica):
         self._tematica = tematica
 
-    @staticmethod
-    def crear(id_evento, nombre=None, tipo=None, lugar=None, fecha_comienzo=None, fecha_final=None, poblacion=None, tematica=None):
-        return Evento(id_evento, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica)
+    # @staticmethod
+    # def crear(id_evento, nombre=None, tipo=None, lugar=None, fecha_comienzo=None, fecha_final=None, poblacion=None, tematica=None):
+    #     return Evento(id_evento, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica)
 
     def __str__(self):
         return (

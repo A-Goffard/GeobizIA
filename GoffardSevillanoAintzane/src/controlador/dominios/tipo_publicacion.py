@@ -3,9 +3,9 @@ class Tipo_Publicacion:
         self._id_tipo_publicacion = id_tipo_publicacion
         self._nombre = nombre
 
-    @staticmethod
-    def crear(id_tipo_publicacion, nombre=None):
-        return Tipo_Publicacion(id_tipo_publicacion, nombre)
+    # @staticmethod
+    # def crear(id_tipo_publicacion, nombre=None):
+    #     return Tipo_Publicacion(id_tipo_publicacion, nombre)
 
     @property
     def id_tipo_publicacion(self):

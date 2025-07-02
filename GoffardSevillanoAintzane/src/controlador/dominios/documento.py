@@ -55,9 +55,9 @@ class Documento:
     def tematica(self, tematica):
         self._tematica = tematica
 
-    @staticmethod
-    def crear(id_documento, titulo=None, descripcion=None, fecha_subida=None, tipo=None, tematica=None):
-        return Documento(id_documento, titulo, descripcion, fecha_subida, tipo, tematica)
+    # @staticmethod
+    # def crear(id_documento, titulo=None, descripcion=None, fecha_subida=None, tipo=None, tematica=None):
+    #     return Documento(id_documento, titulo, descripcion, fecha_subida, tipo, tematica)
 
     def __str__(self):
         return (

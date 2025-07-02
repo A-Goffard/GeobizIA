@@ -19,9 +19,9 @@ class Fecha_Actividad:
     def fecha(self, fecha):
         self._fecha = fecha
 
-    @staticmethod
-    def crear(id_fecha, fecha=None):
-        return Fecha_Actividad(id_fecha, fecha)
+    # @staticmethod
+    # def crear(id_fecha, fecha=None):
+    #     return Fecha_Actividad(id_fecha, fecha)
 
     def __str__(self):
         return f"ID: {self.id_fecha}, Fecha: {self.fecha or 'N/A'}"

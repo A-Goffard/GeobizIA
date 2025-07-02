@@ -133,34 +133,34 @@ class Publicacion:
     def id_plantilla(self, value):
         self._id_plantilla = value
 
-    @staticmethod
-    def crear(
-        id_publicacion,
-        titulo,
-        contenido,
-        autor,
-        fecha_creacion,
-        estado,
-        tags,
-        palabras_clave,
-        generada_por_ia,
-        id_generador_ia,
-        feedback_empresa,
-        id_tipo_publicacion,
-        id_plantilla
-    ):
-        return Publicacion(
-            id_publicacion,
-            titulo,
-            contenido,
-            autor,
-            fecha_creacion,
-            estado,
-            tags,
-            palabras_clave,
-            generada_por_ia,
-            id_generador_ia,
-            feedback_empresa,
-            id_tipo_publicacion,
-            id_plantilla
-        )
+    # @staticmethod
+    # def crear(
+    #     id_publicacion,
+    #     titulo,
+    #     contenido,
+    #     autor,
+    #     fecha_creacion,
+    #     estado,
+    #     tags,
+    #     palabras_clave,
+    #     generada_por_ia,
+    #     id_generador_ia,
+    #     feedback_empresa,
+    #     id_tipo_publicacion,
+    #     id_plantilla
+    # ):
+    #     return Publicacion(
+    #         id_publicacion,
+    #         titulo,
+    #         contenido,
+    #         autor,
+    #         fecha_creacion,
+    #         estado,
+    #         tags,
+    #         palabras_clave,
+    #         generada_por_ia,
+    #         id_generador_ia,
+    #         feedback_empresa,
+    #         id_tipo_publicacion,
+    #         id_plantilla
+    #     )

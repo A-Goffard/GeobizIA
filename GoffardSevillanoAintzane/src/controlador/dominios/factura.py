@@ -145,9 +145,9 @@ class Factura:
     def irpf(self, irpf):
         self._irpf = irpf
 
-    @staticmethod
-    def crear(id_factura, id_cliente, tipo=None, nombre=None, direccion=None, nif=None, fecha_facturacion=None, fecha_vencimiento=None, concepto=None, responsable=None, iva=None, coste_total=None, base_imponible=None, numero_factura=None, tipo_pago=None, irpf=None):
-        return Factura(id_factura, id_cliente, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf)
+    # @staticmethod
+    # def crear(id_factura, id_cliente, tipo=None, nombre=None, direccion=None, nif=None, fecha_facturacion=None, fecha_vencimiento=None, concepto=None, responsable=None, iva=None, coste_total=None, base_imponible=None, numero_factura=None, tipo_pago=None, irpf=None):
+    #     return Factura(id_factura, id_cliente, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf)
 
     def __str__(self):
         return (

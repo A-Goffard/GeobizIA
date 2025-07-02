@@ -19,9 +19,9 @@ class DocumentoTag:
     def id_tag(self, value):
         self._id_tag = value
 
-    @staticmethod
-    def crear(id_documento, id_tag):
-        return DocumentoTag(id_documento, id_tag)
+    # @staticmethod
+    # def crear(id_documento, id_tag):
+    #     return DocumentoTag(id_documento, id_tag)
 
     def __str__(self):
         return f"ID Documento: {self.id_documento}, ID Tag: {self.id_tag}"

@@ -55,9 +55,9 @@ class Plantilla:
     def ultima_modificacion(self, ultima_modificacion):
         self._ultima_modificacion = ultima_modificacion
 
-    @staticmethod
-    def crear(id_plantilla, titulo=None, tipo=None, contenido_base=None, fecha_creacion=None, ultima_modificacion=None):
-        return Plantilla(id_plantilla, titulo, tipo, contenido_base, fecha_creacion, ultima_modificacion)
+    # @staticmethod
+    # def crear(id_plantilla, titulo=None, tipo=None, contenido_base=None, fecha_creacion=None, ultima_modificacion=None):
+    #     return Plantilla(id_plantilla, titulo, tipo, contenido_base, fecha_creacion, ultima_modificacion)
 
     def __str__(self):
         return (

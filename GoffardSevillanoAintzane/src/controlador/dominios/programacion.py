@@ -8,9 +8,9 @@ class Programacion:
         self._notificaciones = notificaciones
         self._responsable = responsable
 
-    @staticmethod
-    def crear(id_programacion, publicacion_id, red_social_id, fecha_programada, estado, notificaciones, responsable):
-        return Programacion(id_programacion, publicacion_id, red_social_id, fecha_programada, estado, notificaciones, responsable)
+    # @staticmethod
+    # def crear(id_programacion, publicacion_id, red_social_id, fecha_programada, estado, notificaciones, responsable):
+    #     return Programacion(id_programacion, publicacion_id, red_social_id, fecha_programada, estado, notificaciones, responsable)
 
     @property
     def id_programacion(self):

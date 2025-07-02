@@ -1,39 +1,132 @@
-from src.controlador.crud.crud_rol import CrudRol
-from src.controlador.validaciones.validar_rol import validar_datos_rol
+from src.controlador.gestores.base_gestor import BaseGestor
+from src.controlador.dominios.rol import Rol
+from src.modelo.database.db_conexion import get_connection, close_connection
 
-class Roles:
+class Roles(BaseGestor[Rol]):
     def __init__(self):
-        self.crud = CrudRol()
+        super().__init__(table_name="rol", id_field="id_rol", domain_class=Rol)
 
-    def agregar(self, **kwargs):
-        id_rol = kwargs.get("id_rol")
-        if id_rol is not None and self.crud.existe(id_rol):
-            print(f"Error: Ya existe un rol con id_rol={id_rol}.")
+    def agregar(self, rol: Rol):
+        if self.existe(rol.id_rol):
+            print(f"Error: Ya existe un rol con id_rol={rol.id_rol}.")
             return None
-        valido, msg = validar_datos_rol(kwargs)
-        if not valido:
-            print(f"Error: {msg}")
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"""
+                INSERT INTO {self.table_name} (id_rol, nombre, descripcion)
+                VALUES (?, ?, ?)
+            """
+            cursor.execute(query, (
+                rol.id_rol,
+                rol.nombre,
+                rol.descripcion
+            ))
+            conn.commit()
+            return rol
+        except Exception as e:
+            print(f"Error al agregar rol: {e}")
             return None
-        return self.crud.crear(**kwargs)
+        finally:
+            close_connection(conn, cursor)
 
     def eliminar(self, id_rol):
-        if not self.crud.existe(id_rol):
+        if not self.existe(id_rol):
             print(f"Error: No existe un rol con id_rol={id_rol}.")
             return False
-        return self.crud.eliminar(id_rol)
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"DELETE FROM {self.table_name} WHERE id_rol = ?"
+            cursor.execute(query, (id_rol,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            print(f"Error al eliminar rol: {e}")
+            return False
+        finally:
+            close_connection(conn, cursor)
 
     def buscar(self, id_rol):
-        return self.crud.leer(id_rol)
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"SELECT id_rol, nombre, descripcion FROM {self.table_name} WHERE id_rol = ?"
+            cursor.execute(query, (id_rol,))
+            row = cursor.fetchone()
+            if row:
+                return Rol(*row)
+            return None
+        except Exception as e:
+            print(f"Error al buscar rol: {e}")
+            return None
+        finally:
+            close_connection(conn, cursor)
 
-    def actualizar(self, id_rol, **kwargs):
-        valido, msg = validar_datos_rol(kwargs)
-        if not valido:
-            print(f"Error: {msg}")
+    def mostrar_todos_los_elem(self):
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"SELECT id_rol, nombre, descripcion FROM {self.table_name}"
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            return [Rol(*row) for row in rows]
+        except Exception as e:
+            print(f"Error al listar roles: {e}")
+            return []
+        finally:
+            close_connection(conn, cursor)
+
+    def actualizar(self, rol: Rol):
+        if not self.existe(rol.id_rol):
+            print(f"Error: No existe un rol con id_rol={rol.id_rol}.")
             return False
-        return self.crud.actualizar(id_rol, **kwargs)
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"""
+                UPDATE {self.table_name}
+                SET nombre=?, descripcion=?
+                WHERE id_rol=?
+            """
+            cursor.execute(query, (
+                rol.nombre,
+                rol.descripcion,
+                rol.id_rol
+            ))
+            conn.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            print(f"Error al actualizar rol: {e}")
+            return False
+        finally:
+            close_connection(conn, cursor)
 
     def existe(self, id_rol):
-        return self.crud.existe(id_rol)
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"SELECT 1 FROM {self.table_name} WHERE id_rol = ?"
+            cursor.execute(query, (id_rol,))
+            return cursor.fetchone() is not None
+        except Exception as e:
+            print(f"Error al comprobar existencia de rol: {e}")
+            return False
+        finally:
+            close_connection(conn, cursor)
 
-    def listar(self):
-        return self.crud.listar()
+    def cantidad_elementos(self):
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"SELECT COUNT(*) FROM {self.table_name}"
+            cursor.execute(query)
+            return cursor.fetchone()[0]
+        except Exception as e:
+            print(f"Error al contar roles: {e}")
+            return 0
+        finally:
+            close_connection(conn, cursor)
+
+    def mostrar_elemento(self, rol: Rol) -> str:
+        return str(rol)

@@ -35,4 +35,5 @@ Teses que han pasado correctamente
 -actividad_evento
 -base_gestor
 
+despues de los cambios solo he adaptado el de actividad
 

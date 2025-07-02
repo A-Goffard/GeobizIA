@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+/config
+constantes_conexion.py
 
 # Ignorar archivos de configuración sensibles
 src/controlador/config/
@@ -24,3 +26,8 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+
+python_cache__pycache__
+*.py[cod]
+__pycache__

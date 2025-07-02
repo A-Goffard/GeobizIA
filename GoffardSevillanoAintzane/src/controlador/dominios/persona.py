@@ -91,9 +91,9 @@ class Persona:
     def pais(self, pais):
         self._pais = pais
 
-    @staticmethod
-    def crear(id_persona, nombre=None, apellido=None, email=None, telefono=None, dni=None, direccion=None, cp=None, poblacion=None, pais=None):
-        return Persona(id_persona, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais)
+    # @staticmethod
+    # def crear(id_persona, nombre=None, apellido=None, email=None, telefono=None, dni=None, direccion=None, cp=None, poblacion=None, pais=None):
+    #     return Persona(id_persona, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais)
 
     def __str__(self):
         return f"ID: {self.id_persona}, Nombre: {self.nombre or 'N/A'}, Apellido: {self.apellido or 'N/A'}, Email: {self.email or 'N/A'}, Teléfono: {self.telefono or 'N/A'}, DNI: {self.dni or 'N/A'}, Dirección: {self.direccion or 'N/A'}, CP: {self.cp or 'N/A'}, Población: {self.poblacion or 'N/A'}, País: {self.pais or 'N/A'}"

@@ -55,9 +55,9 @@ class Usuario:
     def password(self, password):
         self._password = password
 
-    @staticmethod
-    def crear(id_usuario, id_persona, fecha_nacimiento=None, rol=None, preferencias=None, password=None):
-        return Usuario(id_usuario, id_persona, fecha_nacimiento, rol, preferencias, password)
+    # @staticmethod
+    # def crear(id_usuario, id_persona, fecha_nacimiento=None, rol=None, preferencias=None, password=None):
+    #     return Usuario(id_usuario, id_persona, fecha_nacimiento, rol, preferencias, password)
 
     def __str__(self):
         return f"ID: {self.id_usuario}, ID Persona: {self.id_persona}, Fecha Nacimiento: {self.fecha_nacimiento or 'N/A'}, Rol: {self.rol or 'N/A'}, Preferencias: {self.preferencias or 'N/A'}, Password: {self.password or 'N/A'}"

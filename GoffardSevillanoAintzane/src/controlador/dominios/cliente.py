@@ -55,9 +55,9 @@ class Cliente:
     def fecha_registro(self, fecha_registro):
         self._fecha_registro = fecha_registro
 
-    @staticmethod
-    def crear(id_cliente, id_persona, tipo=None, razon_social=None, nif=None, fecha_registro=None):
-        return Cliente(id_cliente, id_persona, tipo, razon_social, nif, fecha_registro)
+    # @staticmethod
+    # def crear(id_cliente, id_persona, tipo=None, razon_social=None, nif=None, fecha_registro=None):
+    #     return Cliente(id_cliente, id_persona, tipo, razon_social, nif, fecha_registro)
 
     def __str__(self):
         return f"ID: {self.id_cliente}, ID Persona: {self.id_persona}, Tipo: {self.tipo or 'N/A'}, Razón Social: {self.razon_social or 'N/A'}, NIF: {self.nif or 'N/A'}, Fecha Registro: {self.fecha_registro or 'N/A'}"

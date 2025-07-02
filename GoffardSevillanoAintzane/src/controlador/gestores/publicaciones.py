@@ -1,39 +1,152 @@
-from src.controlador.crud.crud_publicacion import CrudPublicacion
-from src.controlador.validaciones.validar_publicacion import validar_datos_publicacion
+from src.controlador.gestores.base_gestor import BaseGestor
+from src.controlador.dominios.publicacion import Publicacion
+from src.modelo.database.db_conexion import get_connection, close_connection
 
-class Publicaciones:
+class Publicaciones(BaseGestor[Publicacion]):
     def __init__(self):
-        self.crud = CrudPublicacion()
+        super().__init__(table_name="publicacion", id_field="id_publicacion", domain_class=Publicacion)
 
-    def agregar(self, **kwargs):
-        id_publicacion = kwargs.get("id_publicacion")
-        if id_publicacion is not None and self.crud.existe(id_publicacion):
-            print(f"Error: Ya existe una publicación con id_publicacion={id_publicacion}.")
+    def agregar(self, publicacion: Publicacion):
+        if self.existe(publicacion.id_publicacion):
+            print(f"Error: Ya existe una publicación con id_publicacion={publicacion.id_publicacion}.")
             return None
-        valido, msg = validar_datos_publicacion(kwargs)
-        if not valido:
-            print(f"Error: {msg}")
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"""
+                INSERT INTO {self.table_name} (id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave, generada_por_ia, id_generador_ia, feedback_empresa, id_tipo_publicacion, id_plantilla)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """
+            cursor.execute(query, (
+                publicacion.id_publicacion,
+                publicacion.titulo,
+                publicacion.contenido,
+                publicacion.autor,
+                publicacion.fecha_creacion,
+                publicacion.estado,
+                publicacion.tags,
+                publicacion.palabras_clave,
+                publicacion.generada_por_ia,
+                publicacion.id_generador_ia,
+                publicacion.feedback_empresa,
+                publicacion.id_tipo_publicacion,
+                publicacion.id_plantilla
+            ))
+            conn.commit()
+            return publicacion
+        except Exception as e:
+            print(f"Error al agregar publicación: {e}")
             return None
-        return self.crud.crear(**kwargs)
+        finally:
+            close_connection(conn, cursor)
 
     def eliminar(self, id_publicacion):
-        if not self.crud.existe(id_publicacion):
+        if not self.existe(id_publicacion):
             print(f"Error: No existe una publicación con id_publicacion={id_publicacion}.")
             return False
-        return self.crud.eliminar(id_publicacion)
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"DELETE FROM {self.table_name} WHERE id_publicacion = ?"
+            cursor.execute(query, (id_publicacion,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            print(f"Error al eliminar publicación: {e}")
+            return False
+        finally:
+            close_connection(conn, cursor)
 
     def buscar(self, id_publicacion):
-        return self.crud.leer(id_publicacion)
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"SELECT id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave, generada_por_ia, id_generador_ia, feedback_empresa, id_tipo_publicacion, id_plantilla FROM {self.table_name} WHERE id_publicacion = ?"
+            cursor.execute(query, (id_publicacion,))
+            row = cursor.fetchone()
+            if row:
+                return Publicacion(*row)
+            return None
+        except Exception as e:
+            print(f"Error al buscar publicación: {e}")
+            return None
+        finally:
+            close_connection(conn, cursor)
 
-    def actualizar(self, id_publicacion, **kwargs):
-        valido, msg = validar_datos_publicacion(kwargs)
-        if not valido:
-            print(f"Error: {msg}")
+    def mostrar_todos_los_elem(self):
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"SELECT id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave, generada_por_ia, id_generador_ia, feedback_empresa, id_tipo_publicacion, id_plantilla FROM {self.table_name}"
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            return [Publicacion(*row) for row in rows]
+        except Exception as e:
+            print(f"Error al listar publicaciones: {e}")
+            return []
+        finally:
+            close_connection(conn, cursor)
+
+    def actualizar(self, publicacion: Publicacion):
+        if not self.existe(publicacion.id_publicacion):
+            print(f"Error: No existe una publicación con id_publicacion={publicacion.id_publicacion}.")
             return False
-        return self.crud.actualizar(id_publicacion, **kwargs)
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"""
+                UPDATE {self.table_name}
+                SET titulo=?, contenido=?, autor=?, fecha_creacion=?, estado=?, tags=?, palabras_clave=?, generada_por_ia=?, id_generador_ia=?, feedback_empresa=?, id_tipo_publicacion=?, id_plantilla=?
+                WHERE id_publicacion=?
+            """
+            cursor.execute(query, (
+                publicacion.titulo,
+                publicacion.contenido,
+                publicacion.autor,
+                publicacion.fecha_creacion,
+                publicacion.estado,
+                publicacion.tags,
+                publicacion.palabras_clave,
+                publicacion.generada_por_ia,
+                publicacion.id_generador_ia,
+                publicacion.feedback_empresa,
+                publicacion.id_tipo_publicacion,
+                publicacion.id_plantilla,
+                publicacion.id_publicacion
+            ))
+            conn.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            print(f"Error al actualizar publicación: {e}")
+            return False
+        finally:
+            close_connection(conn, cursor)
 
     def existe(self, id_publicacion):
-        return self.crud.existe(id_publicacion)
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"SELECT 1 FROM {self.table_name} WHERE id_publicacion = ?"
+            cursor.execute(query, (id_publicacion,))
+            return cursor.fetchone() is not None
+        except Exception as e:
+            print(f"Error al comprobar existencia de publicación: {e}")
+            return False
+        finally:
+            close_connection(conn, cursor)
 
-    def listar(self):
-        return self.crud.listar()
+    def cantidad_elementos(self):
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"SELECT COUNT(*) FROM {self.table_name}"
+            cursor.execute(query)
+            return cursor.fetchone()[0]
+        except Exception as e:
+            print(f"Error al contar publicaciones: {e}")
+            return 0
+        finally:
+            close_connection(conn, cursor)
+
+    def mostrar_elemento(self, publicacion: Publicacion) -> str:
+        return str(publicacion)

@@ -28,9 +28,9 @@ class Rol:
     def descripcion(self, descripcion):
         self._descripcion = descripcion
 
-    @staticmethod
-    def crear(id_rol, nombre, descripcion=None):
-        return Rol(id_rol, nombre, descripcion)
+    # @staticmethod
+    # def crear(id_rol, nombre, descripcion=None):
+    #     return Rol(id_rol, nombre, descripcion)
 
     def __str__(self):
         return f"ID: {self.id_rol}, Nombre: {self.nombre}, Descripción: {self.descripcion or 'N/A'}"

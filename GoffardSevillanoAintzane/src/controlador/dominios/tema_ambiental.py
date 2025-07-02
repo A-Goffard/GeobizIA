@@ -37,9 +37,9 @@ class Tema_Ambiental:
     def relevancia(self, relevancia):
         self._relevancia = relevancia
 
-    @staticmethod
-    def crear(id_tema_ambiental, nombre=None, descripcion=None, relevancia=None):
-        return Tema_Ambiental(id_tema_ambiental, nombre, descripcion, relevancia)
+    # @staticmethod
+    # def crear(id_tema_ambiental, nombre=None, descripcion=None, relevancia=None):
+    #     return Tema_Ambiental(id_tema_ambiental, nombre, descripcion, relevancia)
 
     def __str__(self):
         return (

@@ -19,9 +19,9 @@ class FacturaActividad:
     def id_actividad(self, value):
         self._id_actividad = value
 
-    @staticmethod
-    def crear(id_factura, id_actividad):
-        return FacturaActividad(id_factura, id_actividad)
+    # @staticmethod
+    # def crear(id_factura, id_actividad):
+    #     return FacturaActividad(id_factura, id_actividad)
 
     def __str__(self):
         return f"ID Factura: {self.id_factura}, ID Actividad: {self.id_actividad}"
