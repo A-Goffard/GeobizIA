@@ -1,14 +1,53 @@
+import os
 import pyodbc
+from pathlib import Path
 
-# Configura estos valores según tu entorno
-SERVER = r'DESKTOP-G9GRQKM\SQLEXPRESS'
-DATABASE = 'GeobizIAPruebas2'
-USERNAME = ''
-PASSWORD = ''
-DRIVER = 'ODBC Driver 17 for SQL Server'
+# Cargar .env automáticamente si python-dotenv está instalado
+try:
+    from dotenv import load_dotenv
+    # Busca el .env en config relativo al proyecto raíz y también en otras ubicaciones posibles
+    env_paths = [
+        Path(__file__).parents[3] / "config" / ".env",
+        Path(__file__).parent / "config" / ".env",
+        Path(__file__).parents[2] / "config" / ".env",
+        Path(__file__).parents[1] / "config" / ".env"
+    ]
+    env_found = False
+    for env_path in env_paths:
+        if env_path.exists():
+            load_dotenv(env_path)
+            print(f"Usando .env en: {env_path}")
+            env_found = True
+            break
+    if not env_found:
+        print("Advertencia: No se encontró el archivo .env en rutas conocidas.")
+except ImportError:
+    pass
 
-# 1. Conexión al servidor (sin base de datos)
-conn_str_server = f'DRIVER={{{DRIVER}}};SERVER={SERVER};Trusted_Connection=yes;'
+print("Variables de entorno cargadas:")
+for k, v in os.environ.items():
+    if "DB_" in k:
+        print(f"{k}={v}")
+
+SERVER = os.getenv('DB_SERVER')
+DATABASE = os.getenv('DB_NAME')
+DRIVER = os.getenv('DB_DRIVER')
+if not DRIVER:
+    raise RuntimeError("La variable de entorno DB_DRIVER no está definida. Revisa tu archivo .env y asegúrate de que el script la está leyendo correctamente.")
+if not DRIVER.startswith('{'):
+    DRIVER = f'{{{DRIVER}}}'
+
+USE_WINDOWS_AUTH = os.getenv('DB_USE_WINDOWS_AUTH', 'yes').lower() == 'yes'
+USERNAME = os.getenv('DB_USER')
+PASSWORD = os.getenv('DB_PASSWORD')
+
+if USE_WINDOWS_AUTH:
+    conn_str_server = f'DRIVER={DRIVER};SERVER={SERVER};Trusted_Connection=yes;'
+    conn_str_db = f'DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE};Trusted_Connection=yes;'
+else:
+    conn_str_server = f'DRIVER={DRIVER};SERVER={SERVER};UID={USERNAME};PWD={PASSWORD};'
+    conn_str_db = f'DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD};'
+
 conn_server = pyodbc.connect(conn_str_server, autocommit=True)
 cursor_server = conn_server.cursor()
 
@@ -21,7 +60,6 @@ finally:
     conn_server.close()
 
 # 3. Conexión a la base de datos
-conn_str_db = f'DRIVER={{{DRIVER}}};SERVER={SERVER};DATABASE={DATABASE};Trusted_Connection=yes;'
 conn_db = pyodbc.connect(conn_str_db)
 cursor_db = conn_db.cursor()
 

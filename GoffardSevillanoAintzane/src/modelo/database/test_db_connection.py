@@ -6,9 +6,21 @@ from pathlib import Path
 # Cargar .env automáticamente
 try:
     from dotenv import load_dotenv
-    env_path = Path(__file__).parent / "config" / ".env"
-    if not load_dotenv(env_path):
-        print(f"Advertencia: No se pudo cargar el archivo .env en {env_path}")
+    # Busca el .env en config relativo al proyecto raíz y también en otras ubicaciones posibles
+    env_paths = [
+        Path(__file__).parents[2] / "config" / ".env",
+        Path(__file__).parent / "config" / ".env",
+        Path(__file__).parents[1] / "config" / ".env"
+    ]
+    env_found = False
+    for env_path in env_paths:
+        if env_path.exists():
+            load_dotenv(env_path)
+            print(f"Usando .env en: {env_path}")
+            env_found = True
+            break
+    if not env_found:
+        print("Advertencia: No se encontró el archivo .env en rutas conocidas.")
 except ImportError:
     print("Advertencia: python-dotenv no está instalado. Usa variables de entorno del sistema.")
     pass
@@ -24,9 +36,13 @@ def get_connection():
         ValueError: Si faltan variables de entorno requeridas.
         pyodbc.Error: Si falla la conexión a la base de datos.
     """
-    server = os.getenv('DB_SERVER', 'localhost')
+    server = os.getenv('DB_SERVER')
     database = os.getenv('DB_NAME')
-    driver = os.getenv('DB_DRIVER', '{ODBC Driver 17 for SQL Server}')
+    driver = os.getenv('DB_DRIVER')
+    if not driver:
+        raise RuntimeError("La variable de entorno DB_DRIVER no está definida. Revisa tu archivo .env.")
+    if not driver.startswith('{'):
+        driver = f'{{{driver}}}'
     use_windows_auth = os.getenv('DB_USE_WINDOWS_AUTH', 'yes').lower() == 'yes'
 
     if not database:

@@ -1,20 +1,53 @@
+import os
 import pyodbc
+from pathlib import Path
 
-# Configura estos valores según tu entorno
-SERVER = r'DESKTOP-G9GRQKM\SQLEXPRESS'
-DATABASE = 'GeobizIAPruebas2'
-DRIVER = 'ODBC Driver 17 for SQL Server'
+# Cargar .env automáticamente si python-dotenv está instalado
+try:
+    from dotenv import load_dotenv
+    # Busca el .env en config relativo al proyecto raíz y también en otras ubicaciones posibles
+    env_paths = [
+        Path(__file__).parents[3] / "config" / ".env",
+        Path(__file__).parent / "config" / ".env",
+        Path(__file__).parents[2] / "config" / ".env",
+        Path(__file__).parents[1] / "config" / ".env"
+    ]
+    env_found = False
+    for env_path in env_paths:
+        if env_path.exists():
+            load_dotenv(env_path)
+            print(f"Usando .env en: {env_path}")
+            env_found = True
+            break
+    if not env_found:
+        print("Advertencia: No se encontró el archivo .env en rutas conocidas.")
+except ImportError:
+    pass
 
-conn_str = f'DRIVER={{{DRIVER}}};SERVER={SERVER};DATABASE={DATABASE};Trusted_Connection=yes;'
+SERVER = os.getenv('DB_SERVER')
+DATABASE = os.getenv('DB_NAME')
+DRIVER = os.getenv('DB_DRIVER')
+if not DRIVER:
+    raise RuntimeError("La variable de entorno DB_DRIVER no está definida. Revisa tu archivo .env.")
+if not DRIVER.startswith('{'):
+    DRIVER = f'{{{DRIVER}}}'
+
+USE_WINDOWS_AUTH = os.getenv('DB_USE_WINDOWS_AUTH', 'yes').lower() == 'yes'
+USERNAME = os.getenv('DB_USER')
+PASSWORD = os.getenv('DB_PASSWORD')
+
+if USE_WINDOWS_AUTH:
+    conn_str = f'DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE};Trusted_Connection=yes;'
+else:
+    conn_str = f'DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD};'
+
 conn = pyodbc.connect(conn_str)
 cursor = conn.cursor()
 
-# Ruta absoluta al archivo con los inserts de prueba
 sql_path = r'c:\Aintzane\Data Analisis\GeobizIA\GoffardSevillanoAintzane\src\modelo\database\create\queries_ejemplo_pruebas.sql'
 with open(sql_path, encoding='utf-8') as f:
     sql_script = f.read()
 
-# Ejecutar cada sentencia INSERT
 for statement in sql_script.split(';'):
     stmt = statement.strip()
     if stmt:
