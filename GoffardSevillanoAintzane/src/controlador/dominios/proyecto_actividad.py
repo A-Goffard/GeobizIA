@@ -1,7 +1,7 @@
 class ProyectoActividad:
     def __init__(self, id_proyecto, id_actividad):
-        self.id_proyecto = id_proyecto
-        self.id_actividad = id_actividad
+        self._id_proyecto = id_proyecto
+        self._id_actividad = id_actividad
 
     @staticmethod
     def crear(id_proyecto, id_actividad):

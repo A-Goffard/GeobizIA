@@ -1,4 +1,8 @@
+import sys
+import os
 import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
 from src.controlador.gestores.auditorias_publicacion import Auditorias_Publicacion
 from src.controlador.gestores.publicaciones import Publicaciones
 from src.controlador.gestores.generadoresia import GeneradoresIA
@@ -9,57 +13,82 @@ from src.controlador.gestores.plantillas import Plantillas
 
 @pytest.fixture
 def gestor():
-    return Auditorias_Publicacion()
+    gestor = Auditorias_Publicacion()
+    # Elimina la auditoría con id=1 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(1)
+    return gestor
 
 @pytest.fixture
 def gestor_publicaciones():
-    return Publicaciones()
+    gestor = Publicaciones()
+    # Elimina la publicación con id=1 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(1)
+    return gestor
 
 @pytest.fixture
 def gestor_generadores():
-    return GeneradoresIA()
+    gestor = GeneradoresIA()
+    # Elimina el generador con id=1 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(1)
+    return gestor
 
 @pytest.fixture
 def gestor_usuarios():
-    return Usuarios()
+    gestor = Usuarios()
+    # Elimina el usuario con id=1 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(1)
+    return gestor
 
 @pytest.fixture
 def gestor_personas():
-    return Personas()
+    gestor = Personas()
+    # Elimina la persona con id=1 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(1)
+    return gestor
 
 @pytest.fixture
 def gestor_tipos():
-    return Tipos_Publicacion()
+    gestor = Tipos_Publicacion()
+    # Elimina el tipo de publicación con id=1 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(1)
+    return gestor
 
 @pytest.fixture
 def gestor_plantillas():
-    return Plantillas()
+    gestor = Plantillas()
+    # Elimina la plantilla con id=1 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(1)
+    return gestor
 
 def test_crud_auditoria_publicacion(
     gestor, gestor_publicaciones, gestor_generadores, gestor_usuarios, gestor_personas, gestor_tipos, gestor_plantillas
 ):
-    persona = gestor_personas.agregar(
-        id_persona=1,
-        nombre="Laura",
-        apellido="Martínez",
-        email="laura.martinez@example.com",
-        telefono="912345678",
-        dni="12345678G",
-        direccion="Calle Estrella 123",
-        cp="28004",
-        poblacion="Madrid",
-        pais="España"
-    )
+    persona = gestor_personas.buscar(1)
+    if persona is None:
+        persona = gestor_personas.agregar(
+            id_persona=1,
+            nombre="Laura",
+            apellido="Martínez",
+            email="laura.martinez@example.com",
+            telefono="912345678",
+            dni="12345678G",
+            direccion="Calle Estrella 123",
+            cp="28004",
+            poblacion="Madrid",
+            pais="España"
+        )
     assert persona is not None
 
-    usuario = gestor_usuarios.agregar(
-        id_usuario=1,
-        id_persona=1,
-        fecha_nacimiento="1985-03-15",
-        rol="Administrador",
-        preferencias="Notificaciones por email",
-        password="password789"
-    )
+    usuario = gestor_usuarios.buscar(1)
+    if usuario is None:
+        usuario = gestor_usuarios.agregar(
+            id_usuario=1,
+            id_persona=1,
+            fecha_nacimiento="1985-03-15",
+            rol="Administrador",
+            preferencias="Notificaciones por email",
+            password="password789"
+        )
     assert usuario is not None
 
     generador = gestor_generadores.agregar(
@@ -73,21 +102,25 @@ def test_crud_auditoria_publicacion(
     )
     assert generador is not None
 
-    tipo_publicacion = gestor_tipos.agregar(
-        id_tipo_publicacion=1,
-        nombre="Artículo",
-        descripcion="Publicación de tipo artículo"
-    )
+    tipo_publicacion = gestor_tipos.buscar(1)
+    if tipo_publicacion is None:
+        tipo_publicacion = gestor_tipos.agregar(
+            id_tipo_publicacion=1,
+            nombre="Artículo",
+            descripcion="Publicación de tipo artículo"
+        )
     assert tipo_publicacion is not None
 
-    plantilla = gestor_plantillas.agregar(
-        id_plantilla=1,
-        titulo="Plantilla Artículo",
-        tipo="Artículo",
-        contenido_base="Contenido de ejemplo para artículos",
-        fecha_creacion="2025-06-27",
-        ultima_modificacion="2025-06-27"
-    )
+    plantilla = gestor_plantillas.buscar(1)
+    if plantilla is None:
+        plantilla = gestor_plantillas.agregar(
+            id_plantilla=1,
+            titulo="Plantilla Artículo",
+            tipo="Artículo",
+            contenido_base="Contenido de ejemplo para artículos",
+            fecha_creacion="2025-06-27",
+            ultima_modificacion="2025-06-27"
+        )
     assert plantilla is not None
 
     publicacion = gestor_publicaciones.agregar(

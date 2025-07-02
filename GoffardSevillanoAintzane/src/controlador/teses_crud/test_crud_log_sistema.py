@@ -1,4 +1,8 @@
+import sys
+import os
 import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
 from src.controlador.gestores.logs_sistema import LogsSistema
 from src.controlador.gestores.usuarios import Usuarios
 from src.controlador.gestores.personas import Personas
@@ -13,11 +17,15 @@ def gestor_usuarios():
 
 @pytest.fixture
 def gestor_personas():
-    return Personas()
+    gestor = Personas()
+    # Elimina la persona con id=17 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(17)
+    return gestor
+
 
 def test_crud_log_sistema(gestor, gestor_usuarios, gestor_personas):
     persona = gestor_personas.agregar(
-        id_persona=1,
+        id_persona=17,
         nombre="Marta",
         apellido="Rodríguez",
         email="marta.rodriguez@example.com",
@@ -31,8 +39,8 @@ def test_crud_log_sistema(gestor, gestor_usuarios, gestor_personas):
     assert persona is not None
 
     usuario = gestor_usuarios.agregar(
-        id_usuario=1,
-        id_persona=1,
+        id_usuario=17,
+        id_persona=17,
         fecha_nacimiento="1990-05-20",
         rol="Editor",
         preferencias="Notificaciones por email",
@@ -41,8 +49,8 @@ def test_crud_log_sistema(gestor, gestor_usuarios, gestor_personas):
     assert usuario is not None
 
     log_sistema = gestor.agregar(
-        id_log_sistema=1,
-        usuario_id=1,
+        id_log_sistema=17,
+        usuario_id=17,
         fecha="2025-06-27 13:22:00",
         accion="Inicio de sesión",
         descripcion="El usuario inició sesión en el sistema",
@@ -50,16 +58,16 @@ def test_crud_log_sistema(gestor, gestor_usuarios, gestor_personas):
     )
     assert log_sistema is not None
 
-    log_sistema_leido = gestor.buscar(1)
+    log_sistema_leido = gestor.buscar(17)
     assert log_sistema_leido.accion == "Inicio de sesión"
 
-    actualizado = gestor.actualizar(1, accion="Actualización de perfil")
+    actualizado = gestor.actualizar(17, accion="Actualización de perfil")
     assert actualizado
-    assert gestor.buscar(1).accion == "Actualización de perfil"
+    assert gestor.buscar(17).accion == "Actualización de perfil"
 
-    eliminado = gestor.eliminar(1)
+    eliminado = gestor.eliminar(17)
     assert eliminado
-    assert gestor.buscar(1) is None
+    assert gestor.buscar(17) is None
 
-    gestor_usuarios.eliminar(1)
-    gestor_personas.eliminar(1)
+    gestor_usuarios.eliminar(17)
+    gestor_personas.eliminar(17)

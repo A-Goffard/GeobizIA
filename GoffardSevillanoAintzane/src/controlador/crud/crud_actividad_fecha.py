@@ -1,5 +1,6 @@
 from .base_crud import BaseCRUD
 from src.controlador.dominios.actividad_fecha import ActividadFecha
+from src.modelo.database.db_conexion import get_connection, close_connection
 
 class CrudActividadFecha(BaseCRUD):
     def __init__(self):
@@ -18,7 +19,7 @@ class CrudActividadFecha(BaseCRUD):
 
     def eliminar(self, id_actividad, id_fecha):
         query = f"DELETE FROM {self.table_name} WHERE id_actividad = ? AND id_fecha = ?"
-        conn = self.get_connection()
+        conn = get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute(query, (id_actividad, id_fecha))
@@ -28,11 +29,11 @@ class CrudActividadFecha(BaseCRUD):
             print(f"Error al eliminar ActividadFecha: {e}")
             return False
         finally:
-            self.close_connection(conn, cursor)
+            close_connection(conn, cursor)
 
     def buscar(self, id_actividad, id_fecha):
         query = f"SELECT id_actividad, id_fecha FROM {self.table_name} WHERE id_actividad = ? AND id_fecha = ?"
-        conn = self.get_connection()
+        conn = get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute(query, (id_actividad, id_fecha))
@@ -44,7 +45,7 @@ class CrudActividadFecha(BaseCRUD):
             print(f"Error al buscar ActividadFecha: {e}")
             return None
         finally:
-            self.close_connection(conn, cursor)
+            close_connection(conn, cursor)
 
     def listar(self):
         return self.select_all(ActividadFecha)

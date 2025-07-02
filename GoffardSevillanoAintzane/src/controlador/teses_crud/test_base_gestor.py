@@ -1,4 +1,16 @@
-from gestores.roles import Roles
+import sys
+import os
+import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
+from src.controlador.gestores.roles import Roles
+
+@pytest.fixture
+def gestor_eventos():
+    gestor = Roles()
+    # Elimina el rol con id=100 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(100)
+    return gestor
 
 def test_base_gestor():
     gestor = Roles()
@@ -12,7 +24,7 @@ def test_base_gestor():
     print(f"Rol buscado: {rol_buscado}")
 
     # Mostrar todos los roles
-    roles = gestor.mostrar_todos_los_elem()
+    roles = gestor.listar()
     print("Todos los roles:")
     for rol in roles:
         print(rol)
@@ -29,5 +41,3 @@ def test_base_gestor():
     rol_buscado = gestor.buscar(100)
     print(f"Rol después de eliminar: {rol_buscado}")
 
-if __name__ == "__main__":
-    test_base_gestor()

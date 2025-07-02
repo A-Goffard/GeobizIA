@@ -10,32 +10,32 @@ class Tag:
         return self._id_tag
 
     @id_tag.setter
-    def id_tag(self, id_tag):
-        self._id_tag = id_tag
+    def id_tag(self, value):
+        self._id_tag = value
 
     @property
     def palabra_clave(self):
         return self._palabra_clave
 
     @palabra_clave.setter
-    def palabra_clave(self, palabra_clave):
-        self._palabra_clave = palabra_clave
+    def palabra_clave(self, value):
+        self._palabra_clave = value
 
     @property
     def categoria(self):
         return self._categoria
 
     @categoria.setter
-    def categoria(self, categoria):
-        self._categoria = categoria
+    def categoria(self, value):
+        self._categoria = value
 
     @property
     def frecuencia_uso(self):
         return self._frecuencia_uso
 
     @frecuencia_uso.setter
-    def frecuencia_uso(self, frecuencia_uso):
-        self._frecuencia_uso = frecuencia_uso
+    def frecuencia_uso(self, value):
+        self._frecuencia_uso = value
 
     @staticmethod
     def crear(id_tag, palabra_clave, categoria, frecuencia_uso=0):

@@ -7,7 +7,10 @@ from src.controlador.gestores.proyectos import Proyectos
 
 @pytest.fixture
 def gestor():
-    return Proyectos()
+    gestor = Proyectos()
+    # Elimina el proyecto con id=1 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(1)
+    return gestor
 
 def test_crud_proyecto(gestor):
     # Crear un proyecto

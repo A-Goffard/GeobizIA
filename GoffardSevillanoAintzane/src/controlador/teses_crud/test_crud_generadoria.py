@@ -1,23 +1,36 @@
+import sys
+import os
 import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
 from src.controlador.gestores.generadoresia import GeneradoresIA
 from src.controlador.gestores.usuarios import Usuarios
 from src.controlador.gestores.personas import Personas
 
 @pytest.fixture
 def gestor():
-    return GeneradoresIA()
+    gestor = GeneradoresIA()
+    # Elimina el generador con id=17 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(17)
+    return gestor
 
 @pytest.fixture
 def gestor_usuarios():
-    return Usuarios()
+    gestor = Usuarios()
+    # Elimina el usuario con id=17 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(17)
+    return gestor
 
 @pytest.fixture
 def gestor_personas():
-    return Personas()
+    gestor = Personas()
+    # Elimina la persona con id=17 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(17)
+    return gestor
 
 def test_crud_generador_ia(gestor, gestor_usuarios, gestor_personas):
     persona = gestor_personas.agregar(
-        id_persona=1,
+        id_persona=17,
         nombre="Laura",
         apellido="Sánchez",
         email="laura.sanchez@example.com",
@@ -31,8 +44,8 @@ def test_crud_generador_ia(gestor, gestor_usuarios, gestor_personas):
     assert persona is not None
 
     usuario = gestor_usuarios.agregar(
-        id_usuario=1,
-        id_persona=1,
+        id_usuario=17,
+        id_persona=17,
         fecha_nacimiento="1995-03-15",
         rol="Analista",
         preferencias="Notificaciones por email",
@@ -41,7 +54,7 @@ def test_crud_generador_ia(gestor, gestor_usuarios, gestor_personas):
     assert usuario is not None
 
     generador = gestor.agregar(
-        id_generador_ia=1,
+        id_generador_ia=17,
         nombre="Generador de Texto",
         descripcion="Generador de texto basado en IA",
         empresa_id=None,
@@ -51,16 +64,16 @@ def test_crud_generador_ia(gestor, gestor_usuarios, gestor_personas):
     )
     assert generador is not None
 
-    generador_leido = gestor.buscar(1)
+    generador_leido = gestor.buscar(17)
     assert generador_leido.nombre == "Generador de Texto"
 
-    actualizado = gestor.actualizar(1, nombre="Generador de Imágenes", descripcion="Generador de imágenes basado en IA")
+    actualizado = gestor.actualizar(17, nombre="Generador de Imágenes", descripcion="Generador de imágenes basado en IA")
     assert actualizado
-    assert gestor.buscar(1).nombre == "Generador de Imágenes"
+    assert gestor.buscar(17).nombre == "Generador de Imágenes"
 
-    eliminado = gestor.eliminar(1)
+    eliminado = gestor.eliminar(17)
     assert eliminado
-    assert gestor.buscar(1) is None
+    assert gestor.buscar(17) is None
 
-    gestor_usuarios.eliminar(1)
-    gestor_personas.eliminar(1)
+    gestor_usuarios.eliminar(17)
+    gestor_personas.eliminar(17)

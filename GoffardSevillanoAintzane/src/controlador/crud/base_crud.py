@@ -30,7 +30,8 @@ class BaseCRUD:
         Returns:
             Optional[object]: Objeto del dominio creado, o None si falla.
         """
-        fields = [f for f in self.fields if f != self.id_field or not is_identity]
+        # Excluye id_field si no está en values (para autoincrementales)
+        fields = [f for f in self.fields if f in values]
         if not all(field in values for field in fields):
             print(f"Error: Faltan campos requeridos: {fields}")
             return None
@@ -44,11 +45,24 @@ class BaseCRUD:
         cursor = conn.cursor()
         try:
             cursor.execute(query, params)
-            if is_identity:
+            # Si el campo id es autoincremental y no está en values, obtén el id generado
+            if self.id_field and self.id_field not in values:
+                cursor.execute("SELECT @@IDENTITY")
+                values[self.id_field] = int(cursor.fetchone()[0])
+            elif is_identity:
                 cursor.execute("SELECT @@IDENTITY")
                 values[self.id_field] = int(cursor.fetchone()[0])
             conn.commit()
-            return domain_class.crear(**values)
+            # Usa el método 'crear' si existe, si no, usa el constructor
+            if domain_class:
+                if hasattr(domain_class, "crear"):
+                    try:
+                        return domain_class.crear(**values)
+                    except TypeError:
+                        return domain_class(**values)
+                elif callable(domain_class):
+                    return domain_class(**values)
+            return True
         except pyodbc.Error as e:
             print(f"Error al insertar registro: {e}")
             return None

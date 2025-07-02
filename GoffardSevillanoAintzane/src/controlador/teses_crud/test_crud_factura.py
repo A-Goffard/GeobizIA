@@ -1,23 +1,36 @@
+import sys
+import os
 import pytest
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
 from src.controlador.gestores.facturas import Facturas
 from src.controlador.gestores.clientes import Clientes
 from src.controlador.gestores.personas import Personas
 
 @pytest.fixture
 def gestor():
-    return Facturas()
+    gestor = Facturas()
+    # Elimina la factura con id=17 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(17)
+    return gestor
 
 @pytest.fixture
 def gestor_clientes():
-    return Clientes()
+    gestor = Clientes()
+    # Elimina el cliente con id=17 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(17)
+    return gestor
 
 @pytest.fixture
 def gestor_personas():
-    return Personas()
+    gestor = Personas()
+    # Elimina la persona con id=17 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(17)
+    return gestor
 
 def test_crud_factura(gestor, gestor_clientes, gestor_personas):
     persona = gestor_personas.agregar(
-        id_persona=1,
+        id_persona=17,
         nombre="Ana",
         apellido="Gómez",
         email="ana.gomez@example.com",
@@ -31,8 +44,8 @@ def test_crud_factura(gestor, gestor_clientes, gestor_personas):
     assert persona is not None
 
     cliente = gestor_clientes.agregar(
-        id_cliente=1,
-        id_persona=1,
+        id_cliente=17,
+        id_persona=17,
         tipo="Premium",
         razon_social="Consultoría Gómez S.L.",
         nif="B12345678",
@@ -41,8 +54,8 @@ def test_crud_factura(gestor, gestor_clientes, gestor_personas):
     assert cliente is not None
 
     factura = gestor.agregar(
-        id_factura=1,
-        id_cliente=1,
+        id_factura=17,
+        id_cliente=17,
         tipo="Factura Ordinaria",
         nombre="Consultoría Gómez S.L.",
         direccion="Calle Luna 789, Barcelona",
@@ -60,16 +73,16 @@ def test_crud_factura(gestor, gestor_clientes, gestor_personas):
     )
     assert factura is not None
 
-    factura_leida = gestor.buscar(1)
+    factura_leida = gestor.buscar(17)
     assert factura_leida.tipo == "Factura Ordinaria"
 
-    actualizado = gestor.actualizar(1, tipo="Factura Rectificativa", nombre="Consultoría Gómez S.L. Actualizada")
+    actualizado = gestor.actualizar(17, tipo="Factura Rectificativa", nombre="Consultoría Gómez S.L. Actualizada")
     assert actualizado
-    assert gestor.buscar(1).tipo == "Factura Rectificativa"
+    assert gestor.buscar(17).tipo == "Factura Rectificativa"
 
-    eliminado = gestor.eliminar(1)
+    eliminado = gestor.eliminar(17)
     assert eliminado
-    assert gestor.buscar(1) is None
+    assert gestor.buscar(17) is None
 
-    gestor_clientes.eliminar(1)
-    gestor_personas.eliminar(1)
+    gestor_clientes.eliminar(17)
+    gestor_personas.eliminar(17)

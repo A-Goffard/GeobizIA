@@ -1,12 +1,10 @@
 class Empresa:
-    def __init__(self, id_empresa, id_persona, razon_social=None, nif=None, sector=None, tamano=None, fecha_registro=None):
+    def __init__(self, id_empresa, nombre, sector, logo, ubicacion):
         self._id_empresa = id_empresa
-        self._id_persona = id_persona
-        self._razon_social = razon_social
-        self._nif = nif
+        self._nombre = nombre
         self._sector = sector
-        self._tamano = tamano
-        self._fecha_registro = fecha_registro
+        self._logo = logo
+        self._ubicacion = ubicacion
 
     @property
     def id_empresa(self):
@@ -17,28 +15,12 @@ class Empresa:
         self._id_empresa = id_empresa
 
     @property
-    def id_persona(self):
-        return self._id_persona
+    def nombre(self):
+        return self._nombre
 
-    @id_persona.setter
-    def id_persona(self, id_persona):
-        self._id_persona = id_persona
-
-    @property
-    def razon_social(self):
-        return self._razon_social
-
-    @razon_social.setter
-    def razon_social(self, razon_social):
-        self._razon_social = razon_social
-
-    @property
-    def nif(self):
-        return self._nif
-
-    @nif.setter
-    def nif(self, nif):
-        self._nif = nif
+    @nombre.setter
+    def nombre(self, nombre):
+        self._nombre = nombre
 
     @property
     def sector(self):
@@ -49,24 +31,24 @@ class Empresa:
         self._sector = sector
 
     @property
-    def tamano(self):
-        return self._tamano
+    def logo(self):
+        return self._logo
 
-    @tamano.setter
-    def tamano(self, tamano):
-        self._tamano = tamano
+    @logo.setter
+    def logo(self, logo):
+        self._logo = logo
 
     @property
-    def fecha_registro(self):
-        return self._fecha_registro
+    def ubicacion(self):
+        return self._ubicacion
 
-    @fecha_registro.setter
-    def fecha_registro(self, fecha_registro):
-        self._fecha_registro = fecha_registro
+    @ubicacion.setter
+    def ubicacion(self, ubicacion):
+        self._ubicacion = ubicacion
 
     @staticmethod
-    def crear(id_empresa, id_persona, razon_social=None, nif=None, sector=None, tamano=None, fecha_registro=None):
-        return Empresa(id_empresa, id_persona, razon_social, nif, sector, tamano, fecha_registro)
+    def crear(id_empresa, nombre, sector, logo, ubicacion):
+        return Empresa(id_empresa, nombre, sector, logo, ubicacion)
 
     def __str__(self):
-        return f"ID: {self.id_empresa}, ID Persona: {self.id_persona}, Razón Social: {self.razon_social or 'N/A'}, NIF: {self.nif or 'N/A'}, Sector: {self.sector or 'N/A'}, Tamaño: {self.tamano or 'N/A'}, Fecha Registro: {self.fecha_registro or 'N/A'}"
+        return f"ID: {self.id_empresa}, Nombre: {self.nombre}, Sector: {self.sector}, Logo: {self.logo}, Ubicación: {self.ubicacion}"

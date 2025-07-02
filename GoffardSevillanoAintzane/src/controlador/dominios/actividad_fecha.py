@@ -1,36 +1,29 @@
 class ActividadFecha:
-    def __init__(self, id_actividad_fecha, actividad_id, fecha):
-        self._id_actividad_fecha = id_actividad_fecha
-        self._actividad_id = actividad_id
-        self._fecha = fecha
+    def __init__(self, id_actividad, id_fecha):
+        self._id_actividad = id_actividad
+        self._id_fecha = id_fecha
 
     @property
-    def id_actividad_fecha(self):
-        return self._id_actividad_fecha
+    def id_actividad(self):
+        return self._id_actividad
 
-    @id_actividad_fecha.setter
-    def id_actividad_fecha(self, value):
-        self._id_actividad_fecha = value
-
-    @property
-    def actividad_id(self):
-        return self._actividad_id
-
-    @actividad_id.setter
-    def actividad_id(self, value):
-        self._actividad_id = value
+    @id_actividad.setter
+    def id_actividad(self, value):
+        self._id_actividad = value
 
     @property
-    def fecha(self):
-        return self._fecha
+    def id_fecha(self):
+        return self._id_fecha
 
-    @fecha.setter
-    def fecha(self, value):
-        self._fecha = value
+    @id_fecha.setter
+    def id_fecha(self, value):
+        self._id_fecha = value
 
     @staticmethod
-    def crear(id_actividad_fecha, actividad_id, fecha):
-        return ActividadFecha(id_actividad_fecha, actividad_id, fecha)
+    def crear(id_actividad, id_fecha):
+        return ActividadFecha(id_actividad, id_fecha)
 
     def __str__(self):
-        return f"ID: {self.id_actividad_fecha}, Actividad ID: {self.actividad_id}, Fecha: {self.fecha}"
+        return f"ID Actividad: {self.id_actividad}, ID Fecha: {self.id_fecha}"
+    def fecha(self, value):
+        self._fecha = value

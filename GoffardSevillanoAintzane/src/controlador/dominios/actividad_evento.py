@@ -1,36 +1,28 @@
 class ActividadEvento:
-    def __init__(self, id_actividad_evento, actividad_id, evento_id):
-        self._id_actividad_evento = id_actividad_evento
-        self._actividad_id = actividad_id
-        self._evento_id = evento_id
+    def __init__(self, id_actividad, id_evento):
+        self._id_actividad = id_actividad
+        self._id_evento = id_evento
 
     @property
-    def id_actividad_evento(self):
-        return self._id_actividad_evento
+    def id_actividad(self):
+        return self._id_actividad
 
-    @id_actividad_evento.setter
-    def id_actividad_evento(self, value):
-        self._id_actividad_evento = value
-
-    @property
-    def actividad_id(self):
-        return self._actividad_id
-
-    @actividad_id.setter
-    def actividad_id(self, value):
-        self._actividad_id = value
+    @id_actividad.setter
+    def id_actividad(self, value):
+        self._id_actividad = value
 
     @property
-    def evento_id(self):
-        return self._evento_id
+    def id_evento(self):
+        return self._id_evento
 
-    @evento_id.setter
-    def evento_id(self, value):
-        self._evento_id = value
+    @id_evento.setter
+    def id_evento(self, value):
+        self._id_evento = value
 
     @staticmethod
-    def crear(id_actividad_evento, actividad_id, evento_id):
-        return ActividadEvento(id_actividad_evento, actividad_id, evento_id)
+    def crear(id_actividad, id_evento):
+        return ActividadEvento(id_actividad, id_evento)
 
     def __str__(self):
-        return f"ID: {self.id_actividad_evento}, Actividad ID: {self.actividad_id}, Evento ID: {self.evento_id}"
+        return f"ID Actividad: {self.id_actividad}, ID Evento: {self.id_evento}"
+ 

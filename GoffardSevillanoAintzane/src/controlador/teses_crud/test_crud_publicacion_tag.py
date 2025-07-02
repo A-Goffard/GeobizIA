@@ -10,19 +10,39 @@ from src.controlador.gestores.tags import Tags
 
 @pytest.fixture
 def gestor():
-    return PublicacionTags()
+    gestor = PublicacionTags()
+    # Elimina la relación con id_publicacion=1 y id_tag=1 si existe
+    gestor.eliminar(1, 1)
+    return gestor
 
 @pytest.fixture
 def gestor_publicaciones():
-    return Publicaciones()
+    gestor = Publicaciones()
+    # Elimina la publicación con id=1 si existe
+    gestor.eliminar(1)
+    return gestor
 
 @pytest.fixture
 def gestor_tags():
-    return Tags()
+    gestor = Tags()
+    # Elimina el tag con id=1 si existe
+    gestor.eliminar(1)
+    return gestor
 
 def test_crud_publicacion_tag(gestor, gestor_publicaciones, gestor_tags):
     # Crear publicación y tag necesarios
     gestor_publicaciones.eliminar(1)
+    # Elimina primero los registros dependientes de tag
+    import pyodbc
+    from src.modelo.database.db_conexion import get_connection, close_connection
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("DELETE FROM tema_ambiental_tag WHERE id_tag = ?", (1,))
+        cursor.execute("DELETE FROM recurso_multimedia_tag WHERE id_tag = ?", (1,))
+        conn.commit()
+    finally:
+        close_connection(conn, cursor)
     gestor_tags.eliminar(1)
     gestor.eliminar(1, 1)
 

@@ -11,23 +11,38 @@ from src.controlador.gestores.tipos_publicacion import Tipos_Publicacion
 
 @pytest.fixture
 def gestor():
-    return Publicaciones()
+    gestor = Publicaciones()
+    # Elimina la publicación con id=18 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(18)
+    return gestor
 
 @pytest.fixture
 def gestor_usuarios():
-    return Usuarios()
+    gestor = Usuarios()
+    # Elimina el usuario con id=18 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(18)
+    return gestor
 
 @pytest.fixture
 def gestor_personas():
-    return Personas()
+    gestor = Personas()
+    # Elimina la persona con id=18 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(18)
+    return gestor
 
 @pytest.fixture
 def gestor_generadores():
-    return GeneradoresIA()
+    gestor = GeneradoresIA()
+    # Elimina el generador con id=18 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(18)
+    return gestor
 
 @pytest.fixture
 def gestor_tipos():
-    return Tipos_Publicacion()
+    gestor = Tipos_Publicacion()
+    # Elimina el tipo de publicación con id=18 si existe para evitar conflictos de clave primaria
+    gestor.eliminar(18)
+    return gestor
 
 def test_crud_publicacion(gestor, gestor_usuarios, gestor_personas, gestor_generadores, gestor_tipos):
     # Limpieza previa en orden correcto
@@ -81,7 +96,15 @@ def test_crud_publicacion(gestor, gestor_usuarios, gestor_personas, gestor_gener
     publicacion = gestor.agregar(
         id_publicacion=18,
         id_generador_ia=18,
-        id_tipo_publicacion=18,  # <-- Corrige aquí
+        id_tipo_publicacion=18,
+        titulo="Artículo de prueba",
+        autor="Marta",
+        estado="borrador",
+        tags="",
+        palabras_clave="",
+        generada_por_ia=False,
+        feedback_empresa="",
+        id_plantilla=None,
         contenido="xxxxxxxxxxx",
         fecha_creacion="2025-06-27",
     )

@@ -9,7 +9,10 @@ class FacturaActividadGestor:
         if self.crud.buscar(id_factura, id_actividad):
             print(f"Error: Ya existe la relación factura_actividad ({id_factura}, {id_actividad}).")
             return None
-        datos = {"id_factura": id_factura, "id_actividad": id_actividad}
+        datos = {
+            "id_factura": id_factura,
+            "id_actividad": id_actividad
+        }
         valido, msg = validar_datos_factura_actividad(datos)
         if not valido:
             print(f"Error: {msg}")
@@ -24,6 +27,10 @@ class FacturaActividadGestor:
 
     def buscar(self, id_factura, id_actividad):
         return self.crud.buscar(id_factura, id_actividad)
+
+    def listar(self):
+        return self.crud.listar()
+        return self.crud.buscar(factura_id, actividad_id)
 
     def listar(self):
         return self.crud.listar()
