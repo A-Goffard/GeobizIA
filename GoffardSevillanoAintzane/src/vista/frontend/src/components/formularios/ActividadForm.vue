@@ -4,63 +4,66 @@
             <h1>Crear Actividad</h1>
             <form @submit.prevent="submitForm">
                 <div class="form-group">
-                    <label for="tipo">Tipo:</label>
-                    <input type="text" id="tipo" v-model="formData.tipo" required>
+                    <label>Tipo:</label>
+                    <input v-model="formData.tipo" required />
                 </div>
                 <div class="form-group">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" v-model="formData.nombre" required>
+                    <label>Nombre:</label>
+                    <input v-model="formData.nombre" required />
                 </div>
                 <div class="form-group">
-                    <label for="descripcion">Descripción:</label>
-                    <textarea id="descripcion" v-model="formData.descripcion" required></textarea>
+                    <label>Descripción:</label>
+                    <input v-model="formData.descripcion" required />
                 </div>
                 <div class="form-group">
-                    <label for="responsable">Responsable:</label>
-                    <input type="text" id="responsable" v-model="formData.responsable" required>
+                    <label>Responsable:</label>
+                    <input v-model="formData.responsable" required />
                 </div>
                 <div class="form-group">
-                    <label for="duracion">Duración:</label>
-                    <input type="text" id="duracion" v-model="formData.duracion" required>
+                    <label>Duración:</label>
+                    <input v-model="formData.duracion" required />
                 </div>
                 <div class="form-group">
-                    <label for="coste_economico">Coste Económico:</label>
-                    <input type="number" step="any" id="coste_economico" v-model="formData.coste_economico" required>
+                    <label>Coste Económico:</label>
+                    <input v-model.number="formData.coste_economico" type="number" required />
                 </div>
                 <div class="form-group">
-                    <label for="coste_horas">Coste Horas:</label>
-                    <input type="number" step="any" id="coste_horas" v-model="formData.coste_horas" required>
+                    <label>Coste Horas:</label>
+                    <input v-model.number="formData.coste_horas" type="number" required />
                 </div>
                 <div class="form-group">
-                    <label for="facturacion">Facturación:</label>
-                    <input type="number" step="any" id="facturacion" v-model="formData.facturacion" required>
+                    <label>Facturación:</label>
+                    <input v-model.number="formData.facturacion" type="number" required />
                 </div>
                 <div class="form-group">
-                    <label for="resultados">Resultados:</label>
-                    <textarea id="resultados" v-model="formData.resultados"></textarea>
+                    <label>Resultados:</label>
+                    <input v-model="formData.resultados" />
                 </div>
                 <div class="form-group">
-                    <label for="valoracion">Valoración:</label>
-                    <textarea id="valoracion" v-model="formData.valoracion"></textarea>
+                    <label>Valoración:</label>
+                    <input v-model="formData.valoracion" />
                 </div>
                 <div class="form-group">
-                    <label for="observaciones">Observaciones:</label>
-                    <textarea id="observaciones" v-model="formData.observaciones"></textarea>
+                    <label>Observaciones:</label>
+                    <input v-model="formData.observaciones" />
                 </div>
-                <div class="center">
-                    <button type="submit">Guardar Actividad</button>
+                <div class="form-group">
+                    <label>ID Actividad:</label>
+                    <input v-model.number="formData.id_actividad" type="number" required />
                 </div>
-                <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
-                <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+                <button type="submit">Guardar</button>
             </form>
+            <div v-if="successMessage" style="color:green;">{{ successMessage }}</div>
+            <div v-if="errorMessage" style="color:red;">{{ errorMessage }}</div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const formData = ref({
+    id_actividad: '',
     tipo: '',
     nombre: '',
     descripcion: '',
@@ -72,13 +75,29 @@ const formData = ref({
     resultados: '',
     valoracion: '',
     observaciones: ''
-});
+})
 
-const successMessage = ref('');
-const errorMessage = ref('');
+const successMessage = ref('')
+const errorMessage = ref('')
 
-function submitForm() {
-    successMessage.value = 'Actividad guardada correctamente.';
-    errorMessage.value = '';
+async function submitForm() {
+    successMessage.value = ''
+    errorMessage.value = ''
+    try {
+        const response = await fetch('http://localhost:8000/api/api_actividades', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData.value)
+        })
+        const data = await response.json()
+        if (response.ok) {
+            successMessage.value = data.mensaje || 'Actividad guardada correctamente.'
+            errorMessage.value = ''
+        } else {
+            errorMessage.value = data.detail || data.error || 'Error al guardar actividad.'
+        }
+    } catch (err) {
+        errorMessage.value = 'Error de red o servidor.'
+    }
 }
 </script>
