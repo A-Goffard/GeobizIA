@@ -1,6 +1,7 @@
 # filepath: c:\Users\Geobizi\Desktop\Programacion\GeobizIA\GoffardSevillanoAintzane\src\api\actividades.py
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+from typing import Optional
 from src.controlador.gestores.actividades import Actividades
 from src.controlador.validaciones.validar_actividad import validar_datos_actividad
 
@@ -8,7 +9,6 @@ router = APIRouter()
 gestor = Actividades()
 
 class ActividadIn(BaseModel):
-    id_actividad: int
     tipo: str
     nombre: str
     descripcion: str
@@ -17,16 +17,18 @@ class ActividadIn(BaseModel):
     coste_economico: float
     coste_horas: float
     facturacion: float
-    resultados: str = ""
-    valoracion: str = ""
-    observaciones: str = ""
+    resultados: Optional[str] = ""
+    valoracion: Optional[str] = ""
+    observaciones: Optional[str] = ""
 
 @router.post("/api/actividades")
 def crear_actividad(actividad: ActividadIn):
-    valido, msg = validar_datos_actividad(actividad.dict())
+    datos = actividad.dict()
+    valido, msg = validar_datos_actividad(datos)
     if not valido:
         raise HTTPException(status_code=400, detail=msg)
-    obj = gestor.agregar(actividad)
+    from src.controlador.dominios.actividad import Actividad
+    obj = gestor.agregar(Actividad(**datos))
     if obj is None:
         raise HTTPException(status_code=500, detail="No se pudo guardar la actividad")
     return {"mensaje": "Actividad guardada correctamente"}
@@ -37,3 +39,8 @@ def obtener_actividad(id_actividad: int):
     if obj is None:
         raise HTTPException(status_code=404, detail="No encontrada")
     return obj
+
+@router.get("/api/actividades")
+def listar_actividades():
+    actividades = gestor.mostrar_todos_los_elem()
+    return [a.to_dict() for a in actividades]

@@ -7,18 +7,18 @@ class Actividades(BaseGestor[Actividad]):
         super().__init__(table_name="actividad", id_field="id_actividad", domain_class=Actividad)
 
     def agregar(self, actividad: Actividad):
-        if self.existe(actividad.id_actividad):
-            print(f"Error: Ya existe una actividad con id_actividad={actividad.id_actividad}.")
+        # Comprobar duplicado por nombre
+        if self.buscar_por_nombre(actividad.nombre):
+            print(f"Error: Ya existe una actividad con nombre={actividad.nombre}.")
             return None
         conn = get_connection()
         cursor = conn.cursor()
         try:
             query = f"""
-                INSERT INTO {self.table_name} (id_actividad, tipo, nombre, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO {self.table_name} (tipo, nombre, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """
             cursor.execute(query, (
-                actividad.id_actividad,
                 actividad.tipo,
                 actividad.nombre,
                 actividad.descripcion,
@@ -32,9 +32,28 @@ class Actividades(BaseGestor[Actividad]):
                 actividad.observaciones
             ))
             conn.commit()
-            return actividad
+            # Obtener el id generado automáticamente
+            cursor.execute("SELECT @@IDENTITY")
+            id_generado = int(cursor.fetchone()[0])
+            return self.buscar(id_generado)
         except Exception as e:
             print(f"Error al agregar actividad: {e}")
+            return None
+        finally:
+            close_connection(conn, cursor)
+
+    def buscar_por_nombre(self, nombre):
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"SELECT id_actividad, tipo, nombre, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones FROM {self.table_name} WHERE nombre = ?"
+            cursor.execute(query, (nombre,))
+            row = cursor.fetchone()
+            if row:
+                return Actividad(*row)
+            return None
+        except Exception as e:
+            print(f"Error al buscar actividad por nombre: {e}")
             return None
         finally:
             close_connection(conn, cursor)

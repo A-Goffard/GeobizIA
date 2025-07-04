@@ -47,10 +47,6 @@
                     <label>Observaciones:</label>
                     <input v-model="formData.observaciones" />
                 </div>
-                <div class="form-group">
-                    <label>ID Actividad:</label>
-                    <input v-model.number="formData.id_actividad" type="number" required />
-                </div>
                 <button type="submit">Guardar</button>
             </form>
             <div v-if="successMessage" style="color:green;">{{ successMessage }}</div>
@@ -63,7 +59,6 @@
 import { ref } from 'vue'
 
 const formData = ref({
-    id_actividad: '',
     tipo: '',
     nombre: '',
     descripcion: '',
@@ -84,7 +79,7 @@ async function submitForm() {
     successMessage.value = ''
     errorMessage.value = ''
     try {
-        const response = await fetch('http://localhost:8000/api/api_actividades', {
+        const response = await fetch('http://localhost:8000/api/actividades', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData.value)

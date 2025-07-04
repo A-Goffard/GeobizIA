@@ -9,33 +9,36 @@
                     <router-link class="NavButton link" :to="{ name: 'inicio' }"
                         @click="closeMobileNav">Inicio</router-link>
                 </li>
-                <!-- <li>
-                    <router-link class="NavButton link" :to="{ name: 'servicios' }"
-                        @click="closeMobileNav">Servicios</router-link>
+                <li>
+                    <router-link class="NavButton link" to="/actividades" @click="closeMobileNav">Actividades</router-link>
                 </li>
                 <li>
-                    <router-link class="NavButton link" :to="{ name: 'calendario' }"
-                        @click="closeMobileNav">Calendario</router-link>
+                    <router-link class="NavButton link" to="/facturas" @click="closeMobileNav">Facturas</router-link>
                 </li>
                 <li>
-                    <router-link class="NavButton link" :to="{ name: 'reservas' }"
-                        @click="closeMobileNav">Reservas</router-link>
+                    <router-link class="NavButton link" to="/publicaciones" @click="closeMobileNav">Publicaciones</router-link>
                 </li>
                 <li>
-                    <router-link class="NavButton link" :to="{ name: 'tienda' }"
-                        @click="closeMobileNav">Tienda</router-link>
+                    <router-link class="NavButton link" to="/proyectos" @click="closeMobileNav">Proyectos</router-link>
                 </li>
                 <li>
-                    <router-link class="NavButton link" :to="{ name: 'blog' }" @click="closeMobileNav">Blog</router-link>
+                    <router-link class="NavButton link" to="/eventos" @click="closeMobileNav">Eventos</router-link>
                 </li>
                 <li>
-                    <router-link class="NavButton link" :to="{ name: 'projectos' }"
-                        @click="closeMobileNav">Proyectos</router-link>
+                    <router-link class="NavButton link" to="/participantes" @click="closeMobileNav">Participantes</router-link>
                 </li>
                 <li>
-                    <router-link class="NavButton link" :to="{ name: 'contacto' }"
-                        @click="closeMobileNav">Contacto</router-link>
-                </li> -->
+                    <router-link class="NavButton link" to="/documentos" @click="closeMobileNav">Documentos</router-link>
+                </li>
+                <li>
+                    <router-link class="NavButton link" to="/empresas" @click="closeMobileNav">Empresas</router-link>
+                </li>
+                <li>
+                    <router-link class="NavButton link" to="/redes-sociales" @click="closeMobileNav">Redes Sociales</router-link>
+                </li>
+                <li>
+                    <router-link class="NavButton link" to="/clientes" @click="closeMobileNav">Clientes</router-link>
+                </li>
             </ul>
             <div class="icon">
                 <button @click="toggleMobileNav" v-show="mobile">
@@ -48,35 +51,36 @@
                         <router-link class="NavButton link" :to="{ name: 'inicio' }"
                             @click="closeMobileNav">Inicio</router-link>
                     </li>
-                    <!-- <li>
-                        <router-link class="NavButton link" :to="{ name: 'servicios' }"
-                            @click="closeMobileNav">Servicios</router-link>
+                    <li>
+                        <router-link class="NavButton link" to="/actividades" @click="closeMobileNav">Actividades</router-link>
                     </li>
                     <li>
-                        <router-link class="NavButton link" :to="{ name: 'calendario' }"
-                            @click="closeMobileNav">Calendario</router-link>
+                        <router-link class="NavButton link" to="/facturas" @click="closeMobileNav">Facturas</router-link>
                     </li>
                     <li>
-                        <router-link class="NavButton link" :to="{ name: 'reservas' }"
-                            @click="closeMobileNav">Reservas</router-link>
+                        <router-link class="NavButton link" to="/publicaciones" @click="closeMobileNav">Publicaciones</router-link>
                     </li>
                     <li>
-                        <router-link class="NavButton link" :to="{ name: 'tienda' }"
-                            @click="closeMobileNav">Tienda</router-link>
+                        <router-link class="NavButton link" to="/proyectos" @click="closeMobileNav">Proyectos</router-link>
                     </li>
                     <li>
-                        <router-link class="NavButton link" :to="{ name: 'blog' }"
-                            @click="closeMobileNav">Blog</router-link>
+                        <router-link class="NavButton link" to="/eventos" @click="closeMobileNav">Eventos</router-link>
                     </li>
                     <li>
-                        <router-link class="NavButton link" :to="{ name: 'projectos' }"
-                            @click="closeMobileNav">Proyectos</router-link>
+                        <router-link class="NavButton link" to="/participantes" @click="closeMobileNav">Participantes</router-link>
                     </li>
                     <li>
-                        <router-link class="NavButton link" :to="{ name: 'contacto' }"
-                            @click="closeMobileNav">Contacto</router-link>
-                    </li> -->
-
+                        <router-link class="NavButton link" to="/documentos" @click="closeMobileNav">Documentos</router-link>
+                    </li>
+                    <li>
+                        <router-link class="NavButton link" to="/empresas" @click="closeMobileNav">Empresas</router-link>
+                    </li>
+                    <li>
+                        <router-link class="NavButton link" to="/redes-sociales" @click="closeMobileNav">Redes Sociales</router-link>
+                    </li>
+                    <li>
+                        <router-link class="NavButton link" to="/clientes" @click="closeMobileNav">Clientes</router-link>
+                    </li>
                 </ul>
             </transition>
         </nav>

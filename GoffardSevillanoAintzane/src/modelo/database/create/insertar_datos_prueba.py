@@ -13,7 +13,7 @@ from src.modelo.database.db_conexion import get_connection, close_connection
 conn = get_connection()
 cursor = conn.cursor()
 
-sql_path = os.path.join(os.path.dirname(__file__), "queries_creacion_tablas.sql")
+sql_path = os.path.join(os.path.dirname(__file__), "queries_ejemplo_pruebas.sql")
 with open(sql_path, encoding='utf-8') as f:
     sql_script = f.read()
 

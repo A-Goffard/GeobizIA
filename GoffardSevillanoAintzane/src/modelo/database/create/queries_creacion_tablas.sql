@@ -5,7 +5,7 @@ CREATE TABLE rol (
 );
 
 CREATE TABLE persona (
-    id_persona INT PRIMARY KEY,
+    id_persona INT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(100),
     apellido NVARCHAR(100),
     email NVARCHAR(100),
@@ -18,7 +18,7 @@ CREATE TABLE persona (
 );
 
 CREATE TABLE cliente (
-    id_cliente INT PRIMARY KEY,
+    id_cliente INT IDENTITY(1,1) PRIMARY KEY,
     id_persona INT,
     tipo NVARCHAR(20),
     razon_social NVARCHAR(200),
@@ -28,7 +28,7 @@ CREATE TABLE cliente (
 );
 
 CREATE TABLE usuario (
-    id_usuario INT PRIMARY KEY,
+    id_usuario INT IDENTITY(1,1) PRIMARY KEY,
     id_persona INT,
     fecha_nacimiento NVARCHAR(50),
     rol NVARCHAR(50),
@@ -38,7 +38,7 @@ CREATE TABLE usuario (
 );
 
 CREATE TABLE actividad (
-    id_actividad INT PRIMARY KEY,
+    id_actividad INT IDENTITY(1,1) PRIMARY KEY,
     tipo NVARCHAR(50),
     nombre NVARCHAR(100),
     descripcion NVARCHAR(MAX),
@@ -53,7 +53,7 @@ CREATE TABLE actividad (
 );
 
 CREATE TABLE participante (
-    id_participante INT PRIMARY KEY,
+    id_participante INT IDENTITY(1,1) PRIMARY KEY,
     id_persona INT,
     numero_personas_juntas INT,
     rol NVARCHAR(50),
@@ -65,7 +65,7 @@ CREATE TABLE participante (
 );
 
 CREATE TABLE empresa (
-    id_empresa INT PRIMARY KEY,
+    id_empresa INT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(200),
     sector NVARCHAR(100),
     logo NVARCHAR(200),
@@ -73,7 +73,7 @@ CREATE TABLE empresa (
 );
 
 CREATE TABLE generadoria (
-    id_generador_ia INT PRIMARY KEY,
+    id_generador_ia INT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(100),
     descripcion NVARCHAR(MAX),
     empresa_id INT,
@@ -84,12 +84,12 @@ CREATE TABLE generadoria (
 );
 
 CREATE TABLE tipo_publicacion (
-    id_tipo_publicacion INT PRIMARY KEY,
+    id_tipo_publicacion INT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(100)
 );
 
 CREATE TABLE plantilla (
-    id_plantilla INT PRIMARY KEY,
+    id_plantilla INT IDENTITY(1,1) PRIMARY KEY,
     titulo NVARCHAR(200),
     tipo NVARCHAR(50),
     contenido_base NVARCHAR(MAX),
@@ -98,7 +98,7 @@ CREATE TABLE plantilla (
 );
 
 CREATE TABLE publicacion (
-    id_publicacion INT PRIMARY KEY,
+    id_publicacion INT IDENTITY(1,1) PRIMARY KEY,
     titulo NVARCHAR(200),
     contenido NVARCHAR(MAX),
     autor NVARCHAR(100),
@@ -117,7 +117,7 @@ CREATE TABLE publicacion (
 );
 
 CREATE TABLE proyecto (
-    id_proyecto INT PRIMARY KEY,
+    id_proyecto INT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(200),
     descripcion NVARCHAR(MAX),
     fecha_inicio NVARCHAR(50),
@@ -151,7 +151,7 @@ CREATE TABLE proyecto_actividad (
 );
 
 CREATE TABLE documento (
-    id_documento INT PRIMARY KEY,
+    id_documento INT IDENTITY(1,1) PRIMARY KEY,
     titulo NVARCHAR(200),
     descripcion NVARCHAR(MAX),
     fecha_subida NVARCHAR(50),
@@ -160,7 +160,7 @@ CREATE TABLE documento (
 );
 
 CREATE TABLE evento (
-    id_evento INT PRIMARY KEY,
+    id_evento INT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(200),
     tipo NVARCHAR(50),
     lugar NVARCHAR(100),
@@ -179,7 +179,7 @@ CREATE TABLE actividad_evento (
 );
 
 CREATE TABLE factura (
-    id_factura INT PRIMARY KEY,
+    id_factura INT IDENTITY(1,1) PRIMARY KEY,
     id_cliente INT,
     tipo NVARCHAR(50),
     nombre NVARCHAR(100),
@@ -207,7 +207,7 @@ CREATE TABLE factura_actividad (
 );
 
 CREATE TABLE log_sistema (
-    id_log_sistema INT PRIMARY KEY,
+    id_log_sistema INT IDENTITY(1,1) PRIMARY KEY,
     fecha NVARCHAR(50),
     usuario_id INT,
     accion NVARCHAR(100),
@@ -217,7 +217,7 @@ CREATE TABLE log_sistema (
 );
 
 CREATE TABLE auditoria_publicacion (
-    id_auditoria_publicacion INT PRIMARY KEY,
+    id_auditoria_publicacion INT IDENTITY(1,1) PRIMARY KEY,
     publicacion_id INT,
     generador_ia_id INT,
     fecha_generacion NVARCHAR(50),
@@ -231,21 +231,21 @@ CREATE TABLE auditoria_publicacion (
 );
 
 CREATE TABLE tema_ambiental (
-    id_tema_ambiental INT PRIMARY KEY,
+    id_tema_ambiental INT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(100),
     descripcion NVARCHAR(MAX),
     relevancia NVARCHAR(50)
 );
 
 CREATE TABLE tag (
-    id_tag INT PRIMARY KEY,
+    id_tag INT IDENTITY(1,1) PRIMARY KEY,
     palabra_clave NVARCHAR(100),
     categoria NVARCHAR(50),
     frecuencia_uso INT
 );
 
 CREATE TABLE redsocial (
-    id_red_social INT PRIMARY KEY,
+    id_red_social INT IDENTITY(1,1) PRIMARY KEY,
     plataforma NVARCHAR(100),
     nombre_cuenta NVARCHAR(100),
     credenciales NVARCHAR(MAX),
@@ -255,7 +255,7 @@ CREATE TABLE redsocial (
 );
 
 CREATE TABLE programacion (
-    id_programacion INT PRIMARY KEY,
+    id_programacion INT IDENTITY(1,1) PRIMARY KEY,
     publicacion_id INT,
     red_social_id INT,
     fecha_programada NVARCHAR(50),
@@ -267,7 +267,7 @@ CREATE TABLE programacion (
 );
 
 CREATE TABLE recurso_multimedia (
-    id_recurso_multimedia INT PRIMARY KEY,
+    id_recurso_multimedia INT IDENTITY(1,1) PRIMARY KEY,
     tipo NVARCHAR(50),
     titulo NVARCHAR(200),
     fecha_subida NVARCHAR(50),

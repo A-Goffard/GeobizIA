@@ -2,7 +2,10 @@ import subprocess
 import sys
 import os
 
-# Cambia estos comandos según tu estructura y sistema operativo
+
+project_root = os.path.dirname(os.path.abspath(__file__))
+os.chdir(project_root)  # Asegura que el cwd es la raíz del proyecto
+
 commands = [
     # Arranca el backend FastAPI
     [sys.executable, "-m", "uvicorn", "src.api.main:app", "--reload"],

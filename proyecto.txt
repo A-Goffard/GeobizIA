@@ -6,3 +6,6 @@ Luego, ejecuta el archivo insert_test_data.py para insertar los datos de prueba.
 esto es para ejecutar la api:
 python -m uvicorn src.api.main:app --reload
 
+para ejecutar el front:
+desde .\GeobizIA\GoffardSevillanoAintzane\src\vista\frontend> 
+npm run serve

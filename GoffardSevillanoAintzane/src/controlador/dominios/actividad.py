@@ -1,5 +1,5 @@
 class Actividad:
-    def __init__(self, id_actividad, tipo=None, nombre=None, descripcion=None, responsable=None, duracion=None, coste_economico=None, coste_horas=None, facturacion=None, resultados=None, valoracion=None, observaciones=None):
+    def __init__(self, id_actividad=None, tipo=None, nombre=None, descripcion=None, responsable=None, duracion=None, coste_economico=None, coste_horas=None, facturacion=None, resultados=None, valoracion=None, observaciones=None):
         self._id_actividad = id_actividad
         self._tipo = tipo
         self._nombre = nombre
@@ -120,3 +120,19 @@ class Actividad:
                 f"Coste Horas: {self.coste_horas or 'N/A'}, Facturación: {self.facturacion or 'N/A'}, "
                 f"Resultados: {self.resultados or 'N/A'}, Valoración: {self.valoracion or 'N/A'}, "
                 f"Observaciones: {self.observaciones or 'N/A'}")
+
+    def to_dict(self):
+        return {
+            "id_actividad": self.id_actividad,
+            "tipo": self.tipo,
+            "nombre": self.nombre,
+            "descripcion": self.descripcion,
+            "responsable": self.responsable,
+            "duracion": self.duracion,
+            "coste_economico": self.coste_economico,
+            "coste_horas": self.coste_horas,
+            "facturacion": self.facturacion,
+            "resultados": self.resultados,
+            "valoracion": self.valoracion,
+            "observaciones": self.observaciones
+        }
