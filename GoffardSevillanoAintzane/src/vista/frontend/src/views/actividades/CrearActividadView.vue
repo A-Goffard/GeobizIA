@@ -3,6 +3,7 @@
     <h1>Crear Nueva Actividad</h1>
     <p>Formulario para crear una nueva actividad.</p>
     <ActividadForm />
+
   </div>
 </template>
 <script setup>
