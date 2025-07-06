@@ -321,3 +321,18 @@ CREATE TABLE tipo_publicacion_redsocial (
     FOREIGN KEY (id_tipo_publicacion) REFERENCES tipo_publicacion(id_tipo_publicacion),
     FOREIGN KEY (id_red_social) REFERENCES redsocial(id_red_social)
 );
+
+CREATE TABLE actividad_realizada (
+    id_actividad_realizada INT IDENTITY(1,1) PRIMARY KEY,
+    id_actividad INT NOT NULL,
+    fecha NVARCHAR(50) NOT NULL,
+    asistentes INT,
+    coste_economico FLOAT,
+    facturacion FLOAT,
+    observaciones NVARCHAR(MAX),
+    id_evento INT NULL,
+    id_proyecto INT NULL,
+    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad),
+    FOREIGN KEY (id_evento) REFERENCES evento(id_evento),
+    FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto)
+);

@@ -3,9 +3,12 @@ GeobizIA
 Para empezar, ejecuta el archivo create_db_tables.py para crear las tablas en la base de datos. 
 Luego, ejecuta el archivo insert_test_data.py para insertar los datos de prueba.
 
+Hay que conectar primero SQLServer
+
 esto es para ejecutar la api:
 python -m uvicorn src.api.main:app --reload
 
 para ejecutar el front:
 desde .\GeobizIA\GoffardSevillanoAintzane\src\vista\frontend> 
 npm run serve
+

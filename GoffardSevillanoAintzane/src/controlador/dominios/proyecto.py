@@ -103,3 +103,17 @@ class Proyecto:
             f"Estado: {self.estado or 'N/A'}, Objetivos: {self.objetivos or 'N/A'}, "
             f"Presupuesto: {self.presupuesto or 'N/A'}"
         )
+        
+    def to_dict(self):
+        return {
+            "id_proyecto": self.id_proyecto,
+            "nombre": self.nombre,
+            "descripcion": self.descripcion,
+            "fecha_inicio": self.fecha_inicio,
+            "fecha_fin": self.fecha_fin,
+            "poblacion": self.poblacion,
+            "responsable": self.responsable,
+            "estado": self.estado,
+            "objetivos": self.objetivos,
+            "presupuesto": self.presupuesto
+        }

@@ -1,10 +1,10 @@
 rol
-    id_rol
+    id_rol (PK)
     nombre
     descripcion
 
 persona
-    id_persona
+    id_persona (PK)
     nombre
     apellido
     email
@@ -16,39 +16,39 @@ persona
     pais
 
 cliente
-    id_cliente
-    id_persona
+    id_cliente (PK)
+    id_persona (FK)
     tipo
     razon_social
     nif
     fecha_registro
 
 usuario
-    id_usuario
-    id_persona
+    id_usuario (PK)
+    id_persona (FK)
     fecha_nacimiento
     rol
     preferencias
     password
 
 participante
-    id_participante
-    id_persona
+    id_participante (PK)
+    id_persona (FK)
     numero_personas_juntas
     rol
     como_conocer
-    actividad_id
+    actividad_id (FK)
     fecha_registro
 
 empresa
-    id_empresa
+    id_empresa (PK)
     nombre
     sector
     logo
     ubicacion
 
 actividad
-    id_actividad
+    id_actividad (PK)
     tipo
     nombre
     descripcion
@@ -62,11 +62,11 @@ actividad
     observaciones
 
 fecha_actividad
-    id_fecha
+    id_fecha (PK)
     fecha
 
 publicacion
-    id_publicacion
+    id_publicacion (PK)
     titulo
     contenido
     autor
@@ -75,20 +75,22 @@ publicacion
     tags
     palabras_clave
     generada_por_ia
-    id_generador_ia
+    id_generador_ia (FK)
     feedback_empresa
-    id_tipo_publicacion
-    id_plantilla
+    id_tipo_publicacion (FK)
+    id_plantilla (FK)
 
 generadoria
-    id_generador_ia
-    id_usuario
+    id_generador_ia (PK)
     nombre
     descripcion
-    tipo
+    empresa_id (FK)
+    configuraciones
+    ejemplos_estilo
+    ultima_generacion
 
 proyecto
-    id_proyecto
+    id_proyecto (PK)
     nombre
     descripcion
     fecha_inicio
@@ -100,7 +102,7 @@ proyecto
     presupuesto
 
 plantilla
-    id_plantilla
+    id_plantilla (PK)
     titulo
     tipo
     contenido_base
@@ -108,7 +110,7 @@ plantilla
     ultima_modificacion
 
 documento
-    id_documento
+    id_documento (PK)
     titulo
     descripcion
     fecha_subida
@@ -116,7 +118,7 @@ documento
     tematica
 
 evento
-    id_evento
+    id_evento (PK)
     nombre
     tipo
     lugar
@@ -126,8 +128,8 @@ evento
     tematica
 
 factura
-    id_factura
-    id_cliente
+    id_factura (PK)
+    id_cliente (FK)
     tipo
     nombre
     direccion
@@ -144,41 +146,41 @@ factura
     irpf
 
 factura_actividad
-    id_factura
-    id_actividad
+    id_factura (FK, PK)
+    id_actividad (FK, PK)
 
 log_sistema
-    id_log_sistema
+    id_log_sistema (PK)
+    usuario_id (FK)
     fecha
-    usuario_id
     accion
     descripcion
     nivel
 
 auditoria_publicacion
-    id_auditoria_publicacion
-    publicacion_id
-    generador_ia_id
+    id_auditoria_publicacion (PK)
+    publicacion_id (FK)
+    generador_ia_id (FK)
     fecha_generacion
-    usuario_id
+    usuario_id (FK)
     parametros_entrada
     resultado
     observaciones
 
 tema_ambiental
-    id_tema_ambiental
+    id_tema_ambiental (PK)
     nombre
     descripcion
     relevancia
 
 tag
-    id_tag
+    id_tag (PK)
     palabra_clave
     categoria
     frecuencia_uso
 
 redsocial
-    id_red_social
+    id_red_social (PK)
     plataforma
     nombre_cuenta
     credenciales
@@ -187,61 +189,70 @@ redsocial
     ultima_publicacion
 
 programacion
-    id_programacion
-    publicacion_id
-    red_social_id
+    id_programacion (PK)
+    publicacion_id (FK)
+    red_social_id (FK)
     fecha_programada
     estado
     notificaciones
     responsable
 
 recurso_multimedia
-    id_recurso_multimedia
+    id_recurso_multimedia (PK)
     tipo
     titulo
     fecha_subida
     autor
 
 tipo_publicacion
-    id_tipo_publicacion
+    id_tipo_publicacion (PK)
     nombre
 
 tipo_publicacion_redsocial
-    id_tipo_publicacion
-    id_red_social
-
-# Tablas intermedias
+    id_tipo_publicacion (FK, PK)
+    id_red_social (FK, PK)
 
 actividad_fecha
-    id_actividad
-    id_fecha
+    id_actividad (FK, PK)
+    id_fecha (FK, PK)
 
 proyecto_actividad
-    id_proyecto
-    id_actividad
+    id_proyecto (FK, PK)
+    id_actividad (FK, PK)
 
 actividad_evento
-    id_actividad
-    id_evento
+    id_actividad (FK, PK)
+    id_evento (FK, PK)
 
 publicacion_tag
-    id_publicacion
-    id_tag
+    id_publicacion (FK, PK)
+    id_tag (FK, PK)
 
 tema_ambiental_tag
-    id_tema_ambiental
-    id_tag
+    id_tema_ambiental (FK, PK)
+    id_tag (FK, PK)
 
 recurso_multimedia_tag
-    id_recurso_multimedia
-    id_tag
+    id_recurso_multimedia (FK, PK)
+    id_tag (FK, PK)
 
 documento_tag
-    id_documento
-    id_tag
+    id_documento (FK, PK)
+    id_tag (FK, PK)
 
 plantilla_tipo_publicacion
-    id_plantilla
-    id_tipo_publicacion
+    id_plantilla (FK, PK)
+    id_tipo_publicacion (FK, PK)
+
+actividad_realizada
+    id_actividad_realizada (PK)
+    id_actividad (FK)
+    fecha
+    asistentes
+    coste_economico
+    facturacion
+    observaciones
+    id_evento (FK)
+    id_proyecto (FK)
 
 

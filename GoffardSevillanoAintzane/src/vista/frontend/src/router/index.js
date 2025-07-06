@@ -5,6 +5,7 @@ import OpcionesView from '../views/OpcionesView.vue'
 
 import ActividadesView from '../views/actividades/ActividadesView.vue'
 import CrearActividadView from '../views/actividades/CrearActividadView.vue'
+import CrearActividadRealizadaView from '../views/actividades/CrearActividadRealizadaView.vue'
 import VerActividadesView from '../views/actividades/VerActividadesView.vue'
 
 import EstadisticasActividadesView from '../views/actividades/EstadisticasActividadesView.vue'
@@ -53,6 +54,7 @@ const routes = [
     { path: '/actividades/crear', name: 'crear-actividad', component: CrearActividadView },
     { path: '/actividades/ver', name: 'ver-actividades', component: VerActividadesView },
     { path: '/actividades/estadisticas', name: 'estadisticas-actividades', component: EstadisticasActividadesView },
+    { path: '/actividades/actividad_realizada', name: 'actividad_realizada', component: CrearActividadRealizadaView },
     
     { path: '/facturas', name: 'facturas', component: FacturasView },
     { path: '/facturas/crear', name: 'crear-factura', component: CrearFacturaView },

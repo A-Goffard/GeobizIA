@@ -1,7 +1,7 @@
-# filepath: c:\Users\Geobizi\Desktop\Programacion\GeobizIA\GoffardSevillanoAintzane\src\api\actividades.py
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+router = APIRouter()
 from typing import Optional
+from pydantic import BaseModel
 from src.controlador.gestores.actividades import Actividades
 from src.controlador.validaciones.validar_actividad import validar_datos_actividad
 from src.controlador.ML.ML_actividades import preparar_estadisticas_actividades

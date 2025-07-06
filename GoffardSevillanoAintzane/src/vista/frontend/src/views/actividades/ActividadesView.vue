@@ -40,6 +40,12 @@ const options = ref([
         description: 'Visualiza estadísticas de las actividades.',
         image: '/imagenes/foto.png',
         route: '/actividades/estadisticas'
+    },
+    {
+        title: 'Añadir actividad realizada',
+        description: 'Añadir una actividad realizada.',
+        image: '/imagenes/foto.png',
+        route: '/actividades/actividad_realizada'
     }
 ])
 

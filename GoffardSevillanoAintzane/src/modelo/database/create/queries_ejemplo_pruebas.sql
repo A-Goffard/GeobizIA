@@ -17,8 +17,16 @@ INSERT INTO usuario (id_persona, fecha_nacimiento, rol, preferencias, password) 
 (3, '1990-07-22', 'Editor', '{"idioma": "es", "notificaciones": false}', 'hashed_pass_456');
 
 INSERT INTO actividad (tipo, nombre, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones) VALUES
-('Taller', 'Taller de Reciclaje', 'Taller práctico sobre reciclaje de plásticos', 'Juan Pérez', '2 horas', 500.00, 10.0, 750.00, '50 participantes, 90% satisfacción', 'Excelente', 'Sin incidencias'),
-('Conferencia', 'Conferencia Sostenibilidad', 'Charla sobre sostenibilidad en empresas', 'María Gómez', '1 hora', 300.00, 5.0, 450.00, '30 asistentes, 85% satisfacción', 'Buena', 'Falta de proyector');
+('Taller', 'Bombas de Semillas', 'Creación de bombas de semillas para reforestación natural', 'Ane Garmendia', '2 horas', 300.00, 8.0, 600.00, '40 participantes, 95% satisfacción', 'Excelente', 'Muy buena acogida por familias'),
+('Ruta Guiada', 'Flysch de Sopela', 'Ruta interpretativa sobre geología costera', 'Unai Zubizarreta', '3 horas', 0.00, 10.0, 0.00, '15 personas, 100% satisfacción', 'Excelente', 'Tiempo soleado y sin incidencias'),
+('Taller', 'Casas para Insectos', 'Taller para construir hoteles de insectos', 'Jon Ander Etxeberria', '2.5 horas', 450.00, 9.0, 700.00, '25 personas, 93% satisfacción', 'Muy buena', 'Faltaron martillos'),
+('Taller', 'Arteterapia Natural', 'Expresión artística con elementos naturales', 'Nerea Bilbao', '2 horas', 320.00, 8.0, 550.00, '15 personas, 92% satisfacción', 'Excelente', 'Actividad relajante y creativa'),
+('Taller', 'Compostaje Doméstico', 'Taller sobre gestión de residuos orgánicos', 'Ane Garmendia', '2.5 horas', 400.00, 8.0, 600.00, '30 personas, 95% satisfacción', 'Excelente', 'Muy participativo'),
+('Charla', 'Movilidad Sostenible', 'Charla sobre transporte sostenible rural', 'Unai Zubizarreta', '1 hora', 200.00, 4.0, 300.00, '35 asistentes, 83% satisfacción', 'Buena', 'Interés en crear grupo de trabajo'),
+('Taller', 'Taller Científico Infantil', 'Experimentos sobre medio ambiente para niños', 'Ane Garmendia', '1.5 horas', 350.00, 6.0, 650.00, '30 niños, 98% satisfacción', 'Excelente', 'Muy buena experiencia'),
+('Charla', 'Cambio Climático Local', 'Charla sobre impacto local del cambio climático', 'Jon Ander Etxeberria', '1.5 horas', 250.00, 6.0, 400.00, '40 asistentes, 80% satisfacción', 'Buena', 'Poco tiempo para preguntas'),
+('Taller', 'Reciclaje Creativo', 'Manualidades con materiales reciclados', 'Nerea Bilbao', '2 horas', 300.00, 7.0, 550.00, '22 personas, 90% satisfacción', 'Muy buena', 'Algunos materiales escasos'),
+('Charla', 'Biodiversidad Local', 'Importancia de la biodiversidad en entornos urbanos', 'Jon Ander Etxeberria', '1 hora', 180.00, 5.0, 300.00, '25 asistentes, 85% satisfacción', 'Buena', 'Interesante para escolares');
 
 -- NO pongas id_participante (IDENTITY)
 INSERT INTO participante (id_persona, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro) VALUES
@@ -142,3 +150,45 @@ INSERT INTO tipo_publicacion_redsocial (id_tipo_publicacion, id_red_social) VALU
 (1, 1),
 (2, 2);
 
+INSERT INTO actividad_realizada (id_actividad, fecha, asistentes, coste_economico, facturacion, observaciones) VALUES
+-- Bombas de Semillas (1)
+(1, '2025-03-15', 30, 280.00, 580.00, 'Buena asistencia pese al mal tiempo'),
+(1, '2025-05-10', 40, 300.00, 600.00, 'Muy buena acogida por familias'),
+(1, '2025-06-20', 45, 320.00, 700.00, 'Gran interés de los centros escolares'),
+
+-- Flysch de Sopela (2)
+(2, '2025-04-01', 12, 0.00, 0.00, 'Ruta sin coste con muy buena participación'),
+(2, '2025-05-12', 15, 0.00, 0.00, 'Excelente participación, sin incidencias'),
+
+-- Casas para Insectos (3)
+(3, '2025-03-22', 20, 400.00, 600.00, 'Grupo reducido por lluvia'),
+(3, '2025-05-15', 25, 450.00, 700.00, 'Actividad muy práctica, algunas herramientas escasas'),
+(3, '2025-06-18', 30, 480.00, 750.00, 'Muy buena respuesta del público'),
+
+-- Arteterapia Natural (4)
+(4, '2025-05-20', 15, 320.00, 550.00, 'Ambiente relajado y creativo'),
+(4, '2025-06-22', 10, 300.00, 500.00, 'Sesión más íntima y reflexiva'),
+
+-- Compostaje Doméstico (5)
+(5, '2025-05-28', 30, 400.00, 600.00, 'Muy valorado por el público'),
+(5, '2025-07-02', 28, 420.00, 650.00, 'Gran interacción y preguntas del público'),
+
+-- Movilidad Sostenible (6)
+(6, '2025-06-03', 35, 200.00, 300.00, 'Se propone crear un grupo de trabajo'),
+(6, '2025-07-05', 40, 220.00, 320.00, 'Buena asistencia, muchas propuestas'),
+
+-- Taller Científico Infantil (7)
+(7, '2025-06-06', 30, 350.00, 650.00, 'Excelente interacción con niños'),
+(7, '2025-06-25', 32, 360.00, 670.00, 'Muy buena energía del grupo'),
+
+-- Cambio Climático Local (8)
+(8, '2025-06-10', 40, 250.00, 400.00, 'Demasiado ajustado de tiempo'),
+(8, '2025-07-01', 38, 260.00, 420.00, 'Buena recepción, muchas preguntas'),
+
+-- Reciclaje Creativo (9)
+(9, '2025-06-12', 22, 300.00, 550.00, 'Muy participativo, material justo'),
+(9, '2025-06-29', 25, 320.00, 600.00, 'Alta participación y creatividad'),
+
+-- Biodiversidad Local (10)
+(10, '2025-06-14', 25, 180.00, 300.00, 'Muy interesante, buena dinámica'),
+(10, '2025-07-04', 30, 190.00, 330.00, 'Mayor participación escolar');

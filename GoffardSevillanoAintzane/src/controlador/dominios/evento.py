@@ -84,3 +84,15 @@ class Evento:
             f"Fecha Final: {self.fecha_final or 'N/A'}, Población: {self.poblacion or 'N/A'}, "
             f"Temática: {self.tematica or 'N/A'}"
         )
+        
+    def to_dict(self):
+        return {
+            "id_evento": self.id_evento,
+            "nombre": self.nombre,
+            "tipo": self.tipo,
+            "lugar": self.lugar,
+            "fecha_comienzo": self.fecha_comienzo,
+            "fecha_final": self.fecha_final,
+            "poblacion": self.poblacion,
+            "tematica": self.tematica
+        }
