@@ -1,0 +1,13 @@
+Enunciado
+
+Nuestra empresa medioambiental necesita una aplicación que facilite la gestión de nuestras actividades, la creación de contenido para redes sociales y blogs, y el análisis económico de nuestro trabajo.
+
+La aplicación debe ser fácil de usar, permitir a los empleados gestionar actividades y publicaciones, y a los administradores controlar usuarios y analizar resultados económicos, todo mientras mantiene nuestra misión de cuidar el medioambiente.
+
+Queremos que GeobizIA nos ayude a:
+
+Crear publicaciones automáticas: Generar textos e imágenes atractivas para redes sociales o nuestra web sobre nuestras actividades y temas ambientales como cambio climático o biodiversidad. Que los textos reflejen nuestro estilo, incluyan datos curiosos y sean fáciles de publicar.
+
+Aprender de nuestras actividades: Registrar lo que hacemos, como eventos o proyectos, para que la aplicación nos sugiera cómo mejorarlos, proponga nuevas ideas y nos ayude a documentar buenas prácticas para ser más eficientes y sostenibles.
+
+Controlar nuestras finanzas: Llevar un registro de ingresos y gastos de cada actividad, ver su rentabilidad y recibir recomendaciones para ajustar precios o enfocarnos en lo que funciona mejor.

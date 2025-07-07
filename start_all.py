@@ -8,7 +8,7 @@ os.chdir(project_root)  # Asegura que el cwd es la raíz del proyecto
 
 commands = [
     # Arranca el backend FastAPI
-    [sys.executable, "-m", "uvicorn", "src.api.main:app", "--reload"],
+    [sys.executable, "-m", "uvicorn", "GeobizIA.api.main:app", "--reload"],
     # Arranca el frontend Vue (requiere npm instalado y configurado)
     ["npm", "run", "serve", "--prefix", "src/vista/frontend"]
 ]
