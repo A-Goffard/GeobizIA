@@ -32,7 +32,19 @@ def crear_actividad_realizada(actividad: ActividadRealizadaIn):
     valido, msg = validar_datos_actividad_realizada(datos)
     if not valido:
         raise HTTPException(status_code=400, detail=msg)
-    obj = gestor.agregar(ActividadRealizada(**datos))
+    
+    # ✅ SEGURO: Solo campos esperados (evita inyección de campos)
+    obj = gestor.agregar(ActividadRealizada(
+        id_actividad=datos['id_actividad'],
+        fecha=datos['fecha'],
+        asistentes=datos.get('asistentes'),
+        coste_economico=datos.get('coste_economico'),
+        facturacion=datos.get('facturacion'),
+        observaciones=datos.get('observaciones', ''),
+        id_evento=datos.get('id_evento'),
+        id_proyecto=datos.get('id_proyecto')
+    ))
+    
     if obj is None:
         raise HTTPException(status_code=500, detail="No se pudo guardar la actividad realizada")
     return {"mensaje": "Actividad realizada guardada correctamente"}

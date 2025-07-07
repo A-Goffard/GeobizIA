@@ -25,6 +25,20 @@ def test_endpoints():
     except Exception as e:
         print(f"❌ Error en actividades: {e}")
     
+    # Probar endpoint de estadísticas de actividades
+    try:
+        response = requests.get(f"{BASE_URL}/api/actividades/estadisticas")
+        print(f"✅ Estadísticas actividades: {response.status_code}")
+        if response.status_code == 200:
+            data = response.json()
+            print(f"   - Total: {data.get('total', 0)}")
+            print(f"   - Tipos: {len(data.get('por_tipo', {}))}")
+            print(f"   - Responsables: {len(data.get('por_responsable', {}))}")
+        else:
+            print(f"   - Error: {response.text}")
+    except Exception as e:
+        print(f"❌ Error en estadísticas de actividades: {e}")
+    
     # Probar endpoint de actividades realizadas
     try:
         response = requests.get(f"{BASE_URL}/api/actividades_realizadas")
@@ -32,10 +46,10 @@ def test_endpoints():
     except Exception as e:
         print(f"❌ Error en actividades realizadas: {e}")
     
-    # Probar endpoint de estadísticas
+    # Probar endpoint de estadísticas de actividades realizadas
     try:
         response = requests.get(f"{BASE_URL}/api/actividades_realizadas/estadisticas")
-        print(f"✅ Estadísticas: {response.status_code}")
+        print(f"✅ Estadísticas actividades realizadas: {response.status_code}")
         if response.status_code == 200:
             data = response.json()
             print(f"   - {len(data.get('por_actividad', []))} actividades en estadísticas")

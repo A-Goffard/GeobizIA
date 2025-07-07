@@ -132,6 +132,17 @@ margin: 2rem;
   flex: 1; /* Distribuye el espacio de manera equitativa */
 }
 
+button {
+    padding: 0.75rem 1rem;
+    background-color: var(--green);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
 @media (min-width: 950px) {
   .contenedor-principal {
     max-width: 950px;

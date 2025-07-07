@@ -9,6 +9,6 @@ esto es para ejecutar la api:
 python -m uvicorn GeobizIA.api.main:app --reload
 
 para ejecutar el front:
-desde .\GeobizIA\GoffardSevillanoAintzane\src\vista\frontend> 
+desde .\GeobizIA\GeobizIA\vista\frontend> 
 npm run serve
 
