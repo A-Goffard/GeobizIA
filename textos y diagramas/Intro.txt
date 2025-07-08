@@ -11,3 +11,24 @@ Crear publicaciones automáticas: Generar textos e imágenes atractivas para red
 Aprender de nuestras actividades: Registrar lo que hacemos, como eventos o proyectos, para que la aplicación nos sugiera cómo mejorarlos, proponga nuevas ideas y nos ayude a documentar buenas prácticas para ser más eficientes y sostenibles.
 
 Controlar nuestras finanzas: Llevar un registro de ingresos y gastos de cada actividad, ver su rentabilidad y recibir recomendaciones para ajustar precios o enfocarnos en lo que funciona mejor.
+
+
+
+Lo que se pide:
+
+* Diagrama de MER (BD que está normalizada mínimamente a 3FN) y diagrama de clases (Que es exactamente lo que se ha implementado).
+* El MER debe ser la representación EXACTA de la BD que se entregará junto con todo el código (.sql)
+* Modificación de evolución positiva, la ÚNICA!: Cambio de ListaGen a Interface, lo que nos va a llevar a añadir métodos genéricos en en los hijos. * Justificación de la arquitectura: pros, contras y razón por la que se ha elegido. (Se tendrá que justificar en la defensa): Es imprescindible que sea POO, cumpla el SOLID, DRY y KISS. 
+* El Clean Code será obligatorio. Por lo que los nombres de las clases, métodos y variables, así como de los ficheros es MUY importante.
+* El proyecto entero (código) comprimido con el nombre del proyecto. (MiProyecto. zip o .rar) que irá con todos los ficheros dentro del comprimido que se entrega (el entero).
+* Pase de parámetros: NO se pasará por parámetro NINGúN atributo del dominio salvo el ID si es necesario. SIEMPRE se pasará el Objeto. 
+* Vista: donde se reciben los datos desde el cliente. Pasa por la validación. Crea el objeto (llama al dominio) Se lo pasa al controlador (o el controlador se lo lee. Es lo mismo).
+Controlador: recibe los objetos de la capa vista, los procesa, los transforma y se los pasa, depurados al modelo. (El CRUD va aquí). 
+Da respuesta a las peticiones del cliente. Devolviendo SIEMPRE un objeto. Por ejemplo: loging: El cliente solicita verificar usuario y emparejamiento pass. Inserta los datos, se validan para evitar "intrusiones", pasa por el controlador. Este verifica existencia y corrección. Devuelve una respuesta a la vista.
+Modelo: Recibe y envía datos en crudo. Ya depurados, ya transformados. Aquí se hace la conexión y aquí está "la puerta" al dato. Mantenimiento de la BD. 
+
+* TIENE QUE FUNCIONAR. Pero, si hay "herramientas" de mejora, que no sean base del proyecto que estén a modo Beta o en construcción, si se justifican los posibles errores, puntúa en ++++.
+* Si preguntamos por un código o ubicación de una funcionalidad, y el/la programador/a no lo encuentra, se entenderá una falta grave, ya que no cumple el Clean Code, pero, denota una clara copia o uso descontrolado de terceros y no se considerará proyecto del autor/a. Además de denotar falta de análisis e implementación improvisada. "sobre la marcha". Recordad, un SW es 80-20. 80: análisis, diseño.... 20 implementación y mantenimiento.
+
+Rúbrica:
+* Para que un proyecto sea evaluado, debe cumplir con el 100% de los puntos de arriba. Si todos los puntos se cumplen, se parte de un 7 sobre 10. El resto: Extras de estadística, mejoras de futuro, uso del Pandas.... Cada uno de los extras es un punto. Siempre que se muestre su análisis y justificación de necesidad.
