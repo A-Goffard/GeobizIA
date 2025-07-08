@@ -39,23 +39,45 @@ const router = useRouter()
 const email = ref('')
 const password = ref('')
 const error = ref('')
+const isSubmitting = ref(false)
 
-// Usuarios autorizados (puedes cambiar esto por una petición a backend en el futuro)
-const usuarios = [
-    { email: 'admin@geobizi.com', password: 'admin123' },
-    { email: 'usuario@geobizi.com', password: 'usuario123' }
-]
+// La lista de usuarios hardcodeada ya no es necesaria
+// const usuarios = [
+//     { email: 'admin@geobizi.com', password: 'admin123' },
+//     { email: 'usuario@geobizi.com', password: 'usuario123' }
+// ]
 
-function login() {
-    const autorizado = usuarios.find(
-        u => u.email === email.value && u.password === password.value
-    )
-    if (autorizado) {
-        localStorage.setItem('autenticado', 'true')
-        error.value = ''
-        router.push('/opciones')
-    } else {
-        error.value = 'Usuario o contraseña incorrectos'
+async function login() {
+    isSubmitting.value = true;
+    error.value = '';
+    try {
+        const response = await fetch('http://localhost:8000/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email.value,
+                password: password.value,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.detail || 'Error de autenticación');
+        }
+
+        // Si el login es exitoso
+        localStorage.setItem('autenticado', 'true');
+        // Opcional: guardar el rol del usuario para controlar permisos en el frontend
+        localStorage.setItem('rol', result.rol);
+        router.push('/opciones');
+
+    } catch (e) {
+        error.value = e.message;
+    } finally {
+        isSubmitting.value = false;
     }
 }
 </script>

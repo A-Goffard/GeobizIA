@@ -7,18 +7,18 @@ class Personas(BaseGestor[Persona]):
         super().__init__(table_name="persona", id_field="id_persona", domain_class=Persona)
 
     def agregar(self, persona: Persona):
-        if self.existe(persona.id_persona):
-            print(f"Error: Ya existe una persona con id_persona={persona.id_persona}.")
-            return None
+        # La comprobación de existencia por ID no es necesaria para un nuevo registro con IDENTITY.
         conn = get_connection()
         cursor = conn.cursor()
         try:
+            # --- AJUSTE CLAVE: Usar OUTPUT para obtener el ID en una sola consulta ---
             query = f"""
-                INSERT INTO {self.table_name} (id_persona, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO {self.table_name} (nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais)
+                OUTPUT INSERTED.id_persona
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """
-            cursor.execute(query, (
-                persona.id_persona,
+            # Se ejecuta la consulta y se obtiene el ID directamente.
+            last_id = cursor.execute(query, (
                 persona.nombre,
                 persona.apellido,
                 persona.email,
@@ -28,11 +28,24 @@ class Personas(BaseGestor[Persona]):
                 persona.cp,
                 persona.poblacion,
                 persona.pais
-            ))
+            )).fetchval()
+            
             conn.commit()
-            return persona
+            
+            if last_id is not None:
+                persona.id_persona = last_id
+                return persona
+            else:
+                # Si no se obtiene un ID, algo falló.
+                raise Exception("La consulta INSERT no devolvió un ID.")
+
         except Exception as e:
-            print(f"Error al agregar persona: {e}")
+            # --- MEJORA DE DIAGNÓSTICO ---
+            print(f"----------- ERROR EN GESTOR DE PERSONAS AL AGREGAR -----------")
+            print(f"Error de base de datos: {e}")
+            print(f"Datos que se intentaron insertar: {persona}")
+            print(f"-----------------------------------------------------------")
+            conn.rollback() # Deshacer cambios si hay un error
             return None
         finally:
             close_connection(conn, cursor)

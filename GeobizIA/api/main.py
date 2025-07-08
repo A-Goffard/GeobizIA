@@ -5,6 +5,7 @@ from GeobizIA.api.api_actividades import router as actividades_router
 from GeobizIA.api.api_actividades_realizadas import router as actividades_realizadas_router
 from GeobizIA.api.api_eventos import router as eventos_router
 from GeobizIA.api.api_proyectos import router as proyectos_router
+from GeobizIA.api.api_auth import router as auth_router
 # from GeobizIA.api.usuarios import router as usuarios_router
 # ...otros routers...
 
@@ -23,6 +24,7 @@ app.include_router(actividades_router)
 app.include_router(actividades_realizadas_router)
 app.include_router(eventos_router)
 app.include_router(proyectos_router)
+app.include_router(auth_router)
 # app.include_router(usuarios_router)
 # ...otros routers...
 

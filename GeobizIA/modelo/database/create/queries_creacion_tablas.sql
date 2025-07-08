@@ -33,7 +33,7 @@ CREATE TABLE usuario (
     fecha_nacimiento NVARCHAR(50),
     rol NVARCHAR(50),
     preferencias NVARCHAR(MAX),
-    password NVARCHAR(100),
+    password NVARCHAR(255),
     FOREIGN KEY (id_persona) REFERENCES persona(id_persona)
 );
 
