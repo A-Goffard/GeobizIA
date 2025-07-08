@@ -207,21 +207,6 @@ async function realizarPrediccion() {
   font-size: 16px;
 }
 
-button {
-  background: #007bff;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-button:hover:not(:disabled) {
-  background: #0056b3;
-}
-
 button:disabled {
   background: #ccc;
   cursor: not-allowed;

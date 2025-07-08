@@ -3,8 +3,13 @@
         <h1>Vista de Actividades</h1>
         <p>Estadísticas y listado de actividades con análisis visual.</p>
         
+        <div v-if="errorMsg" class="error-container">
+            <h2>⚠️ Ha ocurrido un error</h2>
+            <p>{{ errorMsg }}</p>
+        </div>
+
         <!-- Sección de Estadísticas con Gráficos -->
-        <div v-if="estadisticas" class="estadisticas-section">
+        <div v-if="estadisticas && !errorMsg" class="estadisticas-section">
             <h2>📊 Estadísticas de Actividades</h2>
             
             <!-- Tarjetas de Resumen -->
@@ -92,23 +97,29 @@
         </div>
         
         <!-- Sección de Listado de Actividades -->
-        <div class="actividades-section">
-            <h2>📝 Listado de Actividades por Tipo</h2>
-            <div v-for="(grupo, tipo) in actividadesPorTipo" :key="tipo" class="tipo-bloque">
-                <h3>{{ tipo }}</h3>
-                <div class="actividades-lista">
-                    <div v-for="actividad in grupo" :key="actividad.id_actividad" class="actividad-card">
-                        <div class="actividad-header">
-                            <h4>{{ actividad.nombre }}</h4>
-                            <span class="duracion-badge">{{ actividad.duracion }}</span>
-                        </div>
-                        <div class="actividad-details">
-                            <p><strong>Responsable:</strong> {{ actividad.responsable }}</p>
-                            <p><strong>Coste:</strong> {{ formatCurrency(actividad.coste_economico) }}</p>
-                            <p><strong>Facturación:</strong> {{ formatCurrency(actividad.facturacion) }}</p>
+        <div v-if="!errorMsg">
+            <div v-if="actividades.length > 0" class="actividades-section">
+                <h2>📝 Listado de Actividades por Tipo</h2>
+                <div v-for="(grupo, tipo) in actividadesPorTipo" :key="tipo" class="tipo-bloque">
+                    <h3>{{ tipo }}</h3>
+                    <div class="actividades-lista">
+                        <div v-for="actividad in grupo" :key="actividad.id_actividad" class="actividad-card">
+                            <div class="actividad-header">
+                                <h4>{{ actividad.nombre }}</h4>
+                                <span class="duracion-badge">{{ actividad.duracion }}</span>
+                            </div>
+                            <div class="actividad-details">
+                                <p><strong>Responsable:</strong> {{ actividad.responsable }}</p>
+                                <p><strong>Coste:</strong> {{ formatCurrency(actividad.coste_economico) }}</p>
+                                <p><strong>Facturación:</strong> {{ formatCurrency(actividad.facturacion) }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div v-else-if="!estadisticas" class="no-data-container">
+                <p>📭 No se encontraron actividades para mostrar.</p>
+                <span>Verifica si existen datos en la base de datos.</span>
             </div>
         </div>
     </div>
@@ -140,6 +151,7 @@ ChartJS.register(
 
 const actividades = ref([])
 const estadisticas = ref(null)
+const errorMsg = ref(null)
 
 onMounted(async () => {
     await cargarActividades()
@@ -148,28 +160,32 @@ onMounted(async () => {
 
 async function cargarActividades() {
     try {
+        errorMsg.value = null
         const res = await fetch('http://localhost:8000/api/actividades')
         if (res.ok) {
             actividades.value = await res.json()
         } else {
-            actividades.value = []
+            throw new Error(`Error del servidor al cargar actividades: ${res.status} ${res.statusText}`)
         }
     } catch (e) {
         actividades.value = []
+        errorMsg.value = e.message
         console.error('Error cargando actividades:', e)
     }
 }
 
 async function cargarEstadisticas() {
     try {
+        errorMsg.value = null
         const res = await fetch('http://localhost:8000/api/actividades/estadisticas')
         if (res.ok) {
             estadisticas.value = await res.json()
         } else {
-            estadisticas.value = null
+            throw new Error(`Error del servidor al cargar estadísticas: ${res.status} ${res.statusText}`)
         }
     } catch (e) {
         estadisticas.value = null
+        errorMsg.value = e.message
         console.error('Error cargando estadísticas:', e)
     }
 }
@@ -379,6 +395,43 @@ h3 {
     padding-left: 2rem;
     padding-right: 2rem;
     padding-bottom: 2rem;
+}
+
+.error-container {
+    background-color: #fff0f0;
+    border: 1px solid #ffcccc;
+    border-left: 5px solid #ff4d4d;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.no-data-container {
+    background-color: #f0f8ff;
+    border: 1px solid #d1e7fd;
+    border-left: 5px solid #0d6efd;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.no-data-container p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+}
+
+.no-data-container span {
+    font-size: 1rem;
+    color: #555;
+}
+
+.error-container h2 {
+    color: #cc0000;
+    margin-top: 0;
 }
 
 .general-container h1 {

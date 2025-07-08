@@ -1,5 +1,5 @@
 class Evento:
-    def __init__(self, id_evento, nombre=None, tipo=None, lugar=None, fecha_comienzo=None, fecha_final=None, poblacion=None, tematica=None):
+    def __init__(self, id_evento=None, nombre=None, tipo=None, lugar=None, fecha_comienzo=None, fecha_final=None, poblacion=None, tematica=None):
         self._id_evento = id_evento
         self._nombre = nombre
         self._tipo = tipo

@@ -1,11 +1,12 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional
+
+from GeobizIA.controlador.dominios.actividad_realizada import ActividadRealizada
 from GeobizIA.controlador.gestores.actividades_realizadas import ActividadesRealizadas
 from GeobizIA.controlador.gestores.actividades import Actividades
-from GeobizIA.controlador.dominios.actividad_realizada import ActividadRealizada
-from GeobizIA.controlador.ML.ML_actividades_realizadas import preparar_estadisticas_actividades
-from GeobizIA.controlador.ML.predictor_actividades import realizar_prediccion_actividad
+from GeobizIA.controlador.ML.ML_actividades_realizadas_prediccion import realizar_prediccion_actividad
+from GeobizIA.controlador.ML.ML_actividades import preparar_estadisticas_actividades
 from GeobizIA.validaciones.validar_actividad_realizada import validar_datos_actividad_realizada
 
 router = APIRouter()

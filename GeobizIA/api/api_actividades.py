@@ -51,8 +51,11 @@ def crear_actividad(actividad: ActividadIn):
 
 @router.get("/api/actividades")
 def listar_actividades():
-    actividades = gestor.mostrar_todos_los_elem()
-    return [a.to_dict() for a in actividades]
+    try:
+        actividades = gestor.mostrar_todos_los_elem()
+        return [a.to_dict() for a in actividades]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al obtener actividades: {e}")
 
 @router.get("/api/actividades/estadisticas")
 def estadisticas_actividades():
@@ -66,9 +69,12 @@ def estadisticas_actividades():
 
 @router.get("/api/actividades/{id_actividad}")
 def obtener_actividad(id_actividad: int):
-    obj = gestor.buscar(id_actividad)
-    if obj is None:
-        raise HTTPException(status_code=404, detail="No encontrada")
-    return obj.to_dict()
+    try:
+        obj = gestor.buscar(id_actividad)
+        if obj is None:
+            raise HTTPException(status_code=404, detail="No encontrada")
+        return obj.to_dict()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al obtener actividad: {e}")
 
 
