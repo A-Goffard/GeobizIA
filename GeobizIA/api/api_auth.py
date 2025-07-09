@@ -12,10 +12,8 @@ class LoginCredentials(BaseModel):
 @router.post("/api/login")
 def login(credentials: LoginCredentials):
     try:
-        # Buscar usuario por email
         usuario = gestor_usuarios.buscar_por_email(credentials.email)
 
-        # Verificar si el usuario existe y la contraseña es correcta
         if not usuario or not usuario.check_password(credentials.password):
             raise HTTPException(
                 status_code=401,
@@ -23,7 +21,6 @@ def login(credentials: LoginCredentials):
                 headers={"WWW-Authenticate": "Bearer"},
             )
 
-        # En una aplicación real, aquí generarías y devolverías un token (JWT)
         return {"mensaje": "Login exitoso", "rol": usuario.rol}
 
     except HTTPException as e:

@@ -16,13 +16,14 @@ class PredictorActividades:
         self.estadisticas_modelo = {}
         
     def preparar_datos(self, lista_actividades):
-        """Prepara los datos para el entrenamiento del modelo"""
+        
+        # Prepara los datos para el entrenamiento del modelo
+
         if not lista_actividades:
             return None
             
         df = pd.DataFrame(lista_actividades)
         
-        # Validar columnas necesarias
         columnas_necesarias = ['id_actividad', 'fecha', 'coste_economico', 'asistentes', 'facturacion']
         if not all(col in df.columns for col in columnas_necesarias):
             return None
@@ -49,7 +50,9 @@ class PredictorActividades:
         return X, y_asistentes, y_facturacion
         
     def entrenar_modelos(self, lista_actividades):
-        """Entrena los modelos de predicción"""
+        
+        # Entrena los modelos de predicción
+        
         datos = self.preparar_datos(lista_actividades)
         
         if datos is None:
@@ -84,7 +87,9 @@ class PredictorActividades:
             return False, f"Error al entrenar modelos: {str(e)}"
             
     def _calcular_metricas(self, X, y_asistentes, y_facturacion):
-        """Calcula métricas de evaluación de los modelos"""
+        
+        # Calcula métricas de evaluación de los modelos
+        
         # Predicciones
         pred_asistentes = self.modelo_asistentes.predict(X)
         pred_facturacion = self.modelo_facturacion.predict(X)
@@ -111,7 +116,9 @@ class PredictorActividades:
         }
         
     def predecir(self, id_actividad, fecha, coste_economico):
-        """Realiza predicción para una actividad específica"""
+        
+        # Realiza predicción para una actividad específica
+        
         if not self.entrenado:
             return None, "El modelo no ha sido entrenado"
             
@@ -160,7 +167,9 @@ class PredictorActividades:
             return None, f"Error al realizar predicción: {str(e)}"
             
     def obtener_prediccion_historica(self, id_actividad, lista_actividades):
-        """Obtiene estadísticas históricas para una actividad específica"""
+        
+        # Obtiene estadísticas históricas para una actividad específica
+        
         if not lista_actividades:
             return {}
             
@@ -192,7 +201,9 @@ class PredictorActividades:
         return stats
 
 def realizar_prediccion_actividad(lista_actividades, id_actividad, fecha, coste_economico, id_to_nombre=None):
-    """Función principal para realizar predicción de actividad"""
+    
+    # Función principal para realizar predicción de actividad
+    
     predictor = PredictorActividades()
     
     # Entrenar modelos

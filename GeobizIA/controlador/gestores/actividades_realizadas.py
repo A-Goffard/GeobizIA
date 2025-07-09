@@ -64,17 +64,17 @@ class ActividadesRealizadas(BaseGestor[ActividadRealizada]):
         finally:
             close_connection(conn, cursor)
 
-    def eliminar(self, id_actividad_realizada):
+    def buscar_por_id_actividad(self, id_actividad: int):
         conn = get_connection()
         cursor = conn.cursor()
         try:
-            query = f"DELETE FROM {self.table_name} WHERE id_actividad_realizada = ?"
-            cursor.execute(query, (id_actividad_realizada,))
-            conn.commit()
-            return cursor.rowcount > 0
+            query = f"SELECT * FROM {self.table_name} WHERE id_actividad = ? ORDER BY fecha DESC"
+            cursor.execute(query, (id_actividad,))
+            rows = cursor.fetchall()
+            return [ActividadRealizada(*row) for row in rows]
         except Exception as e:
-            print(f"Error al eliminar actividad_realizada: {e}")
-            return False
+            print(f"Error al buscar actividades realizadas por id_actividad: {e}")
+            return []
         finally:
             close_connection(conn, cursor)
 
@@ -82,13 +82,12 @@ class ActividadesRealizadas(BaseGestor[ActividadRealizada]):
         conn = get_connection()
         cursor = conn.cursor()
         try:
-            query = f"""
-                UPDATE {self.table_name}
-                SET id_actividad=?, fecha=?, asistentes=?, coste_economico=?, facturacion=?, observaciones=?, id_evento=?, id_proyecto=?
+            query = """
+                UPDATE actividad_realizada
+                SET fecha=?, asistentes=?, coste_economico=?, facturacion=?, observaciones=?, id_evento=?, id_proyecto=?
                 WHERE id_actividad_realizada=?
             """
             cursor.execute(query, (
-                actividad_realizada.id_actividad,
                 actividad_realizada.fecha,
                 actividad_realizada.asistentes,
                 actividad_realizada.coste_economico,
@@ -101,7 +100,22 @@ class ActividadesRealizadas(BaseGestor[ActividadRealizada]):
             conn.commit()
             return cursor.rowcount > 0
         except Exception as e:
-            print(f"Error al actualizar actividad_realizada: {e}")
+            print(f"Error al actualizar actividad realizada: {e}")
+            conn.rollback()
+            return False
+        finally:
+            close_connection(conn, cursor)
+
+    def eliminar(self, id_actividad_realizada):
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            query = f"DELETE FROM {self.table_name} WHERE id_actividad_realizada = ?"
+            cursor.execute(query, (id_actividad_realizada,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            print(f"Error al eliminar actividad_realizada: {e}")
             return False
         finally:
             close_connection(conn, cursor)

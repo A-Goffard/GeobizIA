@@ -1,5 +1,5 @@
 <template>
-    <div class="general-container">
+    <div class="contenedor-principal">
         <h1>Opciones</h1>
         <div class="container">
             <div class="card" v-for="option in options" :key="option.title" @click="goToDetail(option.link)">
@@ -97,7 +97,7 @@ const goToDetail = (link) => {
     justify-content: center;
 }
 
-.general-container {
+/* .general-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -106,7 +106,7 @@ const goToDetail = (link) => {
     padding-left: 2rem;
     padding-right: 2rem;
     padding-bottom: 2rem;
-}
+} */
 
 .card {
     width: 300px;

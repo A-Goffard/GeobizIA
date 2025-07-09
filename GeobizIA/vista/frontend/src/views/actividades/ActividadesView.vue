@@ -1,5 +1,5 @@
 <template>
-    <div class="general-container">
+    <div class="contenedor-principal">
         <h1>Actividades</h1>
         <div class="container">
             <div
@@ -68,7 +68,7 @@ function goTo(route) {
     justify-content: center;
 }
 
-.general-container {
+.contenedor-principal {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;

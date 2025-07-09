@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional
-import logging # Importar logging
+import logging
 
 from GeobizIA.controlador.dominios.evento import Evento
 from GeobizIA.controlador.gestores.eventos import Eventos
@@ -23,7 +23,6 @@ class EventoIn(BaseModel):
 def listar_eventos():
     try:
         eventos = gestor.mostrar_todos_los_elem()
-        # Asumiendo que el método to_dict() del dominio ya devuelve los campos correctos.
         return [e.to_dict() for e in eventos]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al obtener eventos: {e}")
@@ -41,13 +40,11 @@ def obtener_evento(id_evento: int):
 @router.post("/api/eventos")
 def crear_evento(evento: EventoIn):
     try:
-        datos = evento.dict()
-        # Reactivamos la validación de los datos de entrada.
+        datos = evento.model_dump()
         valido, msg = validar_datos_evento(datos)
         if not valido:
             raise HTTPException(status_code=400, detail=msg)
         
-        # Creamos el objeto Evento
         evento_a_guardar = Evento(
             nombre=datos['nombre'],
             tipo=datos['tipo'],
@@ -58,17 +55,10 @@ def crear_evento(evento: EventoIn):
             tematica=datos['tematica']
         )
 
-        # Log para depuración: Muestra en la consola del backend qué se va a guardar.
-        logging.warning(f"Intentando guardar el siguiente evento: {evento_a_guardar}")
-
         obj = gestor.agregar(evento_a_guardar)
         
         if obj is None:
             raise HTTPException(status_code=500, detail="El gestor no pudo guardar el evento, devolvió None.")
         return {"mensaje": "Evento guardado correctamente"}
     except Exception as e:
-        # Este bloque capturará el error interno y lo mostrará, ayudando a depurar.
-        # Revisa la consola del backend para ver el error completo.
-        raise HTTPException(status_code=500, detail=f"Error interno del servidor al crear el evento: {e}")
-        # Revisa la consola del backend para ver el error completo.
         raise HTTPException(status_code=500, detail=f"Error interno del servidor al crear el evento: {e}")

@@ -5,40 +5,32 @@
                 <img src="@/assets/GeobiziLogo.png" class="logo" alt="">
             </div>
             <ul v-show="!mobile" class="navigation">
-                <li>
-                    <router-link class="NavButton link" :to="{ name: 'inicio' }"
-                        @click="closeMobileNav">Inicio</router-link>
+                <li><router-link class="link" :to="{ name: 'inicio' }">Inicio</router-link></li>
+                <li><router-link class="link" to="/actividades">Actividades</router-link></li>
+                
+                <!-- Menú Desplegable: Gestión -->
+                <li class="dropdown">
+                    <a class="link">Gestión &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><router-link class="link" to="/clientes">Clientes</router-link></li>
+                        <li><router-link class="link" to="/empresas">Empresas</router-link></li>
+                        <li><router-link class="link" to="/participantes">Participantes</router-link></li>
+                    </ul>
                 </li>
-                <li>
-                    <router-link class="NavButton link" to="/actividades" @click="closeMobileNav">Actividades</router-link>
+
+                <!-- Menú Desplegable: Contenido -->
+                <li class="dropdown">
+                    <a class="link">Contenido &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><router-link class="link" to="/documentos">Documentos</router-link></li>
+                        <li><router-link class="link" to="/publicaciones">Publicaciones</router-link></li>
+                        <li><router-link class="link" to="/facturas">Facturas</router-link></li>
+                    </ul>
                 </li>
-                <li>
-                    <router-link class="NavButton link" to="/facturas" @click="closeMobileNav">Facturas</router-link>
-                </li>
-                <li>
-                    <router-link class="NavButton link" to="/publicaciones" @click="closeMobileNav">Publicaciones</router-link>
-                </li>
-                <li>
-                    <router-link class="NavButton link" to="/proyectos" @click="closeMobileNav">Proyectos</router-link>
-                </li>
-                <li>
-                    <router-link class="NavButton link" to="/eventos" @click="closeMobileNav">Eventos</router-link>
-                </li>
-                <li>
-                    <router-link class="NavButton link" to="/participantes" @click="closeMobileNav">Participantes</router-link>
-                </li>
-                <li>
-                    <router-link class="NavButton link" to="/documentos" @click="closeMobileNav">Documentos</router-link>
-                </li>
-                <li>
-                    <router-link class="NavButton link" to="/empresas" @click="closeMobileNav">Empresas</router-link>
-                </li>
-                <li>
-                    <router-link class="NavButton link" to="/redes-sociales" @click="closeMobileNav">Redes Sociales</router-link>
-                </li>
-                <li>
-                    <router-link class="NavButton link" to="/clientes" @click="closeMobileNav">Clientes</router-link>
-                </li>
+
+                <li><router-link class="link" to="/proyectos">Proyectos</router-link></li>
+                <li><router-link class="link" to="/eventos">Eventos</router-link></li>
+                <li><router-link class="link" to="/redes-sociales">Redes Sociales</router-link></li>
             </ul>
             <div class="icon">
                 <button @click="toggleMobileNav" v-show="mobile">
@@ -47,40 +39,32 @@
             </div>
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="dropdown-nav">
-                    <li>
-                        <router-link class="NavButton link" :to="{ name: 'inicio' }"
-                            @click="closeMobileNav">Inicio</router-link>
+                    <li @click="closeMobileNav"><router-link class="link" :to="{ name: 'inicio' }">Inicio</router-link></li>
+                    <li @click="closeMobileNav"><router-link class="link" to="/actividades">Actividades</router-link></li>
+                    
+                    <!-- Menú Desplegable Móvil: Gestión -->
+                    <li class="dropdown-mobile">
+                        <a @click="toggleDropdown('gestion')" class="link">Gestión &#9662;</a>
+                        <ul v-show="activeDropdown === 'gestion'" class="sub-menu">
+                            <li @click="closeMobileNav"><router-link class="link" to="/clientes">Clientes</router-link></li>
+                            <li @click="closeMobileNav"><router-link class="link" to="/empresas">Empresas</router-link></li>
+                            <li @click="closeMobileNav"><router-link class="link" to="/participantes">Participantes</router-link></li>
+                        </ul>
                     </li>
-                    <li>
-                        <router-link class="NavButton link" to="/actividades" @click="closeMobileNav">Actividades</router-link>
+
+                    <!-- Menú Desplegable Móvil: Contenido -->
+                    <li class="dropdown-mobile">
+                        <a @click="toggleDropdown('contenido')" class="link">Contenido &#9662;</a>
+                        <ul v-show="activeDropdown === 'contenido'" class="sub-menu">
+                            <li @click="closeMobileNav"><router-link class="link" to="/documentos">Documentos</router-link></li>
+                            <li @click="closeMobileNav"><router-link class="link" to="/publicaciones">Publicaciones</router-link></li>
+                            <li @click="closeMobileNav"><router-link class="link" to="/facturas">Facturas</router-link></li>
+                        </ul>
                     </li>
-                    <li>
-                        <router-link class="NavButton link" to="/facturas" @click="closeMobileNav">Facturas</router-link>
-                    </li>
-                    <li>
-                        <router-link class="NavButton link" to="/publicaciones" @click="closeMobileNav">Publicaciones</router-link>
-                    </li>
-                    <li>
-                        <router-link class="NavButton link" to="/proyectos" @click="closeMobileNav">Proyectos</router-link>
-                    </li>
-                    <li>
-                        <router-link class="NavButton link" to="/eventos" @click="closeMobileNav">Eventos</router-link>
-                    </li>
-                    <li>
-                        <router-link class="NavButton link" to="/participantes" @click="closeMobileNav">Participantes</router-link>
-                    </li>
-                    <li>
-                        <router-link class="NavButton link" to="/documentos" @click="closeMobileNav">Documentos</router-link>
-                    </li>
-                    <li>
-                        <router-link class="NavButton link" to="/empresas" @click="closeMobileNav">Empresas</router-link>
-                    </li>
-                    <li>
-                        <router-link class="NavButton link" to="/redes-sociales" @click="closeMobileNav">Redes Sociales</router-link>
-                    </li>
-                    <li>
-                        <router-link class="NavButton link" to="/clientes" @click="closeMobileNav">Clientes</router-link>
-                    </li>
+
+                    <li @click="closeMobileNav"><router-link class="link" to="/proyectos">Proyectos</router-link></li>
+                    <li @click="closeMobileNav"><router-link class="link" to="/eventos">Eventos</router-link></li>
+                    <li @click="closeMobileNav"><router-link class="link" to="/redes-sociales">Redes Sociales</router-link></li>
                 </ul>
             </transition>
         </nav>
@@ -93,12 +77,24 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const mobileNav = ref(false);
 const mobile = ref(true);
 const scrolledNav = ref(false);
+const activeDropdown = ref(null); // Para controlar el desplegable en móvil
+
+const toggleDropdown = (menu) => {
+    if (activeDropdown.value === menu) {
+        activeDropdown.value = null;
+    } else {
+        activeDropdown.value = menu;
+    }
+};
 
 const toggleMobileNav = () => {
     mobileNav.value = !mobileNav.value;
     const hojitasIcon = document.querySelector('.hojitas');
     if (hojitasIcon) {
         hojitasIcon.style.transform = mobileNav.value ? 'rotate(45deg)' : 'rotate(0deg)';
+    }
+    if (!mobileNav.value) {
+        activeDropdown.value = null; // Cierra submenús al cerrar nav principal
     }
 };
 
@@ -108,6 +104,7 @@ const closeMobileNav = () => {
     if (hojitasIcon) {
         hojitasIcon.style.transform = 'rotate(0deg)';
     }
+    activeDropdown.value = null; // Cierra submenús
 };
 
 const updateScroll = () => {
@@ -244,6 +241,7 @@ header nav .mobile-nav-enter-to {
     color: var(--green);
     position: relative;
     transition: 250s ease all;
+    cursor: pointer; /* Para que los <a> no-link parezcan clicables */
 }
 
 .link:hover {
@@ -265,6 +263,7 @@ header nav .mobile-nav-enter-to {
 
 ul {
     margin: 0;
+    list-style: none; /* Quita los puntos de la lista */
 }
 
 li {
@@ -275,6 +274,62 @@ li {
 .logo {
     position: absolute;
     height: 2.8rem;
+}
+
+/* Estilos para los menús desplegables */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+    min-width: 180px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li {
+    padding: 0;
+}
+
+.dropdown-menu .link {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dropdown-menu .link:hover::after {
+    content: none; /* No queremos la línea inferior en los sub-items */
+}
+
+/* Estilos para desplegables en móvil */
+.dropdown-mobile .sub-menu {
+    list-style: none;
+    padding-left: 1rem; /* Indentación para los sub-items */
+    overflow: hidden;
+    max-height: 500px; /* Suficiente para los items */
+    transition: max-height 0.5s ease-in-out;
+}
+
+.dropdown-mobile .sub-menu[v-show="false"] {
+    max-height: 0;
 }
 
 @media (min-width: 1024px) {

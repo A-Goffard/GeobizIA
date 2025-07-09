@@ -7,7 +7,6 @@ class Actividades(BaseGestor[Actividad]):
         super().__init__(table_name="actividad", id_field="id_actividad", domain_class=Actividad)
 
     def agregar(self, actividad: Actividad):
-        # Comprobar duplicado por nombre
         if self.buscar_por_nombre(actividad.nombre):
             print(f"Error: Ya existe una actividad con nombre={actividad.nombre}.")
             return None
@@ -50,7 +49,20 @@ class Actividades(BaseGestor[Actividad]):
             cursor.execute(query, (nombre,))
             row = cursor.fetchone()
             if row:
-                return Actividad(*row)
+                return Actividad(
+                    id_actividad=row[0],
+                    tipo=row[1],
+                    nombre=row[2],
+                    descripcion=row[3],
+                    responsable=row[4],
+                    duracion=row[5],
+                    coste_economico=row[6],
+                    coste_horas=row[7],
+                    facturacion=row[8],
+                    resultados=row[9],
+                    valoracion=row[10],
+                    observaciones=row[11]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar actividad por nombre: {e}")
@@ -62,15 +74,27 @@ class Actividades(BaseGestor[Actividad]):
         if not self.existe(id_actividad):
             print(f"Error: No existe una actividad con id_actividad={id_actividad}.")
             return False
+        
         conn = get_connection()
         cursor = conn.cursor()
         try:
-            query = f"DELETE FROM {self.table_name} WHERE id_actividad = ?"
-            cursor.execute(query, (id_actividad,))
+            # Iniciar transacción
+            
+            # 1. Eliminar registros dependientes en 'actividad_realizada'
+            query_dependientes = "DELETE FROM actividad_realizada WHERE id_actividad = ?"
+            cursor.execute(query_dependientes, (id_actividad,))
+            
+            # 2. Eliminar la actividad principal
+            query_principal = f"DELETE FROM {self.table_name} WHERE id_actividad = ?"
+            cursor.execute(query_principal, (id_actividad,))
+            
+            # Confirmar transacción
             conn.commit()
+            
             return cursor.rowcount > 0
         except Exception as e:
-            print(f"Error al eliminar actividad: {e}")
+            print(f"Error al eliminar actividad y sus dependencias: {e}")
+            conn.rollback() # Revertir cambios si algo falla
             return False
         finally:
             close_connection(conn, cursor)
@@ -83,7 +107,20 @@ class Actividades(BaseGestor[Actividad]):
             cursor.execute(query, (id_actividad,))
             row = cursor.fetchone()
             if row:
-                return Actividad(*row)
+                return Actividad(
+                    id_actividad=row[0],
+                    tipo=row[1],
+                    nombre=row[2],
+                    descripcion=row[3],
+                    responsable=row[4],
+                    duracion=row[5],
+                    coste_economico=row[6],
+                    coste_horas=row[7],
+                    facturacion=row[8],
+                    resultados=row[9],
+                    valoracion=row[10],
+                    observaciones=row[11]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar actividad: {e}")
@@ -98,7 +135,23 @@ class Actividades(BaseGestor[Actividad]):
             query = f"SELECT id_actividad, tipo, nombre, descripcion, responsable, duracion, coste_economico, coste_horas, facturacion, resultados, valoracion, observaciones FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Actividad(*row) for row in rows]
+            actividades = []
+            for row in rows:
+                actividades.append(Actividad(
+                    id_actividad=row[0],
+                    tipo=row[1],
+                    nombre=row[2],
+                    descripcion=row[3],
+                    responsable=row[4],
+                    duracion=row[5],
+                    coste_economico=row[6],
+                    coste_horas=row[7],
+                    facturacion=row[8],
+                    resultados=row[9],
+                    valoracion=row[10],
+                    observaciones=row[11]
+                ))
+            return actividades
         except Exception as e:
             print(f"Error al listar actividades: {e}")
             return []

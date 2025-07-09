@@ -29,12 +29,11 @@ class PrediccionIn(BaseModel):
 
 @router.post("/api/actividades_realizadas")
 def crear_actividad_realizada(actividad: ActividadRealizadaIn):
-    datos = actividad.dict()
+    datos = actividad.model_dump()
     valido, msg = validar_datos_actividad_realizada(datos)
     if not valido:
         raise HTTPException(status_code=400, detail=msg)
     
-    # ✅ SEGURO: Solo campos esperados (evita inyección de campos)
     obj = gestor.agregar(ActividadRealizada(
         id_actividad=datos['id_actividad'],
         fecha=datos['fecha'],
@@ -50,10 +49,35 @@ def crear_actividad_realizada(actividad: ActividadRealizadaIn):
         raise HTTPException(status_code=500, detail="No se pudo guardar la actividad realizada")
     return {"mensaje": "Actividad realizada guardada correctamente"}
 
+@router.put("/api/actividades_realizadas/{id_actividad_realizada}")
+def actualizar_actividad_realizada(id_actividad_realizada: int, actividad: ActividadRealizadaIn):
+    datos = actividad.model_dump()
+    
+    from GeobizIA.controlador.dominios.actividad_realizada import ActividadRealizada
+    actividad_obj = ActividadRealizada(id_actividad_realizada=id_actividad_realizada, **datos)
+    
+    if not gestor.actualizar(actividad_obj):
+        raise HTTPException(status_code=404, detail="Registro no encontrado o no se pudo actualizar")
+    return {"mensaje": "Registro actualizado correctamente"}
+
+@router.delete("/api/actividades_realizadas/{id_actividad_realizada}")
+def eliminar_actividad_realizada(id_actividad_realizada: int):
+    if not gestor.eliminar(id_actividad_realizada):
+        raise HTTPException(status_code=404, detail="Registro no encontrado o no se pudo eliminar")
+    return {"mensaje": "Registro eliminado correctamente"}
+
 @router.get("/api/actividades_realizadas")
 def listar_actividades_realizadas():
     actividades = gestor.mostrar_todos_los_elem()
     return [a.to_dict() for a in actividades]
+
+@router.get("/api/actividades_realizadas/por_actividad/{id_actividad}")
+def listar_por_actividad(id_actividad: int):
+    try:
+        actividades = gestor.buscar_por_id_actividad(id_actividad)
+        return [a.to_dict() for a in actividades]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al obtener historial: {e}")
 
 @router.get("/api/actividades_realizadas/estadisticas")
 def estadisticas_actividades_realizadas():
@@ -61,7 +85,6 @@ def estadisticas_actividades_realizadas():
         actividades_realizadas = gestor.mostrar_todos_los_elem()
         actividades_dicts = [a.to_dict() for a in actividades_realizadas]
         
-        # Mapeo id_actividad -> nombre
         actividades = Actividades().mostrar_todos_los_elem()
         id_to_nombre = {a.id_actividad: a.nombre for a in actividades}
         
@@ -71,10 +94,10 @@ def estadisticas_actividades_realizadas():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al generar estadísticas: {str(e)}")
 
-@router.get("/api/actividades_realizadas/test")
-def test_endpoint():
-    """Endpoint de prueba para verificar que el servidor funciona"""
-    return {"status": "ok", "mensaje": "Servidor funcionando correctamente"}
+# @router.get("/api/actividades_realizadas/test")
+# def test_endpoint():
+#     """Endpoint de prueba para verificar que el servidor funciona"""
+#     return {"status": "ok", "mensaje": "Servidor funcionando correctamente"}
 
 @router.get("/api/actividades_realizadas/{id_actividad_realizada}")
 def obtener_actividad_realizada(id_actividad_realizada: int):
@@ -85,7 +108,8 @@ def obtener_actividad_realizada(id_actividad_realizada: int):
 
 @router.post("/api/actividades_realizadas/prediccion")
 def prediccion_actividad_realizada(datos_prediccion: PrediccionIn):
-    """Predice asistentes y facturación basado en id_actividad, fecha y coste_economico"""
+    
+    # Predice asistentes y facturación basado en id_actividad, fecha y coste_economico
     try:
         actividades_realizadas = gestor.mostrar_todos_los_elem()
         actividades_dicts = [a.to_dict() for a in actividades_realizadas]

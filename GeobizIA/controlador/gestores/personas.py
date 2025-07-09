@@ -75,7 +75,18 @@ class Personas(BaseGestor[Persona]):
             cursor.execute(query, (id_persona,))
             row = cursor.fetchone()
             if row:
-                return Persona(*row)
+                return Persona(
+                    id_persona=row[0],
+                    nombre=row[1],
+                    apellido=row[2],
+                    email=row[3],
+                    telefono=row[4],
+                    dni=row[5],
+                    direccion=row[6],
+                    cp=row[7],
+                    poblacion=row[8],
+                    pais=row[9]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar persona: {e}")
@@ -90,7 +101,21 @@ class Personas(BaseGestor[Persona]):
             query = f"SELECT id_persona, nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Persona(*row) for row in rows]
+            personas = []
+            for row in rows:
+                personas.append(Persona(
+                    id_persona=row[0],
+                    nombre=row[1],
+                    apellido=row[2],
+                    email=row[3],
+                    telefono=row[4],
+                    dni=row[5],
+                    direccion=row[6],
+                    cp=row[7],
+                    poblacion=row[8],
+                    pais=row[9]
+                ))
+            return personas
         except Exception as e:
             print(f"Error al listar personas: {e}")
             return []

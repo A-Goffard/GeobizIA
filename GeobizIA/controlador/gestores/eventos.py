@@ -7,23 +7,16 @@ class Eventos(BaseGestor[Evento]):
         super().__init__(table_name="evento", id_field="id_evento", domain_class=Evento)
 
     def agregar(self, evento: Evento):
-        # Comprobamos si ya existe un evento con el mismo nombre.
         if self.existe_por_nombre(evento.nombre):
             print(f"Error: Ya existe un evento con el nombre '{evento.nombre}'.")
-            # Devolvemos un error específico que la API pueda interpretar.
-            # Para ello, lo mejor sería que el gestor lanzara una excepción.
-            # Por ahora, devolvemos None y la API lo manejará.
-            # Considera lanzar una excepción personalizada para más claridad.
             return None
         conn = get_connection()
         cursor = conn.cursor()
         try:
-            # Se elimina id_evento de la consulta INSERT. La base de datos lo generará.
             query = f"""
                 INSERT INTO {self.table_name} (nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             """
-            # Se elimina evento.id_evento de los parámetros.
             cursor.execute(query, (
                 evento.nombre,
                 evento.tipo,
@@ -34,14 +27,8 @@ class Eventos(BaseGestor[Evento]):
                 evento.tematica
             ))
             conn.commit()
-            # Opcional: podrías obtener el último ID insertado y asignarlo al objeto evento.
-            # evento.id_evento = cursor.lastrowid 
             return evento
         except Exception as e:
-            # ESTA ES LA SOLUCIÓN: Muestra el error real en la consola del backend
-            print(f"----------- ERROR EN GESTOR DE EVENTOS AL AGREGAR -----------")
-            print(f"Error de base de datos: {e}")
-            print(f"-----------------------------------------------------------")
             return None
         finally:
             close_connection(conn, cursor)
@@ -71,7 +58,16 @@ class Eventos(BaseGestor[Evento]):
             cursor.execute(query, (id_evento,))
             row = cursor.fetchone()
             if row:
-                return Evento(*row)
+                return Evento(
+                    id_evento=row[0],
+                    nombre=row[1],
+                    tipo=row[2],
+                    lugar=row[3],
+                    fecha_comienzo=row[4],
+                    fecha_final=row[5],
+                    poblacion=row[6],
+                    tematica=row[7]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar evento: {e}")
@@ -86,7 +82,19 @@ class Eventos(BaseGestor[Evento]):
             query = f"SELECT id_evento, nombre, tipo, lugar, fecha_comienzo, fecha_final, poblacion, tematica FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Evento(*row) for row in rows]
+            eventos = []
+            for row in rows:
+                eventos.append(Evento(
+                    id_evento=row[0],
+                    nombre=row[1],
+                    tipo=row[2],
+                    lugar=row[3],
+                    fecha_comienzo=row[4],
+                    fecha_final=row[5],
+                    poblacion=row[6],
+                    tematica=row[7]
+                ))
+            return eventos
         except Exception as e:
             print(f"Error al listar eventos: {e}")
             return []
@@ -124,7 +132,6 @@ class Eventos(BaseGestor[Evento]):
             close_connection(conn, cursor)
 
     def existe(self, id_evento):
-        # Este método sigue siendo útil para 'actualizar' y 'eliminar'.
         conn = get_connection()
         cursor = conn.cursor()
         try:
@@ -138,7 +145,6 @@ class Eventos(BaseGestor[Evento]):
             close_connection(conn, cursor)
 
     def existe_por_nombre(self, nombre):
-        """Comprueba si un evento ya existe por su nombre."""
         conn = get_connection()
         cursor = conn.cursor()
         try:
@@ -147,7 +153,7 @@ class Eventos(BaseGestor[Evento]):
             return cursor.fetchone() is not None
         except Exception as e:
             print(f"Error al comprobar existencia por nombre: {e}")
-            return False # Asumimos que no existe si hay un error
+            return False
         finally:
             close_connection(conn, cursor)
 

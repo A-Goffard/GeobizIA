@@ -1,5 +1,5 @@
 <template>
-  <div class="general-container">
+  <div class="contenedor-principal">
     <h1>Añadir Actividad Realizada</h1>
     <p>Formulario para añadir una actividad realizada.</p>
     <ActividadRealizadaForm />

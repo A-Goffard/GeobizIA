@@ -1,5 +1,5 @@
 <template>
-  <div class="general-container">
+  <div class="contenedor-principal">
     <h1>Crear Nueva Actividad</h1>
     <p>Formulario para crear una nueva actividad.</p>
     <ActividadForm />

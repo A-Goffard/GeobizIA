@@ -7,21 +7,17 @@ class Usuarios(BaseGestor[Usuario]):
         super().__init__(table_name="usuario", id_field="id_usuario", domain_class=Usuario)
 
     def agregar(self, usuario: Usuario):
-        # La comprobación de existencia por ID no es necesaria para un nuevo registro con IDENTITY.
         conn = get_connection()
         cursor = conn.cursor()
         try:
-            # --- AJUSTE CLAVE: Usar OUTPUT para obtener el ID en una sola consulta ---
             query = f"""
                 INSERT INTO {self.table_name} (id_persona, fecha_nacimiento, rol, preferencias, password)
                 OUTPUT INSERTED.id_usuario
                 VALUES (?, ?, ?, ?, ?)
             """
-            # Se hashea la contraseña antes de guardarla si no lo está ya.
             if usuario.password and not usuario.password.startswith('$2b$'):
                  usuario.set_password(usuario.password)
 
-            # Se ejecuta la consulta y se obtiene el ID directamente.
             last_id = cursor.execute(query, (
                 usuario.id_persona,
                 usuario.fecha_nacimiento,
@@ -39,7 +35,7 @@ class Usuarios(BaseGestor[Usuario]):
                 raise Exception("La consulta INSERT no devolvió un ID de usuario.")
         except Exception as e:
             print(f"Error al agregar usuario: {e}")
-            conn.rollback() # Deshacer cambios si hay un error
+            conn.rollback()
             return None
         finally:
             close_connection(conn, cursor)
@@ -69,9 +65,7 @@ class Usuarios(BaseGestor[Usuario]):
             cursor.execute(query, (id_usuario,))
             row = cursor.fetchone()
             if row:
-                # Creamos el objeto sin la contraseña para evitar pasar el hash al constructor
                 user = Usuario(id_persona=row[1], fecha_nacimiento=row[2], rol=row[3], preferencias=row[4], id_usuario=row[0])
-                # Asignamos el hash directamente
                 user.password = row[5]
                 return user
             return None
@@ -133,21 +127,17 @@ class Usuarios(BaseGestor[Usuario]):
         conn = get_connection()
         cursor = conn.cursor()
         try:
-            # 1. Se unen las tablas 'usuario' y 'persona' usando el campo común 'id_persona'.
             query = f"""
                 SELECT u.id_usuario, u.id_persona, u.fecha_nacimiento, u.rol, u.preferencias, u.password
                 FROM usuario u
                 JOIN persona p ON u.id_persona = p.id_persona
                 WHERE p.email = ?
             """
-            # 2. Se ejecuta la consulta buscando por el email que llega desde el formulario de login.
             cursor.execute(query, (email,))
             row = cursor.fetchone()
             if row:
-                # 3. Si se encuentra una coincidencia, se reconstruye el objeto Usuario con todos sus datos,
-                #    incluyendo el hash de la contraseña.
                 user = Usuario(id_usuario=row[0], id_persona=row[1], fecha_nacimiento=row[2], rol=row[3], preferencias=row[4])
-                user.password = row[5] # Asignamos el hash directamente
+                user.password = row[5]
                 return user
             return None
         except Exception as e:
