@@ -7,18 +7,16 @@ class Facturas(BaseGestor[Factura]):
         super().__init__(table_name="factura", id_field="id_factura", domain_class=Factura)
 
     def agregar(self, factura: Factura):
-        if self.existe(factura.id_factura):
-            print(f"Error: Ya existe una factura con id_factura={factura.id_factura}.")
-            return None
+        # Para SQL Server con columna IDENTITY, no incluir id_factura en el INSERT
         conn = get_connection()
         cursor = conn.cursor()
         try:
             query = f"""
-                INSERT INTO {self.table_name} (id_factura, id_cliente, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO {self.table_name} (id_cliente, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """
+            
             cursor.execute(query, (
-                factura.id_factura,
                 factura.id_cliente,
                 factura.tipo,
                 factura.nombre,
@@ -35,6 +33,12 @@ class Facturas(BaseGestor[Factura]):
                 factura.tipo_pago,
                 factura.irpf
             ))
+            
+            # Obtener el ID generado por IDENTITY
+            cursor.execute("SELECT @@IDENTITY")
+            nuevo_id = cursor.fetchone()[0]
+            factura.id_factura = int(nuevo_id)
+            
             conn.commit()
             return factura
         except Exception as e:

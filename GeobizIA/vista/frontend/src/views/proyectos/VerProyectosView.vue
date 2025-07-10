@@ -1,5 +1,5 @@
 <template>
-    <div class="general-container">
+    <div class="contenedor-principal">
         <h1>Ver Proyectos</h1>
         <p>Listado de proyectos existentes.</p>
         <div v-if="errorMsg" class="error-container">
@@ -92,18 +92,18 @@ function formatearPresupuesto(presupuesto) {
 </script>
 
 <style scoped>
-.general-container {
+.contenedor-principal {
     max-width: 1200px;
     margin: 0 auto;
     padding: 7rem 2rem 2rem 2rem;
 }
 
-.general-container h1 {
+.contenedor-principal h1 {
     margin-bottom: 10px;
     font-size: 2.5rem;
 }
 
-.general-container > p {
+.contenedor-principal > p {
     margin-bottom: 30px;
     font-size: 1.1rem;
 }

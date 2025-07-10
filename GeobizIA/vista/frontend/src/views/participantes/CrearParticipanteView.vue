@@ -1,5 +1,5 @@
 <template>
-    <div class="general-container">
+    <div class="contenedor-principal">
         <h1>Crear Participante</h1>
         <ParticipanteForm />
     </div>

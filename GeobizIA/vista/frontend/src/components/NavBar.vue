@@ -15,6 +15,8 @@
                         <li><router-link class="link" to="/clientes">Clientes</router-link></li>
                         <li><router-link class="link" to="/empresas">Empresas</router-link></li>
                         <!-- <li><router-link class="link" to="/participantes">Participantes</router-link></li> -->
+                        <li><router-link class="link" to="/facturas">Facturas</router-link></li>
+
                     </ul>
                 </li>
 
@@ -22,14 +24,16 @@
                 <li class="dropdown">
                     <a class="link">Contenido &#9662;</a>
                     <ul class="dropdown-menu">
-                        <li><router-link class="link" to="/documentos">Documentos</router-link></li>
-                        <li><router-link class="link" to="/publicaciones">Publicaciones</router-link></li>
-                        <li><router-link class="link" to="/facturas">Facturas</router-link></li>
+                        <li @click="closeMobileNav"><router-link class="link" to="/proyectos">Proyectos</router-link></li>
+                        <li @click="closeMobileNav"><router-link class="link" to="/eventos">Eventos</router-link></li>
+                        <!-- <li><router-link class="link" to="/documentos">Documentos</router-link></li> -->
+                        <!-- <li><router-link class="link" to="/facturas">Facturas</router-link></li> -->
                     </ul>
                 </li>
+                <li><router-link class="link" to="/publicaciones">Publicaciones</router-link></li>
 
-                <li><router-link class="link" to="/proyectos">Proyectos</router-link></li>
-                <li><router-link class="link" to="/eventos">Eventos</router-link></li>
+                <!-- <li><router-link class="link" to="/proyectos">Proyectos</router-link></li> -->
+                <!-- <li><router-link class="link" to="/eventos">Eventos</router-link></li> -->
                 <!-- <li><router-link class="link" to="/redes-sociales">Redes Sociales</router-link></li> -->
             </ul>
             <div class="icon">
@@ -48,6 +52,8 @@
                         <ul v-show="activeDropdown === 'gestion'" class="sub-menu">
                             <li @click="closeMobileNav"><router-link class="link" to="/clientes">Clientes</router-link></li>
                             <li @click="closeMobileNav"><router-link class="link" to="/empresas">Empresas</router-link></li>
+                            <li><router-link class="link" to="/facturas">Facturas</router-link></li>
+
                             <!-- <li @click="closeMobileNav"><router-link class="link" to="/participantes">Participantes</router-link></li> -->
                         </ul>
                     </li>
@@ -56,14 +62,15 @@
                     <li class="dropdown-mobile">
                         <a @click="toggleDropdown('contenido')" class="link">Contenido &#9662;</a>
                         <ul v-show="activeDropdown === 'contenido'" class="sub-menu">
-                            <li @click="closeMobileNav"><router-link class="link" to="/documentos">Documentos</router-link></li>
-                            <li @click="closeMobileNav"><router-link class="link" to="/publicaciones">Publicaciones</router-link></li>
-                            <li @click="closeMobileNav"><router-link class="link" to="/facturas">Facturas</router-link></li>
+                    <li @click="closeMobileNav"><router-link class="link" to="/proyectos">Proyectos</router-link></li>
+                    <li @click="closeMobileNav"><router-link class="link" to="/eventos">Eventos</router-link></li>
+                            <!-- <li @click="closeMobileNav"><router-link class="link" to="/documentos">Documentos</router-link></li> -->
+                            <!-- <li @click="closeMobileNav"><router-link class="link" to="/facturas">Facturas</router-link></li> -->
                         </ul>
                     </li>
 
-                    <li @click="closeMobileNav"><router-link class="link" to="/proyectos">Proyectos</router-link></li>
-                    <li @click="closeMobileNav"><router-link class="link" to="/eventos">Eventos</router-link></li>
+                    <li @click="closeMobileNav"><router-link class="link" to="/publicaciones">Publicaciones</router-link></li>
+
                     <!-- <li @click="closeMobileNav"><router-link class="link" to="/redes-sociales">Redes Sociales</router-link></li> -->
                 </ul>
             </transition>

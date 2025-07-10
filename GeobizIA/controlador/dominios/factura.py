@@ -145,9 +145,26 @@ class Factura:
     def irpf(self, irpf):
         self._irpf = irpf
 
-    # @staticmethod
-    # def crear(id_factura, id_cliente, tipo=None, nombre=None, direccion=None, nif=None, fecha_facturacion=None, fecha_vencimiento=None, concepto=None, responsable=None, iva=None, coste_total=None, base_imponible=None, numero_factura=None, tipo_pago=None, irpf=None):
-    #     return Factura(id_factura, id_cliente, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf)
+    def to_dict(self):
+        """Convierte la factura a un diccionario para serialización JSON"""
+        return {
+            'id_factura': self.id_factura,
+            'id_cliente': self.id_cliente,
+            'tipo': self.tipo,
+            'nombre': self.nombre,
+            'direccion': self.direccion,
+            'nif': self.nif,
+            'fecha_facturacion': self.fecha_facturacion,
+            'fecha_vencimiento': self.fecha_vencimiento,
+            'concepto': self.concepto,
+            'responsable': self.responsable,
+            'iva': self.iva,
+            'coste_total': self.coste_total,
+            'base_imponible': self.base_imponible,
+            'numero_factura': self.numero_factura,
+            'tipo_pago': self.tipo_pago,
+            'irpf': self.irpf
+        }
 
     def __str__(self):
         return (

@@ -1,5 +1,5 @@
 <template>
-    <div class="general-container">
+    <div class="contenedor-principal">
         <h1>Ver Participantes</h1>
         <p>Aquí se mostrarán los participantes registrados.</p>
     </div>

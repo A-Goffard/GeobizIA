@@ -14,6 +14,7 @@ import ActividadDetalleView from '@/views/actividades/ActividadDetalleView.vue'
 import FacturasView from '../views/facturas/FacturasView.vue'
 import CrearFacturaView from '../views/facturas/CrearFacturaView.vue'
 import VerFacturasView from '../views/facturas/VerFacturasView.vue'
+import FacturaDetalleView from '../views/facturas/FacturaDetalleView.vue'
 
 import PublicacionesView from '../views/publicaciones/PublicacionesView.vue'
 import CrearPublicacionView from '../views/publicaciones/CrearPublicacionView.vue'
@@ -66,6 +67,9 @@ const routes = [
     { path: '/facturas', name: 'facturas', component: FacturasView },
     { path: '/facturas/crear', name: 'crear-factura', component: CrearFacturaView },
     { path: '/facturas/ver', name: 'ver-facturas', component: VerFacturasView },
+    { path: '/facturas/detalle/:id', name: 'factura-detalle', component: FacturaDetalleView },
+    { path: '/facturas/detalle/:id', name: 'factura-detalle', component: FacturaDetalleView },
+    { path: '/facturas/detalle/:id', name: 'factura-detalle', component: FacturaDetalleView },
     
     { path: '/publicaciones', name: 'publicaciones', component: PublicacionesView },
     { path: '/publicaciones/crear', name: 'crear-publicacion', component: CrearPublicacionView },

@@ -1,5 +1,5 @@
 <template>
-    <div class="general-container">
+    <div class="contenedor-principal">
         <h1>Proyectos</h1>
         <div class="container">
             <div class="card" v-for="option in options" :key="option.title" @click="goTo(option.route)">
@@ -45,7 +45,7 @@ const options = ref([
     justify-content: center;
 }
 
-.general-container {
+.contenedor-principal {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
