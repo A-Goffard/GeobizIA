@@ -22,17 +22,23 @@ function goTo(route) {
 }
 
 const options = ref([
+    // {
+    //     title: 'Ver Publicaciones',
+    //     description: 'Consulta y gestiona las publicaciones registradas.',
+    //     image: '/imagenes/foto.png',
+    //     route: '/publicaciones/ver'
+    // },
+    // {
+    //     title: 'Agregar Publicación',
+    //     description: 'Agrega una nueva publicación.',
+    //     image: '/imagenes/foto.png',
+    //     route: '/publicaciones/crear'
+    // },
     {
-        title: 'Ver Publicaciones',
-        description: 'Consulta y gestiona las publicaciones registradas.',
+        title: '🤖 Generar con IA',
+        description: 'Crea publicaciones automáticamente usando inteligencia artificial.',
         image: '/imagenes/foto.png',
-        route: '/publicaciones/ver'
-    },
-    {
-        title: 'Agregar Publicación',
-        description: 'Agrega una nueva publicación.',
-        image: '/imagenes/foto.png',
-        route: '/publicaciones/crear'
+        route: '/ia/generador-publicaciones'
     }
 ])
 </script>

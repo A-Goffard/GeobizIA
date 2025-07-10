@@ -52,6 +52,9 @@ import CrearClienteView from '../views/clientes/CrearClienteView.vue'
 import VerClientesView from '../views/clientes/VerClientesView.vue'
 import ClienteDetalleView from '../views/clientes/ClienteDetalleView.vue'
 
+// Componentes IA
+import GeneradorPublicacionView from '../views/ia/GeneradorPublicacionView.vue'
+
 const routes = [
     { path: '/', name: 'inicio', component: InicioView },
     { path: '/opciones', name: 'opciones', component: OpcionesView },
@@ -106,6 +109,9 @@ const routes = [
     { path: '/clientes/crear', name: 'crear-cliente', component: CrearClienteView },
     { path: '/clientes/ver', name: 'ver-clientes', component: VerClientesView },
     { path: '/clientes/detalle/:id', name: 'cliente-detalle', component: ClienteDetalleView },
+    
+    // Rutas IA
+    { path: '/ia/generador-publicaciones', name: 'generador-publicaciones', component: GeneradorPublicacionView },
     // ...otras rutas
 ]
 

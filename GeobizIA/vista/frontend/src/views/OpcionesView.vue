@@ -81,6 +81,12 @@ const options = ref([
         description: 'Aquí puedes ver los clientes de la empresa, agregar nuevos clientes, y gestionar los existentes.',
         link: '/clientes',
         image: '/imagenes/foto.png',
+    },
+    {
+        title: '🤖 Generador IA',
+        description: 'Genera publicaciones automáticas para redes sociales usando inteligencia artificial basada en tus actividades.',
+        link: '/ia/generador-publicaciones',
+        image: '/imagenes/foto.png',
     }
 ])
 
