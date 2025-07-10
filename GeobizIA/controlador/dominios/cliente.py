@@ -61,3 +61,13 @@ class Cliente:
 
     def __str__(self):
         return f"ID: {self.id_cliente}, ID Persona: {self.id_persona}, Tipo: {self.tipo or 'N/A'}, Razón Social: {self.razon_social or 'N/A'}, NIF: {self.nif or 'N/A'}, Fecha Registro: {self.fecha_registro or 'N/A'}"
+    
+    def to_dict(self):
+        return {
+            'id_cliente': self.id_cliente,
+            'id_persona': self.id_persona,
+            'tipo': self.tipo,
+            'razon_social': self.razon_social,
+            'nif': self.nif,
+            'fecha_registro': self.fecha_registro
+        }

@@ -51,6 +51,30 @@ class Participantes(BaseGestor[Participante]):
         finally:
             close_connection(conn, cursor)
 
+    def _crear_participante_basico(self, row):
+        """
+        Crea una instancia de Participante con solo los campos disponibles en la query.
+        Los campos de Persona se establecen como None o valores por defecto.
+        """
+        return Participante(
+            id_participante=row[0],
+            id_persona=row[1],
+            numero_personas_juntas=row[2],
+            rol=row[3],
+            como_conocer=row[4],
+            actividad_id=row[5],
+            fecha_registro=row[6],
+            nombre=None,  # Campos de Persona no disponibles
+            apellido=None,
+            email=None,
+            telefono=None,
+            dni=None,
+            direccion=None,
+            cp=None,
+            poblacion=None,
+            pais=None
+        )
+
     def buscar(self, id_participante):
         conn = get_connection()
         cursor = conn.cursor()
@@ -59,7 +83,7 @@ class Participantes(BaseGestor[Participante]):
             cursor.execute(query, (id_participante,))
             row = cursor.fetchone()
             if row:
-                return Participante(*row)
+                return self._crear_participante_basico(row)
             return None
         except Exception as e:
             print(f"Error al buscar participante: {e}")
@@ -74,7 +98,7 @@ class Participantes(BaseGestor[Participante]):
             query = f"SELECT id_participante, id_persona, numero_personas_juntas, rol, como_conocer, actividad_id, fecha_registro FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Participante(*row) for row in rows]
+            return [self._crear_participante_basico(row) for row in rows]
         except Exception as e:
             print(f"Error al listar participantes: {e}")
             return []

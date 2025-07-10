@@ -42,7 +42,17 @@ class ActividadesRealizadas(BaseGestor[ActividadRealizada]):
             cursor.execute(query, (id_actividad_realizada,))
             row = cursor.fetchone()
             if row:
-                return ActividadRealizada(*row)
+                return ActividadRealizada(
+                    id_actividad_realizada=row[0],
+                    id_actividad=row[1],
+                    fecha=row[2],
+                    asistentes=row[3],
+                    coste_economico=row[4],
+                    facturacion=row[5],
+                    observaciones=row[6],
+                    id_evento=row[7],
+                    id_proyecto=row[8]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar actividad_realizada: {e}")
@@ -57,7 +67,20 @@ class ActividadesRealizadas(BaseGestor[ActividadRealizada]):
             query = f"SELECT id_actividad_realizada, id_actividad, fecha, asistentes, coste_economico, facturacion, observaciones, id_evento, id_proyecto FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [ActividadRealizada(*row) for row in rows]
+            actividades = []
+            for row in rows:
+                actividades.append(ActividadRealizada(
+                    id_actividad_realizada=row[0],
+                    id_actividad=row[1],
+                    fecha=row[2],
+                    asistentes=row[3],
+                    coste_economico=row[4],
+                    facturacion=row[5],
+                    observaciones=row[6],
+                    id_evento=row[7],
+                    id_proyecto=row[8]
+                ))
+            return actividades
         except Exception as e:
             print(f"Error al listar actividades_realizadas: {e}")
             return []
@@ -71,7 +94,20 @@ class ActividadesRealizadas(BaseGestor[ActividadRealizada]):
             query = f"SELECT * FROM {self.table_name} WHERE id_actividad = ? ORDER BY fecha DESC"
             cursor.execute(query, (id_actividad,))
             rows = cursor.fetchall()
-            return [ActividadRealizada(*row) for row in rows]
+            actividades = []
+            for row in rows:
+                actividades.append(ActividadRealizada(
+                    id_actividad_realizada=row[0],
+                    id_actividad=row[1],
+                    fecha=row[2],
+                    asistentes=row[3],
+                    coste_economico=row[4],
+                    facturacion=row[5],
+                    observaciones=row[6],
+                    id_evento=row[7],
+                    id_proyecto=row[8]
+                ))
+            return actividades
         except Exception as e:
             print(f"Error al buscar actividades realizadas por id_actividad: {e}")
             return []

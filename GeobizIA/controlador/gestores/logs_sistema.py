@@ -58,7 +58,14 @@ class LogsSistema(BaseGestor[Log_Sistema]):
             cursor.execute(query, (id_log_sistema,))
             row = cursor.fetchone()
             if row:
-                return Log_Sistema(*row)
+                return Log_Sistema(
+                    id_log_sistema=row[0],
+                    usuario_id=row[1],
+                    fecha=row[2],
+                    accion=row[3],
+                    descripcion=row[4],
+                    nivel=row[5]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar log_sistema: {e}")
@@ -73,7 +80,14 @@ class LogsSistema(BaseGestor[Log_Sistema]):
             query = f"SELECT id_log_sistema, usuario_id, fecha, accion, descripcion, nivel FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Log_Sistema(*row) for row in rows]
+            return [Log_Sistema(
+                id_log_sistema=row[0],
+                usuario_id=row[1],
+                fecha=row[2],
+                accion=row[3],
+                descripcion=row[4],
+                nivel=row[5]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar logs_sistema: {e}")
             return []

@@ -11,14 +11,13 @@ class Personas(BaseGestor[Persona]):
         conn = get_connection()
         cursor = conn.cursor()
         try:
-            # --- AJUSTE CLAVE: Usar OUTPUT para obtener el ID en una sola consulta ---
+            # Insertar y obtener el ID generado automáticamente en una sola consulta
             query = f"""
                 INSERT INTO {self.table_name} (nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais)
                 OUTPUT INSERTED.id_persona
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """
-            # Se ejecuta la consulta y se obtiene el ID directamente.
-            last_id = cursor.execute(query, (
+            cursor.execute(query, (
                 persona.nombre,
                 persona.apellido,
                 persona.email,
@@ -28,22 +27,24 @@ class Personas(BaseGestor[Persona]):
                 persona.cp,
                 persona.poblacion,
                 persona.pais
-            )).fetchval()
+            ))
             
-            conn.commit()
-            
-            if last_id is not None:
-                persona.id_persona = last_id
+            # Obtener el ID generado automáticamente
+            result = cursor.fetchone()
+            if result and result[0]:
+                nuevo_id = int(result[0])
+                persona.id_persona = nuevo_id
+                conn.commit()
                 return persona
             else:
-                # Si no se obtiene un ID, algo falló.
-                raise Exception("La consulta INSERT no devolvió un ID.")
+                raise Exception("No se pudo obtener el ID generado automáticamente")
 
         except Exception as e:
             # --- MEJORA DE DIAGNÓSTICO ---
             print(f"----------- ERROR EN GESTOR DE PERSONAS AL AGREGAR -----------")
             print(f"Error de base de datos: {e}")
             print(f"Datos que se intentaron insertar: {persona}")
+            print(f"Query ejecutada: INSERT INTO {self.table_name} (nombre, apellido, email, telefono, dni, direccion, cp, poblacion, pais) OUTPUT INSERTED.id_persona VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
             print(f"-----------------------------------------------------------")
             conn.rollback() # Deshacer cambios si hay un error
             return None

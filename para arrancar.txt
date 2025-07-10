@@ -1,16 +1,3 @@
-GeobizIA
-
-Para empezar, ejecuta el archivo create_db_tables.py para crear las tablas en la base de datos. 
-Luego, ejecuta el archivo insert_test_data.py para insertar los datos de prueba.
-
-Hay que conectar primero SQLServer
-
-esto es para ejecutar la api:
-python -m uvicorn GeobizIA.api.main:app --reload
-
-para ejecutar el front:
-desde .\GeobizIA\GeobizIA\vista\frontend> 
-npm run serve
 
 Diagrama de clases:
 https://www.canva.com/design/DAGnTp3TyrU/LfPswkTqKmjzMEkeuYBpKA/edit?utm_content=DAGnTp3TyrU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
@@ -19,25 +6,42 @@ Diagrama MER:
 https://www.canva.com/design/DAGqOEAv4Ug/hDpiJMpRkBtuWolHUp50gw/edit?utm_content=DAGqOEAv4Ug&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 
-Por si instalas algo más en py
+***Por si instalas algo más en py***
 
 Antes de mover el proyecto, debes asegurarte de que este archivo contiene todas las librerías que has instalado.
 pip freeze > requirements.txt
 
-# Para instalar las librerías que están en requirements.txt
-pip install -r requirements.txt
-
-# Para crear un entorno virtual
+***Para crear un entorno virtual***
 python -m venv nombre_entorno
 
-# Para activar el entorno virtual
-# En Windows:
+***Para activar el entorno virtual***
+En Windows:
 .\nombre_entorno\Scripts\activate
 
-Para vue
+***Para actualizar pip***
+python.exe -m pip install --upgrade pip
 
-Asegúrate de que Node.js y npm están instalados en el nuevo sistema.
+***Para instalar las librerías que están en requirements.txt***
+pip install -r requirements.txt
 
-# Para instalar las dependencias del proyecto Vue.js
+***Para vue***
+
+---Asegúrate de que Node.js y npm están instalados en el nuevo sistema.
+
+***Para instalar las dependencias del proyecto Vue.js***
+desde .\GeobizIA\GeobizIA\vista\frontend> 
 npm install
 
+GeobizIA
+
+Para empezar, ejecuta el archivo create_db_tables.py para crear las tablas en la base de datos. 
+Luego, ejecuta el archivo insert_test_data.py para insertar los datos de prueba.
+
+Hay que conectar primero SQLServer si quieres comprobar que las tablas se actualizan ahí visualmente
+
+Esto es para ejecutar la api:
+python -m uvicorn GeobizIA.api.main:app --reload
+
+Para ejecutar el front:
+desde .\GeobizIA\GeobizIA\vista\frontend> 
+npm run serve

@@ -57,7 +57,13 @@ class RecursosMultimedia(BaseGestor[RecursoMultimedia]):
             cursor.execute(query, (id_recurso_multimedia,))
             row = cursor.fetchone()
             if row:
-                return RecursoMultimedia(*row)
+                return RecursoMultimedia(
+                    id_recurso_multimedia=row[0],
+                    tipo=row[1],
+                    titulo=row[2],
+                    fecha_subida=row[3],
+                    autor=row[4]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar recurso_multimedia: {e}")
@@ -72,7 +78,13 @@ class RecursosMultimedia(BaseGestor[RecursoMultimedia]):
             query = f"SELECT id_recurso_multimedia, tipo, titulo, fecha_subida, autor FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [RecursoMultimedia(*row) for row in rows]
+            return [RecursoMultimedia(
+                id_recurso_multimedia=row[0],
+                tipo=row[1],
+                titulo=row[2],
+                fecha_subida=row[3],
+                autor=row[4]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar recursos_multimedia: {e}")
             return []

@@ -50,7 +50,10 @@ class DocumentosTagGestor(BaseGestor[DocumentoTag]):
             cursor.execute(query, (id_documento, id_tag))
             row = cursor.fetchone()
             if row:
-                return DocumentoTag(*row)
+                return DocumentoTag(
+                    id_documento=row[0],
+                    id_tag=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar documento_tag: {e}")
@@ -65,7 +68,10 @@ class DocumentosTagGestor(BaseGestor[DocumentoTag]):
             query = f"SELECT id_documento, id_tag FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [DocumentoTag(*row) for row in rows]
+            return [DocumentoTag(
+                id_documento=row[0],
+                id_tag=row[1]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar documento_tag: {e}")
             return []

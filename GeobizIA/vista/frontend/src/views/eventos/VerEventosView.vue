@@ -8,9 +8,13 @@
         </div>
         <div v-else>
             <div v-if="eventos.length > 0" class="eventos-list">
-                <div v-for="evento in eventos" :key="evento.id_evento" class="evento-card">
+                <div v-for="evento in eventos" :key="evento.id_evento" class="evento-card" @click="verDetalle(evento.id_evento)">
                     <h3>{{ evento.nombre }}</h3>
+                    <p><strong>Tipo:</strong> {{ evento.tipo }}</p>
+                    <p><strong>Lugar:</strong> {{ evento.lugar }}</p>
                     <p><strong>Fechas:</strong> {{ evento.fecha_comienzo }} a {{ evento.fecha_final }}</p>
+                    <p><strong>Población:</strong> {{ evento.poblacion }}</p>
+                    <p><strong>Temática:</strong> {{ evento.tematica }}</p>
                 </div>
             </div>
             <div v-else class="no-data-container">
@@ -22,13 +26,19 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const eventos = ref([])
 const errorMsg = ref(null)
 
 onMounted(async () => {
-await cargarEventos()
+    await cargarEventos()
 })
+
+function verDetalle(id) {
+    router.push(`/eventos/detalle/${id}`)
+}
 
 async function cargarEventos() {
     try {
@@ -54,13 +64,11 @@ async function cargarEventos() {
 }
 
 .general-container h1 {
-    color: #2c3e50;
     margin-bottom: 10px;
     font-size: 2.5rem;
 }
 
 .general-container > p {
-    color: #7f8c8d;
     margin-bottom: 30px;
     font-size: 1.1rem;
 }

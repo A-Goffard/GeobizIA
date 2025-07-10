@@ -22,10 +22,12 @@ import VerPublicacionesView from '../views/publicaciones/VerPublicacionesView.vu
 import ProyectosView from '../views/proyectos/ProyectosView.vue'
 import CrearProyectoView from '../views/proyectos/CrearProyectoView.vue'
 import VerProyectosView from '../views/proyectos/VerProyectosView.vue'
+import ProyectoDetalleView from '../views/proyectos/ProyectoDetalleView.vue'
 
 import EventosView from '../views/eventos/EventosView.vue'
 import CrearEventosView from '../views/eventos/CrearEventosView.vue'
 import VerEventosView from '../views/eventos/VerEventosView.vue'
+import EventoDetalleView from '../views/eventos/EventoDetalleView.vue'
 
 import ParticipantesView from '../views/participantes/ParticipantesView.vue'
 import CrearParticipanteView from '../views/participantes/CrearParticipanteView.vue'
@@ -38,6 +40,7 @@ import VerDocumentosView from '../views/documentos/VerDocumentosView.vue'
 import EmpresasView from '../views/empresas/EmpresasView.vue'
 import CrearEmpresaView from '../views/empresas/CrearEmpresaView.vue'
 import VerEmpresasView from '../views/empresas/VerEmpresasView.vue'
+import EmpresaDetalleView from '../views/empresas/EmpresaDetalleView.vue'
 
 import RedesSocialesView from '../views/redessociales/RedesSocialesView.vue'
 import CrearRedSocialView from '../views/redessociales/CrearRedSocialView.vue'
@@ -46,6 +49,7 @@ import VerRedesSocialesView from '../views/redessociales/VerRedesSocialesView.vu
 import ClientesView from '../views/clientes/ClientesView.vue'
 import CrearClienteView from '../views/clientes/CrearClienteView.vue'
 import VerClientesView from '../views/clientes/VerClientesView.vue'
+import ClienteDetalleView from '../views/clientes/ClienteDetalleView.vue'
 
 const routes = [
     { path: '/', name: 'inicio', component: InicioView },
@@ -70,10 +74,12 @@ const routes = [
     { path: '/proyectos', name: 'proyectos', component: ProyectosView },
     { path: '/proyectos/crear', name: 'crear-proyecto', component: CrearProyectoView },
     { path: '/proyectos/ver', name: 'ver-proyectos', component: VerProyectosView },
+    { path: '/proyectos/detalle/:id', name: 'proyecto-detalle', component: ProyectoDetalleView },
 
     { path: '/eventos', name: 'eventos', component: EventosView },
     { path: '/eventos/crear', name: 'crear-eventos', component: CrearEventosView },
     { path: '/eventos/ver', name: 'ver-eventos', component: VerEventosView },
+    { path: '/eventos/detalle/:id', name: 'evento-detalle', component: EventoDetalleView },
 
     { path: '/participantes', name: 'participantes', component: ParticipantesView },
     { path: '/participantes/crear', name: 'crear-participante', component: CrearParticipanteView },
@@ -86,6 +92,7 @@ const routes = [
     { path: '/empresas', name: 'empresas', component: EmpresasView },
     { path: '/empresas/crear', name: 'crear-empresa', component: CrearEmpresaView },
     { path: '/empresas/ver', name: 'ver-empresas', component: VerEmpresasView },
+    { path: '/empresas/detalle/:id', name: 'empresa-detalle', component: EmpresaDetalleView },
     
     { path: '/redes-sociales', name: 'redes-sociales', component: RedesSocialesView },
     { path: '/redes-sociales/crear', name: 'crear-red-social', component: CrearRedSocialView },
@@ -94,6 +101,7 @@ const routes = [
     { path: '/clientes', name: 'clientes', component: ClientesView },
     { path: '/clientes/crear', name: 'crear-cliente', component: CrearClienteView },
     { path: '/clientes/ver', name: 'ver-clientes', component: VerClientesView },
+    { path: '/clientes/detalle/:id', name: 'cliente-detalle', component: ClienteDetalleView },
     // ...otras rutas
 ]
 

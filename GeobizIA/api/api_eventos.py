@@ -62,3 +62,39 @@ def crear_evento(evento: EventoIn):
         return {"mensaje": "Evento guardado correctamente"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error interno del servidor al crear el evento: {e}")
+
+@router.put("/api/eventos/{id_evento}")
+def actualizar_evento(id_evento: int, evento: EventoIn):
+    try:
+        datos = evento.model_dump()
+        valido, msg = validar_datos_evento(datos)
+        if not valido:
+            raise HTTPException(status_code=400, detail=msg)
+        
+        evento_obj = Evento(
+            id_evento=id_evento,
+            nombre=datos['nombre'],
+            tipo=datos['tipo'],
+            lugar=datos['lugar'],
+            fecha_comienzo=datos['fecha_comienzo'],
+            fecha_final=datos['fecha_final'],
+            poblacion=datos['poblacion'],
+            tematica=datos['tematica']
+        )
+        
+        if not gestor.actualizar(evento_obj):
+            raise HTTPException(status_code=404, detail="Evento no encontrado o no se pudo actualizar")
+        return {"mensaje": "Evento actualizado correctamente"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error interno del servidor: {e}")
+
+@router.delete("/api/eventos/{id_evento}")
+def eliminar_evento(id_evento: int):
+    try:
+        if not gestor.eliminar(id_evento):
+            raise HTTPException(status_code=404, detail="Evento no encontrado o no se pudo eliminar")
+        return {"mensaje": "Evento eliminado correctamente"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error interno del servidor: {e}")

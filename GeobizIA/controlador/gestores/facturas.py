@@ -68,7 +68,24 @@ class Facturas(BaseGestor[Factura]):
             cursor.execute(query, (id_factura,))
             row = cursor.fetchone()
             if row:
-                return Factura(*row)
+                return Factura(
+                    id_factura=row[0],
+                    id_cliente=row[1],
+                    tipo=row[2],
+                    nombre=row[3],
+                    direccion=row[4],
+                    nif=row[5],
+                    fecha_facturacion=row[6],
+                    fecha_vencimiento=row[7],
+                    concepto=row[8],
+                    responsable=row[9],
+                    iva=row[10],
+                    coste_total=row[11],
+                    base_imponible=row[12],
+                    numero_factura=row[13],
+                    tipo_pago=row[14],
+                    irpf=row[15]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar factura: {e}")
@@ -83,7 +100,24 @@ class Facturas(BaseGestor[Factura]):
             query = f"SELECT id_factura, id_cliente, tipo, nombre, direccion, nif, fecha_facturacion, fecha_vencimiento, concepto, responsable, iva, coste_total, base_imponible, numero_factura, tipo_pago, irpf FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Factura(*row) for row in rows]
+            return [Factura(
+                id_factura=row[0],
+                id_cliente=row[1],
+                tipo=row[2],
+                nombre=row[3],
+                direccion=row[4],
+                nif=row[5],
+                fecha_facturacion=row[6],
+                fecha_vencimiento=row[7],
+                concepto=row[8],
+                responsable=row[9],
+                iva=row[10],
+                coste_total=row[11],
+                base_imponible=row[12],
+                numero_factura=row[13],
+                tipo_pago=row[14],
+                irpf=row[15]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar facturas: {e}")
             return []

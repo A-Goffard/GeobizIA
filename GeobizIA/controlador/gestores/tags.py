@@ -56,7 +56,12 @@ class Tags(BaseGestor[Tag]):
             cursor.execute(query, (id_tag,))
             row = cursor.fetchone()
             if row:
-                return Tag(*row)
+                return Tag(
+                    id_tag=row[0],
+                    palabra_clave=row[1],
+                    categoria=row[2],
+                    frecuencia_uso=row[3]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar tag: {e}")
@@ -71,7 +76,12 @@ class Tags(BaseGestor[Tag]):
             query = f"SELECT id_tag, palabra_clave, categoria, frecuencia_uso FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Tag(*row) for row in rows]
+            return [Tag(
+                id_tag=row[0],
+                palabra_clave=row[1],
+                categoria=row[2],
+                frecuencia_uso=row[3]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar tags: {e}")
             return []

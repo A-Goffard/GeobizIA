@@ -58,7 +58,14 @@ class Plantillas(BaseGestor[Plantilla]):
             cursor.execute(query, (id_plantilla,))
             row = cursor.fetchone()
             if row:
-                return Plantilla(*row)
+                return Plantilla(
+                    id_plantilla=row[0],
+                    titulo=row[1],
+                    tipo=row[2],
+                    contenido_base=row[3],
+                    fecha_creacion=row[4],
+                    ultima_modificacion=row[5]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar plantilla: {e}")
@@ -73,7 +80,14 @@ class Plantillas(BaseGestor[Plantilla]):
             query = f"SELECT id_plantilla, titulo, tipo, contenido_base, fecha_creacion, ultima_modificacion FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Plantilla(*row) for row in rows]
+            return [Plantilla(
+                id_plantilla=row[0],
+                titulo=row[1],
+                tipo=row[2],
+                contenido_base=row[3],
+                fecha_creacion=row[4],
+                ultima_modificacion=row[5]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar plantillas: {e}")
             return []

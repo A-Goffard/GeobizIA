@@ -59,7 +59,15 @@ class Programaciones(BaseGestor[Programacion]):
             cursor.execute(query, (id_programacion,))
             row = cursor.fetchone()
             if row:
-                return Programacion(*row)
+                return Programacion(
+                    id_programacion=row[0],
+                    publicacion_id=row[1],
+                    red_social_id=row[2],
+                    fecha_programada=row[3],
+                    estado=row[4],
+                    notificaciones=row[5],
+                    responsable=row[6]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar programación: {e}")
@@ -74,7 +82,15 @@ class Programaciones(BaseGestor[Programacion]):
             query = f"SELECT id_programacion, publicacion_id, red_social_id, fecha_programada, estado, notificaciones, responsable FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Programacion(*row) for row in rows]
+            return [Programacion(
+                id_programacion=row[0],
+                publicacion_id=row[1],
+                red_social_id=row[2],
+                fecha_programada=row[3],
+                estado=row[4],
+                notificaciones=row[5],
+                responsable=row[6]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar programaciones: {e}")
             return []

@@ -54,7 +54,10 @@ class TiposPublicacion(BaseGestor[TipoPublicacion]):
             cursor.execute(query, (id_tipo_publicacion,))
             row = cursor.fetchone()
             if row:
-                return TipoPublicacion(*row)
+                return TipoPublicacion(
+                    id_tipo_publicacion=row[0],
+                    nombre=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar tipo_publicacion: {e}")
@@ -69,7 +72,10 @@ class TiposPublicacion(BaseGestor[TipoPublicacion]):
             query = f"SELECT id_tipo_publicacion, nombre FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [TipoPublicacion(*row) for row in rows]
+            return [TipoPublicacion(
+                id_tipo_publicacion=row[0],
+                nombre=row[1]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar tipos_publicacion: {e}")
             return []

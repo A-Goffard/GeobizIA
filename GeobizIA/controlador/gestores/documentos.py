@@ -58,7 +58,14 @@ class Documentos(BaseGestor[Documento]):
             cursor.execute(query, (id_documento,))
             row = cursor.fetchone()
             if row:
-                return Documento(*row)
+                return Documento(
+                    id_documento=row[0],
+                    titulo=row[1],
+                    descripcion=row[2],
+                    fecha_subida=row[3],
+                    tipo=row[4],
+                    tematica=row[5]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar documento: {e}")
@@ -73,7 +80,17 @@ class Documentos(BaseGestor[Documento]):
             query = f"SELECT id_documento, titulo, descripcion, fecha_subida, tipo, tematica FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Documento(*row) for row in rows]
+            documentos = []
+            for row in rows:
+                documentos.append(Documento(
+                    id_documento=row[0],
+                    titulo=row[1],
+                    descripcion=row[2],
+                    fecha_subida=row[3],
+                    tipo=row[4],
+                    tematica=row[5]
+                ))
+            return documentos
         except Exception as e:
             print(f"Error al listar documentos: {e}")
             return []

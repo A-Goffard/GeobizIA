@@ -50,7 +50,10 @@ class PlantillaTipoPublicacionesGestor(BaseGestor[PlantillaTipoPublicacion]):
             cursor.execute(query, (id_plantilla, id_tipo_publicacion))
             row = cursor.fetchone()
             if row:
-                return PlantillaTipoPublicacion(*row)
+                return PlantillaTipoPublicacion(
+                    id_plantilla=row[0],
+                    id_tipo_publicacion=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar plantilla_tipo_publicacion: {e}")
@@ -65,7 +68,10 @@ class PlantillaTipoPublicacionesGestor(BaseGestor[PlantillaTipoPublicacion]):
             query = f"SELECT id_plantilla, id_tipo_publicacion FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [PlantillaTipoPublicacion(*row) for row in rows]
+            return [PlantillaTipoPublicacion(
+                id_plantilla=row[0],
+                id_tipo_publicacion=row[1]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar plantilla_tipo_publicacion: {e}")
             return []

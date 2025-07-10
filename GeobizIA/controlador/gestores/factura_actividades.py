@@ -50,7 +50,10 @@ class FacturaActividadGestor(BaseGestor[FacturaActividad]):
             cursor.execute(query, (id_factura, id_actividad))
             row = cursor.fetchone()
             if row:
-                return FacturaActividad(*row)
+                return FacturaActividad(
+                    id_factura=row[0],
+                    id_actividad=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar factura_actividad: {e}")
@@ -65,7 +68,10 @@ class FacturaActividadGestor(BaseGestor[FacturaActividad]):
             query = f"SELECT id_factura, id_actividad FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [FacturaActividad(*row) for row in rows]
+            return [FacturaActividad(
+                id_factura=row[0],
+                id_actividad=row[1]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar factura_actividad: {e}")
             return []

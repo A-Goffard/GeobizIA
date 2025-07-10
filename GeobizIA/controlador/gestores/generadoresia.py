@@ -59,7 +59,15 @@ class GeneradoresIA(BaseGestor[GeneradorIA]):
             cursor.execute(query, (id_generador_ia,))
             row = cursor.fetchone()
             if row:
-                return GeneradorIA(*row)
+                return GeneradorIA(
+                    id_generador_ia=row[0],
+                    nombre=row[1],
+                    descripcion=row[2],
+                    empresa_id=row[3],
+                    configuraciones=row[4],
+                    ejemplos_estilo=row[5],
+                    ultima_generacion=row[6]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar generador: {e}")
@@ -74,7 +82,15 @@ class GeneradoresIA(BaseGestor[GeneradorIA]):
             query = f"SELECT id_generador_ia, nombre, descripcion, empresa_id, configuraciones, ejemplos_estilo, ultima_generacion FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [GeneradorIA(*row) for row in rows]
+            return [GeneradorIA(
+                id_generador_ia=row[0],
+                nombre=row[1],
+                descripcion=row[2],
+                empresa_id=row[3],
+                configuraciones=row[4],
+                ejemplos_estilo=row[5],
+                ultima_generacion=row[6]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar generadores: {e}")
             return []

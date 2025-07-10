@@ -50,7 +50,10 @@ class ProyectosActividadGestor(BaseGestor[ProyectoActividad]):
             cursor.execute(query, (id_proyecto, id_actividad))
             row = cursor.fetchone()
             if row:
-                return ProyectoActividad(*row)
+                return ProyectoActividad(
+                    id_proyecto=row[0],
+                    id_actividad=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar proyecto_actividad: {e}")
@@ -65,7 +68,10 @@ class ProyectosActividadGestor(BaseGestor[ProyectoActividad]):
             query = f"SELECT id_proyecto, id_actividad FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [ProyectoActividad(*row) for row in rows]
+            return [ProyectoActividad(
+                id_proyecto=row[0],
+                id_actividad=row[1]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar proyecto_actividad: {e}")
             return []

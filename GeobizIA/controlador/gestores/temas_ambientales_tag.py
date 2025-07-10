@@ -50,7 +50,10 @@ class TemasAmbientalesTagGestor(BaseGestor[TemaAmbientalTag]):
             cursor.execute(query, (id_tema_ambiental, id_tag))
             row = cursor.fetchone()
             if row:
-                return TemaAmbientalTag(*row)
+                return TemaAmbientalTag(
+                    id_tema_ambiental=row[0],
+                    id_tag=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar tema_ambiental_tag: {e}")
@@ -65,7 +68,10 @@ class TemasAmbientalesTagGestor(BaseGestor[TemaAmbientalTag]):
             query = f"SELECT id_tema_ambiental, id_tag FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [TemaAmbientalTag(*row) for row in rows]
+            return [TemaAmbientalTag(
+                id_tema_ambiental=row[0],
+                id_tag=row[1]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar tema_ambiental_tag: {e}")
             return []

@@ -7,28 +7,35 @@ class Clientes(BaseGestor[Cliente]):
         super().__init__(table_name="cliente", id_field="id_cliente", domain_class=Cliente)
 
     def agregar(self, cliente: Cliente):
-        if self.existe(cliente.id_cliente):
-            print(f"Error: Ya existe un cliente con id_cliente={cliente.id_cliente}.")
-            return None
         conn = get_connection()
         cursor = conn.cursor()
         try:
+            # Insertar y obtener el ID generado automáticamente en una sola consulta
             query = f"""
-                INSERT INTO {self.table_name} (id_cliente, id_persona, tipo, razon_social, nif, fecha_registro)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO {self.table_name} (id_persona, tipo, razon_social, nif, fecha_registro)
+                OUTPUT INSERTED.id_cliente
+                VALUES (?, ?, ?, ?, ?)
             """
             cursor.execute(query, (
-                cliente.id_cliente,
                 cliente.id_persona,
                 cliente.tipo,
                 cliente.razon_social,
                 cliente.nif,
                 cliente.fecha_registro
             ))
-            conn.commit()
-            return cliente
+            
+            # Obtener el ID generado automáticamente
+            result = cursor.fetchone()
+            if result and result[0]:
+                nuevo_id = int(result[0])
+                cliente.id_cliente = nuevo_id
+                conn.commit()
+                return cliente
+            else:
+                raise Exception("No se pudo obtener el ID generado automáticamente")
         except Exception as e:
             print(f"Error al agregar cliente: {e}")
+            conn.rollback()
             return None
         finally:
             close_connection(conn, cursor)
@@ -58,7 +65,14 @@ class Clientes(BaseGestor[Cliente]):
             cursor.execute(query, (id_cliente,))
             row = cursor.fetchone()
             if row:
-                return Cliente(*row)
+                return Cliente(
+                    id_cliente=row[0],
+                    id_persona=row[1],
+                    tipo=row[2],
+                    razon_social=row[3],
+                    nif=row[4],
+                    fecha_registro=row[5]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar cliente: {e}")
@@ -73,7 +87,17 @@ class Clientes(BaseGestor[Cliente]):
             query = f"SELECT id_cliente, id_persona, tipo, razon_social, nif, fecha_registro FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Cliente(*row) for row in rows]
+            clientes = []
+            for row in rows:
+                clientes.append(Cliente(
+                    id_cliente=row[0],
+                    id_persona=row[1],
+                    tipo=row[2],
+                    razon_social=row[3],
+                    nif=row[4],
+                    fecha_registro=row[5]
+                ))
+            return clientes
         except Exception as e:
             print(f"Error al listar clientes: {e}")
             return []

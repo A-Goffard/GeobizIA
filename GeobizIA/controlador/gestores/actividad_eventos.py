@@ -50,7 +50,10 @@ class ActividadEventosGestor(BaseGestor[ActividadEvento]):
             cursor.execute(query, (id_actividad, id_evento))
             row = cursor.fetchone()
             if row:
-                return ActividadEvento(*row)
+                return ActividadEvento(
+                    id_actividad=row[0],
+                    id_evento=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar actividad_evento: {e}")
@@ -65,7 +68,13 @@ class ActividadEventosGestor(BaseGestor[ActividadEvento]):
             query = f"SELECT id_actividad, id_evento FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [ActividadEvento(*row) for row in rows]
+            actividades_eventos = []
+            for row in rows:
+                actividades_eventos.append(ActividadEvento(
+                    id_actividad=row[0],
+                    id_evento=row[1]
+                ))
+            return actividades_eventos
         except Exception as e:
             print(f"Error al listar actividad_evento: {e}")
             return []

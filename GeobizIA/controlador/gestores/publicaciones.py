@@ -65,7 +65,21 @@ class Publicaciones(BaseGestor[Publicacion]):
             cursor.execute(query, (id_publicacion,))
             row = cursor.fetchone()
             if row:
-                return Publicacion(*row)
+                return Publicacion(
+                    id_publicacion=row[0],
+                    titulo=row[1],
+                    contenido=row[2],
+                    autor=row[3],
+                    fecha_creacion=row[4],
+                    estado=row[5],
+                    tags=row[6],
+                    palabras_clave=row[7],
+                    generada_por_ia=row[8],
+                    id_generador_ia=row[9],
+                    feedback_empresa=row[10],
+                    id_tipo_publicacion=row[11],
+                    id_plantilla=row[12]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar publicación: {e}")
@@ -80,7 +94,21 @@ class Publicaciones(BaseGestor[Publicacion]):
             query = f"SELECT id_publicacion, titulo, contenido, autor, fecha_creacion, estado, tags, palabras_clave, generada_por_ia, id_generador_ia, feedback_empresa, id_tipo_publicacion, id_plantilla FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Publicacion(*row) for row in rows]
+            return [Publicacion(
+                id_publicacion=row[0],
+                titulo=row[1],
+                contenido=row[2],
+                autor=row[3],
+                fecha_creacion=row[4],
+                estado=row[5],
+                tags=row[6],
+                palabras_clave=row[7],
+                generada_por_ia=row[8],
+                id_generador_ia=row[9],
+                feedback_empresa=row[10],
+                id_tipo_publicacion=row[11],
+                id_plantilla=row[12]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar publicaciones: {e}")
             return []

@@ -56,7 +56,12 @@ class TemasAmbientales(BaseGestor[TemaAmbiental]):
             cursor.execute(query, (id_tema_ambiental,))
             row = cursor.fetchone()
             if row:
-                return TemaAmbiental(*row)
+                return TemaAmbiental(
+                    id_tema_ambiental=row[0],
+                    nombre=row[1],
+                    descripcion=row[2],
+                    relevancia=row[3]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar tema_ambiental: {e}")
@@ -71,7 +76,12 @@ class TemasAmbientales(BaseGestor[TemaAmbiental]):
             query = f"SELECT id_tema_ambiental, nombre, descripcion, relevancia FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [TemaAmbiental(*row) for row in rows]
+            return [TemaAmbiental(
+                id_tema_ambiental=row[0],
+                nombre=row[1],
+                descripcion=row[2],
+                relevancia=row[3]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar temas_ambientales: {e}")
             return []

@@ -50,7 +50,10 @@ class TipoPublicacionRedsocialGestor(BaseGestor[TipoPublicacionRedsocial]):
             cursor.execute(query, (id_tipo_publicacion, id_red_social))
             row = cursor.fetchone()
             if row:
-                return TipoPublicacionRedsocial(*row)
+                return TipoPublicacionRedsocial(
+                    id_tipo_publicacion=row[0],
+                    id_red_social=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar tipo_publicacion_redsocial: {e}")
@@ -65,7 +68,10 @@ class TipoPublicacionRedsocialGestor(BaseGestor[TipoPublicacionRedsocial]):
             query = f"SELECT id_tipo_publicacion, id_red_social FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [TipoPublicacionRedsocial(*row) for row in rows]
+            return [TipoPublicacionRedsocial(
+                id_tipo_publicacion=row[0],
+                id_red_social=row[1]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar tipo_publicacion_redsocial: {e}")
             return []

@@ -59,7 +59,15 @@ class RedesSociales(BaseGestor[RedSocial]):
             cursor.execute(query, (id_red_social,))
             row = cursor.fetchone()
             if row:
-                return RedSocial(*row)
+                return RedSocial(
+                    id_red_social=row[0],
+                    plataforma=row[1],
+                    nombre_cuenta=row[2],
+                    credenciales=row[3],
+                    preferencias_publicacion=row[4],
+                    estado_conexion=row[5],
+                    ultima_publicacion=row[6]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar red social: {e}")
@@ -74,7 +82,15 @@ class RedesSociales(BaseGestor[RedSocial]):
             query = f"SELECT id_red_social, plataforma, nombre_cuenta, credenciales, preferencias_publicacion, estado_conexion, ultima_publicacion FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [RedSocial(*row) for row in rows]
+            return [RedSocial(
+                id_red_social=row[0],
+                plataforma=row[1],
+                nombre_cuenta=row[2],
+                credenciales=row[3],
+                preferencias_publicacion=row[4],
+                estado_conexion=row[5],
+                ultima_publicacion=row[6]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar redes sociales: {e}")
             return []

@@ -42,12 +42,40 @@ const formData = ref({
 const successMessage = ref('');
 const errorMessage = ref('');
 
-function submitForm() {
-    // Aquí iría la lógica para enviar los datos al backend
-    // Simulación de éxito:
-    successMessage.value = 'Empresa guardada correctamente.';
+async function submitForm() {
+    successMessage.value = '';
     errorMessage.value = '';
-    // Limpiar formulario si quieres:
-    // formData.value = { id_empresa: '', nombre: '', sector: '', logo: '', ubicacion: '' };
+    
+    try {
+        const response = await fetch('http://localhost:8000/api/empresas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData.value)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            successMessage.value = data.mensaje || 'Empresa guardada correctamente.';
+            errorMessage.value = '';
+            
+            // Limpiar formulario
+            formData.value = {
+                nombre: '',
+                sector: '',
+                logo: '',
+                ubicacion: ''
+            };
+        } else {
+            errorMessage.value = data.detail || 'Error al guardar la empresa.';
+            successMessage.value = '';
+        }
+    } catch (error) {
+        errorMessage.value = 'Error de conexión. Intente nuevamente.';
+        successMessage.value = '';
+        console.error('Error:', error);
+    }
 }
 </script>

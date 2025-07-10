@@ -55,7 +55,11 @@ class Roles(BaseGestor[Rol]):
             cursor.execute(query, (id_rol,))
             row = cursor.fetchone()
             if row:
-                return Rol(*row)
+                return Rol(
+                    id_rol=row[0],
+                    nombre=row[1],
+                    descripcion=row[2]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar rol: {e}")
@@ -70,7 +74,11 @@ class Roles(BaseGestor[Rol]):
             query = f"SELECT id_rol, nombre, descripcion FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Rol(*row) for row in rows]
+            return [Rol(
+                id_rol=row[0],
+                nombre=row[1],
+                descripcion=row[2]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar roles: {e}")
             return []

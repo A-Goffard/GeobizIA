@@ -7,24 +7,26 @@ class Empresas(BaseGestor[Empresa]):
         super().__init__(table_name="empresa", id_field="id_empresa", domain_class=Empresa)
 
     def agregar(self, empresa: Empresa):
-        if self.existe(empresa.id_empresa):
-            print(f"Error: Ya existe una empresa con id_empresa={empresa.id_empresa}.")
-            return None
         conn = get_connection()
         cursor = conn.cursor()
         try:
             query = f"""
-                INSERT INTO {self.table_name} (id_empresa, nombre, sector, logo, ubicacion)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO {self.table_name} (nombre, sector, logo, ubicacion)
+                VALUES (?, ?, ?, ?)
             """
             cursor.execute(query, (
-                empresa.id_empresa,
                 empresa.nombre,
                 empresa.sector,
                 empresa.logo,
                 empresa.ubicacion
             ))
             conn.commit()
+            
+            # Obtener el ID generado automáticamente
+            cursor.execute("SELECT @@IDENTITY")
+            new_id = cursor.fetchone()[0]
+            empresa.id_empresa = new_id
+            
             return empresa
         except Exception as e:
             print(f"Error al agregar empresa: {e}")
@@ -57,7 +59,13 @@ class Empresas(BaseGestor[Empresa]):
             cursor.execute(query, (id_empresa,))
             row = cursor.fetchone()
             if row:
-                return Empresa(*row)
+                return Empresa(
+                    id_empresa=row[0],
+                    nombre=row[1],
+                    sector=row[2],
+                    logo=row[3],
+                    ubicacion=row[4]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar empresa: {e}")
@@ -72,7 +80,13 @@ class Empresas(BaseGestor[Empresa]):
             query = f"SELECT id_empresa, nombre, sector, logo, ubicacion FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [Empresa(*row) for row in rows]
+            return [Empresa(
+                id_empresa=row[0],
+                nombre=row[1],
+                sector=row[2],
+                logo=row[3],
+                ubicacion=row[4]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar empresas: {e}")
             return []

@@ -50,7 +50,10 @@ class PublicacionTagsGestor(BaseGestor[PublicacionTag]):
             cursor.execute(query, (id_publicacion, id_tag))
             row = cursor.fetchone()
             if row:
-                return PublicacionTag(*row)
+                return PublicacionTag(
+                    id_publicacion=row[0],
+                    id_tag=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar publicacion_tag: {e}")
@@ -65,7 +68,10 @@ class PublicacionTagsGestor(BaseGestor[PublicacionTag]):
             query = f"SELECT id_publicacion, id_tag FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [PublicacionTag(*row) for row in rows]
+            return [PublicacionTag(
+                id_publicacion=row[0],
+                id_tag=row[1]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar publicacion_tag: {e}")
             return []

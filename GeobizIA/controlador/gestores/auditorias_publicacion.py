@@ -60,7 +60,16 @@ class AuditoriasPublicacion(BaseGestor[AuditoriaPublicacion]):
             cursor.execute(query, (id_auditoria,))
             row = cursor.fetchone()
             if row:
-                return AuditoriaPublicacion(*row)
+                return AuditoriaPublicacion(
+                    id_auditoria_publicacion=row[0],
+                    publicacion_id=row[1],
+                    generador_ia_id=row[2],
+                    fecha_generacion=row[3],
+                    usuario_id=row[4],
+                    parametros_entrada=row[5],
+                    resultado=row[6],
+                    observaciones=row[7]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar auditoría: {e}")
@@ -75,7 +84,16 @@ class AuditoriasPublicacion(BaseGestor[AuditoriaPublicacion]):
             query = f"SELECT id_auditoria_publicacion, publicacion_id, generador_ia_id, fecha_generacion, usuario_id, parametros_entrada, resultado, observaciones FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [AuditoriaPublicacion(*row) for row in rows]
+            return [AuditoriaPublicacion(
+                id_auditoria_publicacion=row[0],
+                publicacion_id=row[1],
+                generador_ia_id=row[2],
+                fecha_generacion=row[3],
+                usuario_id=row[4],
+                parametros_entrada=row[5],
+                resultado=row[6],
+                observaciones=row[7]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar auditorías: {e}")
             return []

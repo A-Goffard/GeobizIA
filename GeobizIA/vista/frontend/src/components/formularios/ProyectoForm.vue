@@ -13,23 +13,30 @@
                 </div>
                 <div class="form-group">
                     <label for="fecha_inicio">Fecha de Inicio:</label>
-                    <input type="text" id="fecha_inicio" v-model="formData.fecha_inicio" required>
+                    <input type="date" id="fecha_inicio" v-model="formData.fecha_inicio">
                 </div>
                 <div class="form-group">
                     <label for="fecha_fin">Fecha de Fin:</label>
-                    <input type="text" id="fecha_fin" v-model="formData.fecha_fin" required>
+                    <input type="date" id="fecha_fin" v-model="formData.fecha_fin">
                 </div>
                 <div class="form-group">
                     <label for="poblacion">Población:</label>
-                    <input type="text" id="poblacion" v-model="formData.poblacion" required>
+                    <input type="text" id="poblacion" v-model="formData.poblacion">
                 </div>
                 <div class="form-group">
                     <label for="responsable">Responsable:</label>
-                    <input type="text" id="responsable" v-model="formData.responsable" required>
+                    <input type="text" id="responsable" v-model="formData.responsable">
                 </div>
                 <div class="form-group">
                     <label for="estado">Estado:</label>
-                    <input type="text" id="estado" v-model="formData.estado" required>
+                    <select id="estado" v-model="formData.estado" required>
+                        <option value="">Seleccionar estado</option>
+                        <option value="PLANIFICACION">Planificación</option>
+                        <option value="EN_PROGRESO">En Progreso</option>
+                        <option value="PAUSADO">Pausado</option>
+                        <option value="COMPLETADO">Completado</option>
+                        <option value="CANCELADO">Cancelado</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="objetivos">Objetivos:</label>
@@ -37,10 +44,12 @@
                 </div>
                 <div class="form-group">
                     <label for="presupuesto">Presupuesto:</label>
-                    <input type="number" step="any" id="presupuesto" v-model="formData.presupuesto" required>
+                    <input type="number" step="0.01" id="presupuesto" v-model="formData.presupuesto">
                 </div>
                 <div class="center">
-                    <button type="submit">Guardar Proyecto</button>
+                    <button type="submit" :disabled="isSubmitting">
+                        {{ isSubmitting ? 'Guardando...' : 'Guardar Proyecto' }}
+                    </button>
                 </div>
                 <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
                 <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -66,9 +75,46 @@ const formData = ref({
 
 const successMessage = ref('');
 const errorMessage = ref('');
+const isSubmitting = ref(false);
 
-function submitForm() {
-    successMessage.value = 'Proyecto guardado correctamente.';
+async function submitForm() {
+    isSubmitting.value = true;
+    successMessage.value = '';
     errorMessage.value = '';
+
+    try {
+        const response = await fetch('http://localhost:8000/api/proyectos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData.value),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.detail || 'Error al guardar el proyecto.');
+        }
+
+        successMessage.value = result.mensaje || 'Proyecto guardado correctamente.';
+        // Resetear el formulario
+        formData.value = {
+            nombre: '',
+            descripcion: '',
+            fecha_inicio: '',
+            fecha_fin: '',
+            poblacion: '',
+            responsable: '',
+            estado: '',
+            objetivos: '',
+            presupuesto: ''
+        };
+
+    } catch (error) {
+        errorMessage.value = error.message;
+    } finally {
+        isSubmitting.value = false;
+    }
 }
 </script>

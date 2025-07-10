@@ -48,7 +48,10 @@ class FechasActividadGestor(BaseGestor[FechaActividad]):
             cursor.execute(query, (id_fecha,))
             row = cursor.fetchone()
             if row:
-                return FechaActividad(*row)
+                return FechaActividad(
+                    id_fecha=row[0],
+                    fecha=row[1]
+                )
             return None
         except Exception as e:
             print(f"Error al buscar fecha_actividad: {e}")
@@ -63,7 +66,10 @@ class FechasActividadGestor(BaseGestor[FechaActividad]):
             query = f"SELECT id_fecha, fecha FROM {self.table_name}"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [FechaActividad(*row) for row in rows]
+            return [FechaActividad(
+                id_fecha=row[0],
+                fecha=row[1]
+            ) for row in rows]
         except Exception as e:
             print(f"Error al listar fechas_actividad: {e}")
             return []
